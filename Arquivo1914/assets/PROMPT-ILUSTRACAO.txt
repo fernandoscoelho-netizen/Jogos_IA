@@ -1,0 +1,5 @@
+Ferramenta: image_gen integrada, modo de geração de imagem nova.
+Ficheiro final: assets/arquivo.png. Cenário ilustrativo criado por IA, não fonte histórica.
+Pedido original (conservado para transparência):
+
+Use case: historical-scene. Asset type: wide background for a Portuguese educational historical exploration game. Create a richly textured, realistic softly lit oil-painting style scene of a small European historical archive reading room circa 1922, eye-level wide view. Walnut bookcases on left, tall soft daylight windows at back, wooden desk with folded archival papers and magnifying glass at left foreground, telegraph on a small desk middle, large closed brass-bound document chest right, framed indistinct wall map, wooden floor open in the middle for a character to walk. No humans, no text, no readable map borders, no modern objects, no weapons, no graphic content. Warm cream, muted sage, walnut, antique brass palette, gentle atmosphere with clear silhouettes and low visual noise in central floor. Landscape 1536x1024. This is illustrative scenery, not an exact historical reconstruction.

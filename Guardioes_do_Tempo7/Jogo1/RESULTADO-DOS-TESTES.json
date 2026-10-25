@@ -1,0 +1,25 @@
+{
+  "browser": "Chrome Headless Shell / Chromium 151",
+  "result": "PASS",
+  "missions": 15,
+  "score": 150,
+  "errors": [],
+  "checks": [
+    "file:// offline",
+    "início",
+    "bloqueio por pistas",
+    "movimento por teclado",
+    "clique no cenário",
+    "botões de locais",
+    "erro e nova tentativa",
+    "pistas e caderno",
+    "todos os tipos de missão",
+    "progressão",
+    "conclusão",
+    "exportação do resultado",
+    "ambiente e melodia: AudioContext",
+    "volume e silêncio",
+    "reinício",
+    "390px sem transbordo horizontal"
+  ]
+}

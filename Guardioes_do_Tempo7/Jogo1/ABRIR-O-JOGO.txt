@@ -1,0 +1,58 @@
+GUARDIÕES DO TEMPO
+História | 7.º ano | Tema 1
+
+COMO ABRIR
+1. Extrai o ZIP completo para uma pasta.
+2. Abre o ficheiro index.html com Chrome, Edge, Firefox ou Safari.
+3. Escolhe «Começar a expedição».
+
+Não abras apenas o HTML dentro do ZIP. Mantém index.html, os ficheiros
+JavaScript, style.css e as pastas assets e vendor juntos.
+
+Não precisas de Internet, de Processing, de conta nem de instalações.
+As ligações às fontes externas só abrem com Internet.
+Não houve publicação online.
+
+COMO JOGAR
+Investiga três locais por território: clica/toca nos círculos do cenário
+ou usa os botões dos locais. No computador, usa setas ou WASD para mover
+e E para investigar perto de um local. Clicar num círculo faz caminhar
+a personagem até ao local.
+
+Resolve as três missões e avança. Há cinco territórios e quinze missões.
+Podes escolher opções, associar etiquetas, ordenar cartões com os botões
+de subir/descer e distribuir cestos com os controlos deslizantes.
+
+Cada missão vale 10 pontos, uma única vez. Os erros não retiram pontos.
+Não há tempo limite. Lê a explicação, consulta uma pista e volta a tentar.
+O caderno permite rever vestígios e explicações durante a sessão.
+No fim, podes guardar um ficheiro de texto com o resultado e as aprendizagens.
+
+ACESSIBILIDADE
+Tab / Shift+Tab: navegar; Enter / Espaço: ativar botões.
+Nos controlos deslizantes: setas para alterar o valor.
+Escape: fechar as janelas. Os botões dos locais permitem investigar
+sem depender do cenário ou de movimentos precisos.
+Em ecrãs pequenos, desloca a página para chegar à missão abaixo do cenário.
+
+SOM
+Começa desligado. Abre «Som: desligado» e escolhe «Ambiente discreto»
+ou «Melodia suave de jogo». Ajusta o volume entre 0 e 50%.
+«Todo o som desligado» desliga música e efeitos. São composições modernas
+ilustrativas, não reconstituições da música antiga.
+
+SESSÃO E PRIVACIDADE
+O progresso existe apenas nesta página aberta. Recarregar ou fechar
+a página inicia uma nova sessão. Usa «Guardar resultado» na conclusão
+se quiseres conservar o teu caderno. Não são enviados dados.
+
+PARA O PROFESSOR
+A aprendizagem de cada missão e as páginas da sebenta aparecem no jogo.
+Consulta FONTES-E-VERIFICACAO.md para o mapa de conteúdos, fontes,
+precisões científicas e limites dos testes.
+O resultado mede conclusão com novas tentativas; não é uma nota escolar.
+
+TECNOLOGIA
+p5.js 2.3.3; Bootstrap 5.3.8 (CSS); Web Audio API nativa.
+Todas as bibliotecas necessárias e respetivas licenças estão em vendor.
+Os desenhos são produzidos em p5.js; o logótipo original está em assets.

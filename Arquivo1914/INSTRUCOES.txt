@@ -1,0 +1,35 @@
+ARQUIVO 1914 — O COFRE DA HISTÓRIA
+Jogo educativo de História · 9.º ano · Tema I
+
+1. Extrai todos os ficheiros do ZIP para uma pasta.
+2. Abre a pasta Arquivo1914 e faz duplo clique em index.html.
+3. Se o sistema pedir uma aplicação, escolhe um navegador moderno.
+4. Clica em Entrar no arquivo. Investiga os três objetos de cada missão.
+
+Não precisas de Internet, de Processing, de instalar bibliotecas ou de criar uma conta.
+As bibliotecas p5.js 2.3.3 e Bootstrap 5.3.8 e o cenário estão incluídos.
+Mantém index.html, os ficheiros .js e .css e as pastas assets e vendor juntos.
+Não abras o jogo de dentro do ZIP sem o extrair.
+
+Computador: clica nos objetos; usa setas/WASD no cenário e E para investigar.
+Teclado: Tab percorre os controlos, Enter/Espaço ativa-os e Esc fecha janelas.
+Toque: usa os objetos ou os botões de deslocação e de investigação.
+As cronologias ordenam-se com os botões ↑ e ↓, sem arrastar.
+
+O som começa desligado. No botão Som, escolhe Ambiente discreto ou Banda sonora de aventura
+e ajusta o volume. Todo o som desligado silencia também os efeitos.
+
+Não há cronómetro nem perda de pontos por erro. Cada missão concluída vale 10 descobertas,
+uma única vez. As 10 missões totalizam 100. O resultado não é uma classificação escolar.
+O caderno permite rever e guardar pistas, conclusões e referências num ficheiro .txt.
+O progresso fica apenas no navegador, quando o armazenamento está disponível.
+Em modo privado ou com restrições locais, exporta o caderno antes de fechar.
+Mudar de navegador, de pasta ou de endereço pode criar uma sessão separada.
+
+Abre GUIA.html para veres o enquadramento, fontes, revisões e testes.
+As referências externas são facultativas e exigem Internet.
+Nada foi publicado online.
+
+Verificação: o percurso completo foi testado num navegador através de servidor local.
+A abertura direta de index.html não pôde ser testada porque a ferramenta de verificação
+bloqueia file://. Não foram testados telemóveis físicos, Safari ou Firefox.

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guardiões do Tempo — História 7.º ano</title>
+  <meta name="description" content="Jogo educativo de História (7.º ano, Tema 1): das sociedades recoletoras às primeiras civilizações. Agrupamento de Escolas de São Pedro da Cova.">
+  <link rel="stylesheet" href="libs/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <a class="visually-hidden-focusable salto" href="#cena">Saltar para a cena do jogo</a>
+  <div id="anuncio" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Barra superior -->
+  <header class="navbar navbar-expand barra-topo px-2 px-md-3">
+    <div class="d-flex align-items-center gap-2 gap-md-3 me-auto">
+      <img src="assets/logoagrupspc.png" alt="Agrupamento de Escolas de São Pedro da Cova" class="logo">
+      <div class="titulo-jogo d-none d-sm-block">
+        <span class="fw-bold">Guardiões do Tempo</span>
+        <span class="small d-block">História · 7.º ano · Tema 1</span>
+      </div>
+    </div>
+    <nav class="d-flex gap-1 gap-md-2" aria-label="Menu do jogo">
+      <button type="button" class="btn btn-sm btn-light" id="btnCaderno" aria-label="Abrir o caderno de descobertas (tecla C)"><span aria-hidden="true">📓</span><span class="d-none d-md-inline"> Caderno</span></button>
+      <button type="button" class="btn btn-sm btn-light" id="btnSom" aria-label="Definições de som"><span aria-hidden="true">🔇</span></button>
+      <button type="button" class="btn btn-sm btn-light" id="btnAjuda" aria-label="Ajuda e instruções (tecla H)"><span aria-hidden="true">❔</span><span class="d-none d-md-inline"> Ajuda</span></button>
+      <button type="button" class="btn btn-sm btn-outline-light" id="btnRecomecar" aria-label="Recomeçar o jogo"><span aria-hidden="true">↺</span><span class="d-none d-md-inline"> Recomeçar</span></button>
+    </nav>
+  </header>
+
+  <main class="container-xxl py-2 py-md-3">
+    <!-- Linha do tempo (navegação entre épocas) -->
+    <nav aria-label="Linha do tempo das épocas">
+      <ol id="linhaTempo" class="linha-tempo list-unstyled d-flex mb-2"></ol>
+    </nav>
+
+    <!-- Cabeçalho da época -->
+    <section class="cartao-era mb-2" aria-labelledby="eraNome">
+      <div class="d-flex flex-wrap align-items-center gap-2 justify-content-between">
+        <div>
+          <h1 id="eraNome" class="h4 mb-0">—</h1>
+          <p id="eraPeriodo" class="small mb-0 text-body-secondary"></p>
+        </div>
+        <div class="d-flex flex-wrap gap-2 align-items-center contadores">
+          <span class="badge-cont" title="Pistas recolhidas"><span id="rotPistas">Pistas</span> <strong id="contPistas">0/0</strong></span>
+          <span class="badge-cont" title="Desafios resolvidos">Desafios <strong id="contDesafios">0/0</strong></span>
+          <span class="badge-cont" title="Pontuação">Pontos <strong id="contPontos">0</strong></span>
+          <span id="selos" class="d-inline-flex gap-1 align-items-center" aria-label="Selos do tempo"></span>
+        </div>
+      </div>
+      <p class="mb-0 mt-1 small"><strong>Objetivo:</strong> <span id="objetivo"></span> <span class="text-body-secondary" id="eraPaginas"></span></p>
+    </section>
+
+    <!-- Cena p5.js -->
+    <div class="moldura-cena">
+      <div id="cena" tabindex="0" aria-describedby="ajudaControlos"></div>
+      <p id="legendaCena" class="legenda-cena"></p>
+    </div>
+    <p class="dica-horizontal small alert alert-light border py-1 px-2 mt-2 mb-0">📱 Dica: roda o telemóvel na horizontal para veres a cena maior.</p>
+    <p id="ajudaControlos" class="small text-body-secondary mt-1 mb-2">
+      <strong>Controlos:</strong> setas ou W A S D para andar · toca ou clica num objeto para ir até ele · E ou Enter para investigar · C para o caderno.
+      Também podes usar os botões abaixo.
+    </p>
+
+    <!-- Alternativa acessível à exploração -->
+    <section aria-labelledby="tituloObjetos" class="mb-3">
+      <h2 id="tituloObjetos" class="h6 mb-1">Objetos nesta época</h2>
+      <div id="listaObjetos" class="d-flex flex-wrap gap-2"></div>
+      <button type="button" id="btnContinuarEra" class="btn btn-success mt-2" hidden>Viajar para a época seguinte →</button>
+    </section>
+  </main>
+
+  <footer class="rodape small text-center py-2">
+    Agrupamento de Escolas de São Pedro da Cova · Jogo de apoio à Sebenta de Estudo de História, 7.º ano, Tema 1 ·
+    As cenas são ilustrações estilizadas, não reconstituições exatas.
+  </footer>
+
+  <!-- Ecrã inicial -->
+  <div id="ecraInicio" class="ecra-inicio" role="dialog" aria-modal="true" aria-labelledby="tituloInicio">
+    <div class="cartao-inicio">
+      <img src="assets/logoagrupspc.png" alt="Agrupamento de Escolas de São Pedro da Cova" class="logo-inicio mb-3">
+      <p class="text-uppercase small fw-semibold mb-1 cor-dourada">História · 7.º ano · Das sociedades recoletoras às primeiras civilizações</p>
+      <h1 id="tituloInicio" class="display-6 fw-bold mb-3">Guardiões do Tempo</h1>
+      <p>Uma tempestade no <strong>Arquivo do Tempo</strong> espalhou os cinco Selos do Tempo pelo passado. Como aprendiz de historiador, vais viajar do Paleolítico até aos Fenícios e Hebreus.</p>
+      <p>Em cada época: <strong>explora</strong> a cena, <strong>investiga</strong> os vestígios para recolher pistas e resolve os desafios da <strong>Pedra do Tempo</strong> — ordenar, comparar, decidir e construir. Se errares, recebes uma explicação e tentas de novo. Não há limite de tempo.</p>
+      <div class="d-flex flex-wrap gap-2 justify-content-center mt-3">
+        <button type="button" class="btn btn-lg btn-primary" id="btnComecar">Começar a aventura</button>
+        <button type="button" class="btn btn-lg btn-outline-primary" id="btnContinuar" hidden>Continuar onde fiquei</button>
+      </div>
+      <p class="small text-body-secondary mt-3 mb-0">O som começa desligado (botão 🔇 no topo). O jogo funciona sem ligação à Internet.</p>
+    </div>
+  </div>
+
+  <!-- Modal: introdução da época -->
+  <div class="modal fade" id="modalIntro" tabindex="-1" aria-labelledby="introTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h5" id="introTitulo"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body" id="introCorpo"></div>
+        <div class="modal-footer"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Explorar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: pista -->
+  <div class="modal fade" id="modalPista" tabindex="-1" aria-labelledby="pistaTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h5" id="pistaTitulo"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body" id="pistaCorpo"></div>
+        <div class="modal-footer"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar no caderno e continuar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: desafio -->
+  <div class="modal fade" id="modalDesafio" tabindex="-1" aria-labelledby="desafioTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div><h2 class="modal-title h5" id="desafioTitulo"></h2><p class="small mb-0 text-body-secondary" id="desafioSub"></p></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar o desafio e voltar a explorar"></button></div>
+        <div class="modal-body">
+          <p class="small ae-caixa" id="desafioAE"></p>
+          <p class="fw-semibold" id="desafioEnunciado"></p>
+          <div id="desafioCorpo"></div>
+          <div id="desafioFeedback" class="mt-3"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary me-auto" data-bs-dismiss="modal">Voltar a explorar</button>
+          <button type="button" class="btn btn-primary" id="btnVerificar">Verificar</button>
+          <button type="button" class="btn btn-success" id="btnSeguinte" hidden>Continuar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: selo -->
+  <div class="modal fade" id="modalSelo" tabindex="-1" aria-labelledby="seloTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h5" id="seloTitulo"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body" id="seloCorpo"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ficar nesta época</button>
+          <button type="button" class="btn btn-success" id="btnSeloAvancar">Viajar para a época seguinte →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: fim -->
+  <div class="modal fade" id="modalFim" tabindex="-1" aria-labelledby="fimTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="d-flex align-items-center gap-3"><img src="assets/logoagrupspc.png" alt="" class="logo-pequeno"><h2 class="modal-title h4" id="fimTitulo">Missão cumprida, Guardião do Tempo!</h2></div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body" id="fimCorpo"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" id="btnFimCaderno">Rever o caderno</button>
+          <button type="button" class="btn btn-primary" id="btnJogarDeNovo">Jogar de novo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: ajuda -->
+  <div class="modal fade" id="modalAjuda" tabindex="-1" aria-labelledby="ajudaTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h5" id="ajudaTitulo">Como jogar</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body">
+          <h3 class="h6">A tua missão</h3>
+          <p>Recupera os cinco Selos do Tempo, um em cada época: Paleolítico, Neolítico, megalitismo, Egito antigo e Fenícios e Hebreus. No fim, abre a porta do Arquivo do Tempo.</p>
+          <h3 class="h6">Em cada época</h3>
+          <ol>
+            <li><strong>Explora</strong> a cena e <strong>investiga</strong> os objetos assinalados com <span class="badge rounded-pill text-bg-warning">?</span>. Cada pista fica guardada no caderno.</li>
+            <li>Com todas as pistas, a <strong>Pedra do Tempo</strong> acende-se. Vai até ela para resolveres os desafios.</li>
+            <li>Ao resolveres todos os desafios, ganhas o selo e podes viajar para a época seguinte.</li>
+          </ol>
+          <h3 class="h6">Controlos</h3>
+          <div class="table-responsive"><table class="table table-sm small">
+            <thead><tr><th scope="col">Ação</th><th scope="col">Computador</th><th scope="col">Tablet ou telemóvel</th></tr></thead>
+            <tbody>
+              <tr><td>Andar</td><td>Setas ou W A S D; ou clicar no chão</td><td>Tocar no chão</td></tr>
+              <tr><td>Investigar</td><td>E ou Enter junto a um objeto; ou clicar no objeto</td><td>Tocar no objeto</td></tr>
+              <tr><td>Caderno</td><td>Tecla C ou botão 📓</td><td>Botão 📓</td></tr>
+              <tr><td>Ajuda</td><td>Tecla H</td><td>Botão ❔</td></tr>
+            </tbody></table></div>
+          <p class="small">Sem rato nem ecrã tátil, usa a tecla Tab: todos os objetos e desafios estão também na lista «Objetos nesta época», por baixo da cena. Nos desafios de ordenar, usa os botões ↑ e ↓.</p>
+          <h3 class="h6">Pontuação</h3>
+          <p class="small mb-1">Cada pista vale 10 pontos. Cada desafio vale 100 pontos à primeira tentativa, 70 à segunda e 40 depois disso. Nunca perdes pontos e podes tentar quantas vezes quiseres.</p>
+          <h3 class="h6 mt-3">Factos, hipóteses e interpretações</h3>
+          <p class="small mb-0">As pistas indicam se a informação é um <span class="badge text-bg-success">Facto</span>, uma <span class="badge text-bg-warning">Hipótese</span> ou uma <span class="badge text-bg-info">Interpretação</span>. As caixas «🔎 Olhar de historiador» acrescentam precisões científicas.</p>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendi</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: som -->
+  <div class="modal fade" id="modalSom" tabindex="-1" aria-labelledby="somTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h5" id="somTitulo">Som</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body">
+          <fieldset class="mb-3">
+            <legend class="h6">Escolhe o som</legend>
+            <div class="form-check"><input class="form-check-input" type="radio" name="modoSom" id="somOff" value="off" checked><label class="form-check-label" for="somOff">Desligado (sem qualquer som)</label></div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="modoSom" id="somEfeitos" value="efeitos"><label class="form-check-label" for="somEfeitos">Só efeitos sonoros</label></div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="modoSom" id="somAmbiente" value="ambiente"><label class="form-check-label" for="somAmbiente">Ambiente discreto (vento e água)</label></div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="modoSom" id="somMelodia" value="melodia"><label class="form-check-label" for="somMelodia">Melodia suave de jogo</label></div>
+          </fieldset>
+          <label for="volume" class="form-label">Volume: <span id="volumeValor">50%</span></label>
+          <input type="range" class="form-range" id="volume" min="0" max="100" value="50">
+          <div class="form-check form-switch mt-2"><input class="form-check-input" type="checkbox" role="switch" id="efeitos" checked><label class="form-check-label" for="efeitos">Efeitos sonoros delicados (pistas e respostas)</label></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: recomeçar -->
+  <div class="modal fade" id="modalRecomecar" tabindex="-1" aria-labelledby="recTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h2 class="modal-title h5" id="recTitulo">Recomeçar o jogo?</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+        <div class="modal-body">Vais apagar as pistas, os desafios e os selos desta sessão e voltar ao início.</div>
+        <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="btnConfirmarRecomecar">Sim, recomeçar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Caderno de descobertas -->
+  <div class="offcanvas offcanvas-end caderno" tabindex="-1" id="caderno" aria-labelledby="cadernoTitulo">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5" id="cadernoTitulo">📓 Caderno de descobertas</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar o caderno"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav nav-tabs nav-fill small mb-3" role="tablist">
+        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#cadDescobertas" type="button" role="tab" aria-controls="cadDescobertas" aria-selected="true">Pistas</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cadConceitos" type="button" role="tab" aria-controls="cadConceitos" aria-selected="false">Conceitos</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cadAprendizagens" type="button" role="tab" aria-controls="cadAprendizagens" aria-selected="false">Aprendizagens</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cadNotas" type="button" role="tab" aria-controls="cadNotas" aria-selected="false">Rigor</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="cadDescobertas" role="tabpanel" tabindex="0"></div>
+        <div class="tab-pane fade" id="cadConceitos" role="tabpanel" tabindex="0"></div>
+        <div class="tab-pane fade" id="cadAprendizagens" role="tabpanel" tabindex="0"></div>
+        <div class="tab-pane fade" id="cadNotas" role="tabpanel" tabindex="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="libs/bootstrap.bundle.min.js"></script>
+  <script src="libs/p5.min.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/som.js"></script>
+  <script src="js/cenas.js"></script>
+  <script src="js/jogo.js"></script>
+</body>
+</html>

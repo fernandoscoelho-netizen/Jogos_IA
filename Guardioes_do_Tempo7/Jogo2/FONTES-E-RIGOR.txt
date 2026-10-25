@@ -1,0 +1,70 @@
+GUARDIÕES DO TEMPO — FONTES CONSULTADAS E NOTA DE RIGOR CIENTÍFICO
+
+1. FONTE PRINCIPAL
+Sebenta de Estudo, História 7.º ano, Tema 1 — Agrupamento de Escolas de São Pedro da Cova (2026/2027).
+Todas as pistas e desafios indicam a página da sebenta que os apoia.
+
+2. FONTES INSTITUCIONAIS E CIENTÍFICAS CONSULTADAS (outubro de 2026)
+- DGE — Aprendizagens Essenciais de História, 3.º ciclo, 7.º ano (descritores e conceitos do Tema 1):
+  https://www.dge.mec.pt/sites/default/files/Curriculo/Aprendizagens_Essenciais/3_ciclo/historia_3c_7a_ff.pdf
+- Instituto Max Planck de Antropologia Evolutiva — fósseis de Homo sapiens de Jebel Irhoud (c. 300 000 anos):
+  https://www.eva.mpg.de/homo-sapiens.html
+- Instrumentos de Lomekwi 3 (c. 3,3 milhões de anos; Nature, 2015) — síntese:
+  https://en.wikipedia.org/wiki/Lomekwi
+- Domínio do fogo: indícios antigos discutidos; uso regular bem documentado a partir de c. 400 000 anos — síntese:
+  https://en.wikipedia.org/wiki/Control_of_fire_by_early_humans
+- Trabalhadores das pirâmides de Gizé (aldeia, padarias, cemitério; hipóteses de M. Lehner) — Harvard Magazine:
+  https://www.harvardmagazine.com/node/1637
+- Primeiros registos de escrita egípcia (túmulo U-j, Abidos, c. 3200 a.C.): https://the-past.com/shorts/the-picture-desk/the-discovery-of-tomb-u-j
+- Calendário civil egípcio (12 × 30 dias + 5; estações Akhet, Peret, Shemu):
+  https://egyptianstreets.com/2022/01/28/a-year-in-three-seasons-ancient-egypts-calendar/
+- Alfabeto fenício (c. 1050 a.C.; derivado da escrita protossinaítica/protocananeia; adaptação grega):
+  https://en.wikipedia.org/wiki/Phoenician_alphabet
+- Câmara Municipal de Évora — Cromeleque dos Almendres e Anta Grande do Zambujeiro:
+  https://www.cm-evora.pt/wp-content/uploads/2020/06/EVORAMEGALITICA.pdf
+
+3. CORREÇÕES E OBSERVAÇÕES SOBRE A SEBENTA (integradas no jogo como «Olhar de historiador»)
+- p. 2 — Primeiros instrumentos «c. 2,5 M anos»: hoje conhecem-se instrumentos com c. 3,3 milhões de anos
+  (Lomekwi 3). A tradição olduvaiense (c. 2,6 M anos) é a mais antiga bem estudada.
+- p. 3 — Esquema da hominização com setas entre espécies: sugere uma sequência linear, em contradição com o
+  próprio texto. Os Neandertais não são antepassados do Homo sapiens (coexistiram e cruzaram-se).
+- p. 3 — Domínio do fogo: a data de início é discutida (indícios de c. 1 M anos, ainda controversos).
+- p. 7 — Mapa do Crescente Fértil: o rótulo «Mar Mediterrâneo» surge a sul do Egito; o Mediterrâneo fica a norte.
+- p. 9 — A sebenta desmente corretamente a ideia de «escravos acorrentados» nas pirâmides, mas não refere que
+  existiam escravos no Egito; «escravatura» é conceito das Aprendizagens Essenciais.
+- p. 9 — O Livro dos Mortos generalizou-se a partir do Império Novo (c. 1550 a.C.).
+- p. 10 — Os hieróglifos combinam sinais-ideia e sinais-som; não são apenas desenhos.
+- p. 11 — O alfabeto fenício não foi o primeiro alfabeto. A sebenta usa «alfabeto fonético»; as AE usam
+  «escrita alfabética».
+- p. 11 — Monoteísmo hebraico: muitos historiadores consideram que se afirmou de forma gradual (interpretação).
+- p. 12 — Grafia «Recolectores» (no quadro) e «recoletores» (no resto do texto, forma do AO90).
+- Imagens de reconstituição: são ilustrações e misturam por vezes épocas (por exemplo, cidade com aspeto de
+  templo grego atrás do porto fenício; pirâmides do Império Antigo junto de templos de épocas posteriores).
+  Por isso, o jogo usa cenas estilizadas próprias, todas identificadas como ilustrações.
+
+Complementos não presentes na sebenta (assinalados no jogo): pedra polida; púrpura e vidro fenícios;
+feitorias na Península Ibérica (Gadir, estuário do Sado); Vale do Côa; placas de xisto do Alentejo;
+Cromeleque dos Almendres; chegada da agricultura à Península Ibérica no VI milénio a.C.
+
+Factos, hipóteses e interpretações: cada pista tem uma etiqueta («Facto», «Hipótese» ou «Interpretação»).
+Exemplos de hipóteses tratadas como tal: função da arte rupestre; uso astronómico dos cromeleques;
+técnica de colocação das lajes das antas; trabalho dos camponeses em obras do Estado durante a cheia.
+
+4. RELAÇÃO ENTRE DESAFIOS E APRENDIZAGENS ESSENCIAIS
+AE1 Fontes históricas ............................ Paleolítico, desafio 2 (Facto ou interpretação?)
+AE2 Instrumentos e domínio da natureza ........... Paleolítico, desafio 1 (Linha da hominização)
+AE3 Comparar recoletores e produtores ............ Neolítico, desafio 1 (Recoletor ou produtor?)
+AE4 Ritos e manifestações artísticas ............. Megalitismo, desafios 1 e 2 (Vocabulário; Constrói uma anta)
+AE5 Passagem ao modo de vida produtor ............ Neolítico, desafio 2 (Um ano na aldeia); desafio final
+AE6 Civilizações urbanas e recursos do espaço .... Egito, desafios 1 e 2 (O ano do Nilo; Pirâmide social)
+AE7 Contributos que perduram .................... Egito, desafio 3; Fenícios e Hebreus, desafio 3
+AE8 Formas de escrita e suportes ................ Fenícios e Hebreus, desafios 1 e 2
+
+5. O QUE FOI TESTADO (navegador Chromium, automaticamente)
+- Ecrã inicial, introdução de cada época, deslocação por teclado, clique e toque, investigação de todas as
+  28 pistas, Pedra do Tempo fechada/aberta, os 13 desafios com respostas erradas e certas, pontuação
+  (1580 pontos possíveis), selos, progressão, desafio final, conclusão, caderno, som (4 modos e volume),
+  gravação do progresso, «Continuar», «Recomeçar», navegação só com teclado, funcionamento sem Internet
+  e ecrã de telemóvel (390 px, sem deslocamento horizontal).
+- Não testado em dispositivos reais: Safari/iPad, leitores de ecrã (NVDA, VoiceOver) e a audição real do som
+  (verificou-se apenas que o som arranca, muda de modo e para).

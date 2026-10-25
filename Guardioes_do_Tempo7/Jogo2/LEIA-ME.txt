@@ -1,0 +1,41 @@
+GUARDIÕES DO TEMPO
+Jogo educativo de História — 7.º ano — Tema 1: Das sociedades recoletoras às primeiras civilizações
+Agrupamento de Escolas de São Pedro da Cova
+
+COMO ABRIR O JOGO
+1. Descompacta (extrai) o ficheiro ZIP para uma pasta. Não abras o jogo diretamente dentro do ZIP.
+2. Abre a pasta «guardioes-do-tempo» e faz duplo clique em «index.html».
+3. O jogo abre no navegador (Chrome, Edge, Firefox ou Safari atualizados).
+
+LIGAÇÃO À INTERNET
+Não é necessária. Todas as bibliotecas (p5.js 2.3.4 e Bootstrap 5.3.8), o logótipo e os sons
+estão incluídos ou são gerados pelo próprio jogo.
+
+EM TABLETS E TELEMÓVEIS
+Copia a pasta para o dispositivo e abre o «index.html» num navegador, ou coloca a pasta
+num servidor/plataforma da escola. Recomenda-se usar o dispositivo na horizontal.
+
+COMO SE JOGA (resumo)
+- Cinco épocas: Paleolítico, Neolítico, megalitismo, Egito antigo, Fenícios e Hebreus; no fim, o Arquivo do Tempo.
+- Em cada época: investigar os objetos assinalados com «?», recolher as pistas e resolver
+  os desafios da Pedra do Tempo para ganhar um selo.
+- Tipos de desafio: ordenar, classificar (facto/interpretação, recoletor/produtor...),
+  associar, decisões com construção da cena (aldeia neolítica, anta, ano do Nilo).
+- Sem limite de tempo; os erros não retiram pontos; há explicações e dicas após cada tentativa.
+- Caderno de descobertas (botão 📓 ou tecla C): pistas, conceitos, aprendizagens e notas de rigor.
+- Controlos: setas/W A S D ou tocar/clicar no chão para andar; E/Enter ou tocar no objeto para investigar.
+  Todos os objetos estão também acessíveis por botões, por baixo da cena (navegação com Tab).
+- Som: começa desligado. Botão 🔇 → desligado, só efeitos, ambiente discreto ou melodia suave; volume ajustável.
+- O progresso fica guardado neste navegador. «Recomeçar» apaga-o.
+
+ESTRUTURA DOS FICHEIROS
+index.html ............ página do jogo
+css/estilo.css ........ aspeto visual
+js/dados.js ........... conteúdos, desafios, explicações e páginas da sebenta (fácil de editar)
+js/cenas.js ........... cenas desenhadas com p5.js
+js/jogo.js ............ funcionamento do jogo
+js/som.js ............. som (Web Audio API)
+libs/ ................. p5.js e Bootstrap (cópias locais)
+assets/ ............... logótipo do agrupamento
+pre-visualizacao/ ..... imagens do jogo
+FONTES-E-RIGOR.txt .... fontes consultadas, correções científicas e relação desafios/aprendizagens
