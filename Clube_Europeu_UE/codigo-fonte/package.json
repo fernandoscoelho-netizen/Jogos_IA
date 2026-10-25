@@ -1,0 +1,7 @@
+{
+  "name": "clube-europeu-ue-mapa",
+  "private": true,
+  "description": "Só é necessário para voltar a gerar mapdata.js (node build-map.mjs).",
+  "type": "module",
+  "dependencies": { "world-atlas": "2.0.2", "topojson-client": "3.1.0", "d3-geo": "3.1.0" }
+}

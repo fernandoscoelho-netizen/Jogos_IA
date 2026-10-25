@@ -1,0 +1,164 @@
+{
+  "de": {
+    "country": "Alemanha",
+    "file": "assets/flags/de.png",
+    "download": "https://flagcdn.com/w160/de.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "at": {
+    "country": "Áustria",
+    "file": "assets/flags/at.png",
+    "download": "https://flagcdn.com/w160/at.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "be": {
+    "country": "Bélgica",
+    "file": "assets/flags/be.png",
+    "download": "https://flagcdn.com/w160/be.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "bg": {
+    "country": "Bulgária",
+    "file": "assets/flags/bg.png",
+    "download": "https://flagcdn.com/w160/bg.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "cz": {
+    "country": "Chéquia",
+    "file": "assets/flags/cz.png",
+    "download": "https://flagcdn.com/w160/cz.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "cy": {
+    "country": "Chipre",
+    "file": "assets/flags/cy.png",
+    "download": "https://flagcdn.com/w160/cy.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "hr": {
+    "country": "Croácia",
+    "file": "assets/flags/hr.png",
+    "download": "https://flagcdn.com/w160/hr.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "dk": {
+    "country": "Dinamarca",
+    "file": "assets/flags/dk.png",
+    "download": "https://flagcdn.com/w160/dk.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "sk": {
+    "country": "Eslováquia",
+    "file": "assets/flags/sk.png",
+    "download": "https://flagcdn.com/w160/sk.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "si": {
+    "country": "Eslovénia",
+    "file": "assets/flags/si.png",
+    "download": "https://flagcdn.com/w160/si.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "es": {
+    "country": "Espanha",
+    "file": "assets/flags/es.png",
+    "download": "https://flagcdn.com/w160/es.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "ee": {
+    "country": "Estónia",
+    "file": "assets/flags/ee.png",
+    "download": "https://flagcdn.com/w160/ee.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "fi": {
+    "country": "Finlândia",
+    "file": "assets/flags/fi.png",
+    "download": "https://flagcdn.com/w160/fi.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "fr": {
+    "country": "França",
+    "file": "assets/flags/fr.png",
+    "download": "https://flagcdn.com/w160/fr.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "gr": {
+    "country": "Grécia",
+    "file": "assets/flags/gr.png",
+    "download": "https://flagcdn.com/w160/gr.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "hu": {
+    "country": "Hungria",
+    "file": "assets/flags/hu.png",
+    "download": "https://flagcdn.com/w160/hu.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "ie": {
+    "country": "Irlanda",
+    "file": "assets/flags/ie.png",
+    "download": "https://flagcdn.com/w160/ie.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "it": {
+    "country": "Itália",
+    "file": "assets/flags/it.png",
+    "download": "https://flagcdn.com/w160/it.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "lv": {
+    "country": "Letónia",
+    "file": "assets/flags/lv.png",
+    "download": "https://flagcdn.com/w160/lv.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "lt": {
+    "country": "Lituânia",
+    "file": "assets/flags/lt.png",
+    "download": "https://flagcdn.com/w160/lt.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "lu": {
+    "country": "Luxemburgo",
+    "file": "assets/flags/lu.png",
+    "download": "https://flagcdn.com/w160/lu.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "mt": {
+    "country": "Malta",
+    "file": "assets/flags/mt.png",
+    "download": "https://flagcdn.com/w160/mt.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "nl": {
+    "country": "Países Baixos",
+    "file": "assets/flags/nl.png",
+    "download": "https://flagcdn.com/w160/nl.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "pl": {
+    "country": "Polónia",
+    "file": "assets/flags/pl.png",
+    "download": "https://flagcdn.com/w160/pl.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "pt": {
+    "country": "Portugal",
+    "file": "assets/flags/pt.png",
+    "download": "https://flagcdn.com/w160/pt.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "ro": {
+    "country": "Roménia",
+    "file": "assets/flags/ro.png",
+    "download": "https://flagcdn.com/w160/ro.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  },
+  "se": {
+    "country": "Suécia",
+    "file": "assets/flags/se.png",
+    "download": "https://flagcdn.com/w160/se.png",
+    "reference": "https://european-union.europa.eu/principles-countries-history/eu-countries_pt"
+  }
+}

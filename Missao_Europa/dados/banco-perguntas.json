@@ -1,0 +1,347 @@
+{
+  "versao": "1.0",
+  "atualizado": "2026-10",
+  "descricao": "Banco de perguntas do jogo Missão Europa. Em cada desafio, o jogo sorteia itens destes conjuntos. «nivel»: 2 = disponível para o 2.º ciclo e para o 3.º ciclo; 3 = só para o 3.º ciclo. «selecao.n2» e «selecao.n3» indicam quantos itens se sorteiam em cada nível; «minPorCategoria» garante um mínimo de itens em cada categoria; «grupo» impede que saiam dois itens do mesmo grupo (por exemplo, saudações muito parecidas).",
+  "desafios": {
+
+    "d_bandeira": {
+      "estadosIniciais": [
+        { "fundo": "verde", "estrelas": "branco", "n": 27, "disp": "linhas" },
+        { "fundo": "vermelho", "estrelas": "dourado", "n": 6, "disp": "espalhadas" },
+        { "fundo": "branco", "estrelas": "vermelho", "n": 15, "disp": "linhas" },
+        { "fundo": "azul", "estrelas": "branco", "n": 27, "disp": "espalhadas" },
+        { "fundo": "verde", "estrelas": "dourado", "n": 20, "disp": "circulo" }
+      ]
+    },
+
+    "d_linguas": {
+      "selecao": { "n2": 6, "n3": 8 },
+      "pares": [
+        { "a": "Olá", "b": "Português", "dica": "É a tua língua — e uma das 24 línguas oficiais da UE!", "nivel": 2 },
+        { "a": "Hola", "b": "Espanhol", "dica": "Língua do nosso país vizinho.", "nivel": 2 },
+        { "a": "Bonjour", "b": "Francês", "dica": "Língua falada em França, na Bélgica e no Luxemburgo.", "nivel": 2 },
+        { "a": "Buongiorno", "b": "Italiano", "dica": "Repara no «buon», parecido com «bom». Língua de Itália.", "nivel": 2 },
+        { "a": "Guten Tag", "b": "Alemão", "dica": "Língua da Alemanha e da Áustria.", "nivel": 2 },
+        { "a": "Hello", "b": "Inglês", "dica": "Língua oficial na Irlanda e em Malta (e muito usada no mundo).", "nivel": 2 },
+        { "a": "Goedendag", "b": "Neerlandês", "dica": "Língua dos Países Baixos e de parte da Bélgica.", "nivel": 2 },
+        { "a": "Dzień dobry", "b": "Polaco", "dica": "Língua de um país com capital em Varsóvia.", "nivel": 2 },
+        { "a": "Kaliméra (Καλημέρα)", "b": "Grego", "dica": "Escreve-se com o alfabeto grego.", "nivel": 2 },
+        { "a": "Hej", "b": "Sueco", "dica": "Língua de um país nórdico com capital em Estocolmo.", "nivel": 2 },
+        { "a": "Goddag", "b": "Dinamarquês", "dica": "Língua de um país nórdico com capital em Copenhaga.", "nivel": 3 },
+        { "a": "Hyvää päivää", "b": "Finlandês", "dica": "Língua de um país nórdico com capital em Helsínquia; tem muitas letras repetidas.", "nivel": 3 },
+        { "a": "Tere", "b": "Estónio", "dica": "Língua do país mais a norte dos três países bálticos.", "nivel": 3 },
+        { "a": "Labdien", "b": "Letão", "dica": "Língua do país báltico com capital em Riga.", "nivel": 3 },
+        { "a": "Laba diena", "b": "Lituano", "dica": "Língua do país báltico com capital em Vílnius.", "nivel": 3 },
+        { "a": "Jó napot", "b": "Húngaro", "dica": "Língua de um país com capital em Budapeste.", "nivel": 3 },
+        { "a": "Dia duit", "b": "Irlandês", "dica": "Língua celta, falada na Irlanda.", "nivel": 3 },
+        { "a": "Bonġu", "b": "Maltês", "dica": "Língua de uma pequena ilha do Mediterrâneo; mistura influências árabes e italianas.", "nivel": 3 },
+        { "a": "Bună ziua", "b": "Romeno", "dica": "Língua latina, como o português, falada num país com capital em Bucareste.", "nivel": 3 },
+        { "a": "Dobrý den", "b": "Checo", "dica": "Língua de um país com capital em Praga.", "nivel": 3, "grupo": "dobar" },
+        { "a": "Dobrý deň", "b": "Eslovaco", "dica": "Língua de um país com capital em Bratislava.", "nivel": 3, "grupo": "dobar" },
+        { "a": "Dober dan", "b": "Esloveno", "dica": "Língua de um país com capital em Liubliana.", "nivel": 3, "grupo": "dobar" },
+        { "a": "Dobar dan", "b": "Croata", "dica": "Língua de um país com capital em Zagrebe.", "nivel": 3, "grupo": "dobar" },
+        { "a": "Dobar den (Добър ден)", "b": "Búlgaro", "dica": "Escreve-se com o alfabeto cirílico; país com capital em Sófia.", "nivel": 3, "grupo": "dobar" }
+      ]
+    },
+
+    "d_bandeiras": {
+      "selecao": { "n2": 6, "n3": 10 },
+      "pares": [
+        { "a": "pt", "bandeira": true, "b": "Portugal", "dica": "Verde e vermelho, com a esfera armilar e o escudo.", "nivel": 2 },
+        { "a": "es", "bandeira": true, "b": "Espanha", "dica": "Vermelho e amarelo em faixas horizontais, com um escudo.", "nivel": 2 },
+        { "a": "fr", "bandeira": true, "b": "França", "dica": "Azul, branco e vermelho, em faixas verticais.", "nivel": 2 },
+        { "a": "it", "bandeira": true, "b": "Itália", "dica": "Verde, branco e vermelho, em faixas verticais.", "nivel": 2 },
+        { "a": "ie", "bandeira": true, "b": "Irlanda", "dica": "Verde, branco e laranja, em faixas verticais.", "nivel": 2 },
+        { "a": "de", "bandeira": true, "b": "Alemanha", "dica": "Preto, vermelho e dourado, em faixas horizontais.", "nivel": 2 },
+        { "a": "gr", "bandeira": true, "b": "Grécia", "dica": "Riscas azuis e brancas, com uma cruz branca num quadrado azul.", "nivel": 2 },
+        { "a": "be", "bandeira": true, "b": "Bélgica", "dica": "Preto, amarelo e vermelho, em faixas verticais.", "nivel": 2 },
+        { "a": "nl", "bandeira": true, "b": "Países Baixos", "dica": "Vermelho, branco e azul escuro, em faixas horizontais.", "nivel": 2 },
+        { "a": "se", "bandeira": true, "b": "Suécia", "dica": "Cruz amarela sobre fundo azul.", "nivel": 2 },
+        { "a": "dk", "bandeira": true, "b": "Dinamarca", "dica": "Cruz branca sobre fundo vermelho.", "nivel": 2 },
+        { "a": "fi", "bandeira": true, "b": "Finlândia", "dica": "Cruz azul sobre fundo branco.", "nivel": 2 },
+        { "a": "at", "bandeira": true, "b": "Áustria", "dica": "Vermelho, branco e vermelho, em faixas horizontais.", "nivel": 2 },
+        { "a": "pl", "bandeira": true, "b": "Polónia", "dica": "Branco em cima e vermelho em baixo.", "nivel": 2 },
+        { "a": "lu", "bandeira": true, "b": "Luxemburgo", "dica": "Vermelho, branco e azul-claro — parecida com a dos Países Baixos.", "nivel": 3 },
+        { "a": "hr", "bandeira": true, "b": "Croácia", "dica": "Vermelho, branco e azul, com um escudo de quadrados vermelhos e brancos.", "nivel": 3 },
+        { "a": "bg", "bandeira": true, "b": "Bulgária", "dica": "Branco, verde e vermelho, em faixas horizontais.", "nivel": 3 },
+        { "a": "ro", "bandeira": true, "b": "Roménia", "dica": "Azul, amarelo e vermelho, em faixas verticais.", "nivel": 3 },
+        { "a": "hu", "bandeira": true, "b": "Hungria", "dica": "Vermelho, branco e verde, em faixas horizontais.", "nivel": 3 },
+        { "a": "cz", "bandeira": true, "b": "Chéquia", "dica": "Branco e vermelho, com um triângulo azul à esquerda.", "nivel": 3 },
+        { "a": "sk", "bandeira": true, "b": "Eslováquia", "dica": "Branco, azul e vermelho, com um escudo com uma cruz dupla.", "nivel": 3 },
+        { "a": "si", "bandeira": true, "b": "Eslovénia", "dica": "Branco, azul e vermelho, com um escudo que mostra uma montanha.", "nivel": 3 },
+        { "a": "ee", "bandeira": true, "b": "Estónia", "dica": "Azul, preto e branco, em faixas horizontais.", "nivel": 3 },
+        { "a": "lv", "bandeira": true, "b": "Letónia", "dica": "Vermelho escuro com uma faixa branca estreita ao meio.", "nivel": 3 },
+        { "a": "lt", "bandeira": true, "b": "Lituânia", "dica": "Amarelo, verde e vermelho, em faixas horizontais.", "nivel": 3 },
+        { "a": "mt", "bandeira": true, "b": "Malta", "dica": "Branco e vermelho em faixas verticais, com uma pequena cruz no canto.", "nivel": 3 },
+        { "a": "cy", "bandeira": true, "b": "Chipre", "dica": "Branca, com o desenho da ilha e dois ramos de oliveira.", "nivel": 3 }
+      ]
+    },
+
+    "d_euro": {
+      "selecao": { "n2": 7, "n3": 10, "minPorCategoria": 2 },
+      "itens": [
+        { "texto": "Portugal", "bandeira": "pt", "cat": "euro", "explicacao": "Membro desde 1986; usa o euro desde a sua criação (1999).", "nivel": 2 },
+        { "texto": "Espanha", "bandeira": "es", "cat": "euro", "explicacao": "Membro desde 1986; usa o euro desde 1999.", "nivel": 2 },
+        { "texto": "França", "bandeira": "fr", "cat": "euro", "explicacao": "País fundador; usa o euro desde 1999.", "nivel": 2 },
+        { "texto": "Itália", "bandeira": "it", "cat": "euro", "explicacao": "País fundador; usa o euro desde 1999.", "nivel": 2 },
+        { "texto": "Alemanha", "bandeira": "de", "cat": "euro", "explicacao": "País fundador; usa o euro desde 1999.", "nivel": 2 },
+        { "texto": "Irlanda", "bandeira": "ie", "cat": "euro", "explicacao": "Membro desde 1973; usa o euro desde 1999.", "nivel": 2 },
+        { "texto": "Grécia", "bandeira": "gr", "cat": "euro", "explicacao": "Membro desde 1981; usa o euro desde 2001.", "nivel": 2 },
+        { "texto": "Bélgica", "bandeira": "be", "cat": "euro", "explicacao": "País fundador; usa o euro desde 1999.", "nivel": 3 },
+        { "texto": "Países Baixos", "bandeira": "nl", "cat": "euro", "explicacao": "País fundador; usa o euro desde 1999.", "nivel": 3 },
+        { "texto": "Luxemburgo", "bandeira": "lu", "cat": "euro", "explicacao": "País fundador; usa o euro desde 1999.", "nivel": 3 },
+        { "texto": "Áustria", "bandeira": "at", "cat": "euro", "explicacao": "Membro desde 1995; usa o euro desde 1999.", "nivel": 3 },
+        { "texto": "Finlândia", "bandeira": "fi", "cat": "euro", "explicacao": "Membro desde 1995; usa o euro desde 1999.", "nivel": 3 },
+        { "texto": "Eslovénia", "bandeira": "si", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2007.", "nivel": 3 },
+        { "texto": "Chipre", "bandeira": "cy", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2008.", "nivel": 3 },
+        { "texto": "Malta", "bandeira": "mt", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2008.", "nivel": 3 },
+        { "texto": "Eslováquia", "bandeira": "sk", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2009.", "nivel": 3 },
+        { "texto": "Estónia", "bandeira": "ee", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2011.", "nivel": 3 },
+        { "texto": "Letónia", "bandeira": "lv", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2014.", "nivel": 3 },
+        { "texto": "Lituânia", "bandeira": "lt", "cat": "euro", "explicacao": "Membro desde 2004; usa o euro desde 2015.", "nivel": 3 },
+        { "texto": "Croácia", "bandeira": "hr", "cat": "euro", "explicacao": "Membro desde 2013; usa o euro desde 2023.", "nivel": 3 },
+        { "texto": "Bulgária", "bandeira": "bg", "cat": "euro", "explicacao": "Membro desde 2007; usa o euro desde 1 de janeiro de 2026 — é o 21.º país da área do euro.", "nivel": 3 },
+        { "texto": "Suécia", "bandeira": "se", "cat": "semeuro", "explicacao": "Membro desde 1995, mas mantém a coroa sueca.", "nivel": 2 },
+        { "texto": "Dinamarca", "bandeira": "dk", "cat": "semeuro", "explicacao": "Membro desde 1973; mantém a coroa dinamarquesa.", "nivel": 2 },
+        { "texto": "Polónia", "bandeira": "pl", "cat": "semeuro", "explicacao": "Membro desde 2004; mantém o zlóti.", "nivel": 2 },
+        { "texto": "Chéquia", "bandeira": "cz", "cat": "semeuro", "explicacao": "Membro desde 2004; mantém a coroa checa.", "nivel": 3 },
+        { "texto": "Hungria", "bandeira": "hu", "cat": "semeuro", "explicacao": "Membro desde 2004; mantém o florim.", "nivel": 3 },
+        { "texto": "Roménia", "bandeira": "ro", "cat": "semeuro", "explicacao": "Membro desde 2007; mantém o leu romeno.", "nivel": 3 },
+        { "texto": "Noruega", "bandeira": "no", "cat": "fora", "explicacao": "País europeu fora da UE (mas está no Espaço Schengen e no Conselho da Europa).", "nivel": 2 },
+        { "texto": "Suíça", "bandeira": "ch", "cat": "fora", "explicacao": "País europeu fora da UE; usa o franco suíço.", "nivel": 2 },
+        { "texto": "Reino Unido", "bandeira": "gb", "cat": "fora", "explicacao": "Saiu da UE a 31 de janeiro de 2020; usa a libra.", "nivel": 2 },
+        { "texto": "Islândia", "bandeira": "is", "cat": "fora", "explicacao": "País europeu fora da UE (está no Espaço Schengen).", "nivel": 2 },
+        { "texto": "Sérvia", "bandeira": "rs", "cat": "fora", "explicacao": "País europeu candidato à adesão, mas ainda fora da UE.", "nivel": 3 },
+        { "texto": "Montenegro", "bandeira": "me", "cat": "fora", "explicacao": "Cuidado! Usa o euro, mas NÃO pertence à UE (é candidato à adesão). Usar o euro não faz de um país membro da UE.", "nivel": 3 }
+      ]
+    },
+
+    "d_linha": {
+      "selecao": { "n2": 5, "n3": 7 },
+      "itens": [
+        { "texto": "Robert Schuman propõe pôr em comum o carvão e o aço", "ano": "1950", "nivel": 2 },
+        { "texto": "Criação da Comunidade Europeia do Carvão e do Aço (CECA)", "ano": "1951", "nivel": 3 },
+        { "texto": "Tratados de Roma criam a Comunidade Económica Europeia", "ano": "1957", "nivel": 2 },
+        { "texto": "Dinamarca, Irlanda e Reino Unido aderem (primeiro alargamento)", "ano": "1973", "nivel": 2 },
+        { "texto": "Primeiras eleições diretas para o Parlamento Europeu", "ano": "1979", "nivel": 3 },
+        { "texto": "A Grécia adere às Comunidades Europeias", "ano": "1981", "nivel": 3 },
+        { "texto": "Portugal e Espanha aderem às Comunidades Europeias", "ano": "1986", "nivel": 2 },
+        { "texto": "Começa o programa Erasmus", "ano": "1987", "nivel": 2 },
+        { "texto": "Tratado de Maastricht cria a União Europeia", "ano": "1992", "nivel": 3 },
+        { "texto": "Áustria, Finlândia e Suécia aderem à UE", "ano": "1995", "nivel": 3 },
+        { "texto": "Notas e moedas de euro começam a circular", "ano": "2002", "nivel": 2 },
+        { "texto": "Dez novos países aderem, no maior alargamento de sempre", "ano": "2004", "nivel": 3 },
+        { "texto": "Assinatura do Tratado de Lisboa, nos Jerónimos", "ano": "2007", "nivel": 3 },
+        { "texto": "A UE recebe o Prémio Nobel da Paz", "ano": "2012", "nivel": 2 },
+        { "texto": "A Croácia torna-se o 28.º país da UE", "ano": "2013", "nivel": 3 },
+        { "texto": "O Reino Unido sai da União Europeia", "ano": "2020", "nivel": 2 },
+        { "texto": "A Bulgária passa a usar o euro", "ano": "2026", "nivel": 3 }
+      ]
+    },
+
+    "d_porque": {
+      "passos": [
+        {
+          "pergunta": "Em 1950, a Europa ainda recuperava da Segunda Guerra Mundial. Porque é que Robert Schuman propôs que a França e a Alemanha juntassem a produção de carvão e de aço?",
+          "opcoes": [
+            { "texto": "Para tornar uma nova guerra entre esses países praticamente impossível.", "certa": true, "feedback": "Exato! O carvão e o aço eram essenciais para fabricar armas. Ao partilhá-los e controlá-los em comum, os antigos inimigos passavam a depender uns dos outros e a cooperar." },
+            { "texto": "Para criar imediatamente uma moeda única europeia.", "feedback": "Ainda não. A moeda única (o euro) só surgiu quase 50 anos depois, em 1999. Relê a pista do jornal de 1950." },
+            { "texto": "Para que um só país passasse a governar a Europa.", "feedback": "Não. A proposta assentava na cooperação entre países que continuavam independentes. Relê a pista do jornal de 1950." }
+          ]
+        },
+        {
+          "variantes": [
+            {
+              "pergunta": "No arquivo há três frases sobre a Declaração Schuman. Qual delas é um FACTO (algo que se pode comprovar com documentos)?",
+              "opcoes": [
+                { "texto": "A Declaração Schuman foi apresentada a 9 de maio de 1950.", "certa": true, "feedback": "Certo! É um facto: está registado em documentos da época e pode ser comprovado." },
+                { "texto": "A Declaração Schuman foi o discurso mais bonito do século XX.", "feedback": "Isto é uma OPINIÃO: depende do gosto de quem fala." },
+                { "texto": "Sem a CECA, a Europa estaria hoje em guerra.", "feedback": "Isto é uma HIPÓTESE: imagina o que teria acontecido, mas não pode ser comprovado." }
+              ]
+            },
+            {
+              "pergunta": "Três frases sobre os Tratados de Roma. Qual delas é um FACTO?",
+              "opcoes": [
+                { "texto": "Os Tratados de Roma foram assinados em 1957.", "certa": true, "feedback": "Certo! É um facto: a data está registada nos próprios tratados." },
+                { "texto": "Os Tratados de Roma são o documento mais importante da história.", "feedback": "Isto é uma OPINIÃO: outras pessoas podem pensar de forma diferente." },
+                { "texto": "Se não houvesse Tratados de Roma, Portugal nunca teria entrado na UE.", "feedback": "Isto é uma HIPÓTESE: fala do que poderia ter acontecido, e isso não se pode comprovar." }
+              ]
+            },
+            {
+              "pergunta": "Três frases sobre a adesão de Portugal. Qual delas é um FACTO?",
+              "opcoes": [
+                { "texto": "Portugal entrou nas Comunidades Europeias a 1 de janeiro de 1986.", "certa": true, "feedback": "Certo! É um facto, confirmado pelos documentos oficiais." },
+                { "texto": "A adesão foi a melhor decisão de sempre da história de Portugal.", "feedback": "Isto é uma OPINIÃO: é um juízo pessoal, que pode ser discutido." },
+                { "texto": "Sem a adesão, Portugal teria hoje menos estradas e escolas.", "feedback": "Isto é uma HIPÓTESE: não sabemos o que teria acontecido sem a adesão." }
+              ]
+            },
+            {
+              "pergunta": "Três frases sobre o Prémio Nobel da Paz. Qual delas é um FACTO?",
+              "opcoes": [
+                { "texto": "A União Europeia recebeu o Prémio Nobel da Paz em 2012.", "certa": true, "feedback": "Certo! É um facto, registado pelo Comité Nobel." },
+                { "texto": "A UE merecia o prémio mais do que qualquer outra organização.", "feedback": "Isto é uma OPINIÃO: é uma avaliação pessoal." },
+                { "texto": "Sem a UE, a Europa teria tido uma terceira guerra mundial.", "feedback": "Isto é uma HIPÓTESE: ninguém pode comprovar o que teria acontecido." }
+              ]
+            }
+          ]
+        },
+        {
+          "nivel": 3, "aberta": true,
+          "pergunta": "Os historiadores apontam várias razões para o início da integração europeia. Qual te parece a mais importante? (Aqui não há uma única resposta certa: é uma interpretação.)",
+          "opcoes": [
+            { "texto": "A paz e a reconciliação entre antigos inimigos.", "feedback": "É a razão que a própria UE mais destaca na sua história. Ainda assim, os historiadores lembram que houve outras razões ao mesmo tempo." },
+            { "texto": "A reconstrução e o crescimento da economia.", "feedback": "É uma interpretação defendida por vários historiadores: cooperar ajudava a reconstruir indústrias destruídas pela guerra e a criar um mercado maior." },
+            { "texto": "O contexto da Guerra Fria, que dividia a Europa em dois blocos.", "feedback": "É uma interpretação também defendida: a divisão entre o bloco ocidental e o bloco soviético incentivou os países da Europa Ocidental a unirem-se." }
+          ]
+        }
+      ]
+    },
+
+    "d_lei": {
+      "cenarios": [
+        { "intro": "Imagina que muitos europeus querem reduzir o plástico descartável que vai parar às praias. Acompanha a viagem da lei.", "exemplo": "a diretiva europeia de 2019 sobre plásticos de utilização única" },
+        { "intro": "Imagina que muitos europeus querem usar o mesmo carregador em telemóveis e outros aparelhos, para reduzir o lixo eletrónico. Acompanha a viagem da lei.", "exemplo": "a diretiva de 2022 que tornou o USB-C o carregador comum na UE" },
+        { "intro": "Imagina que muitos europeus querem deixar de pagar mais para usar o telemóvel quando viajam noutro país da UE. Acompanha a viagem da lei.", "exemplo": "o regulamento que acabou com as tarifas de roaming dentro da UE em 2017" },
+        { "intro": "Imagina que muitos europeus querem proteger melhor os seus dados pessoais na Internet. Acompanha a viagem da lei.", "exemplo": "o Regulamento Geral sobre a Proteção de Dados (RGPD), aprovado em 2016" }
+      ],
+      "passos": [
+        {
+          "pergunta": "1.ª etapa — Que instituição apresenta a proposta de lei?",
+          "opcoes": [
+            { "texto": "A Comissão Europeia", "certa": true, "feedback": "Certo! A Comissão tem o «direito de iniciativa»: é ela que apresenta as propostas de novas leis." },
+            { "texto": "O Parlamento Europeu", "feedback": "O Parlamento pode pedir à Comissão que apresente uma proposta, mas, em regra, a proposta formal vem de outra instituição. Relê a pista do púlpito." },
+            { "texto": "O Conselho Europeu", "feedback": "O Conselho Europeu (os líderes) define orientações gerais, mas não propõe nem aprova leis. Relê a pista do púlpito." }
+          ]
+        },
+        {
+          "pergunta": "2.ª etapa — Quem discute, pode alterar e aprova a lei?",
+          "opcoes": [
+            { "texto": "O Parlamento Europeu e o Conselho da UE, em conjunto", "certa": true, "feedback": "Exato! Os representantes dos cidadãos (Parlamento) e os ministros dos governos (Conselho da UE) decidem em conjunto." },
+            { "texto": "Só a Comissão Europeia", "feedback": "A Comissão propõe, mas não decide sozinha. Relê as pistas do hemiciclo e da mesa dos ministros." },
+            { "texto": "O Banco Central Europeu", "feedback": "O BCE trata da estabilidade dos preços na área do euro; não aprova leis." }
+          ]
+        },
+        {
+          "pergunta": "3.ª etapa — A lei foi aprovada, mas um país não a cumpre. Que instituição pode decidir o caso?",
+          "opcoes": [
+            { "texto": "O Tribunal de Justiça da União Europeia", "certa": true, "feedback": "Muito bem! O Tribunal de Justiça, no Luxemburgo, garante que o direito da UE é cumprido da mesma forma em todos os países." },
+            { "texto": "O Tribunal Europeu dos Direitos Humanos", "feedback": "Cuidado: esse tribunal pertence ao Conselho da Europa (outra organização) e julga violações da Convenção Europeia dos Direitos Humanos. Relê a pista do martelo." },
+            { "texto": "O Parlamento Europeu", "feedback": "O Parlamento faz leis, mas não é um tribunal. Relê a pista do martelo." }
+          ]
+        }
+      ],
+      "explicacao": "Comissão propõe → Parlamento Europeu e Conselho da UE decidem → os países aplicam → o Tribunal de Justiça garante o cumprimento. Foi assim que nasceu, por exemplo, {exemplo}."
+    },
+
+    "d_quem": {
+      "selecao": { "n2": 5, "n3": 6 },
+      "pares": [
+        { "a": "Parlamento Europeu", "b": ["Representa os cidadãos e é eleito diretamente", "Os seus deputados são eleitos pelos cidadãos de 5 em 5 anos"], "dica": "É a única instituição eleita diretamente pelos cidadãos.", "nivel": 2 },
+        { "a": "Comissão Europeia", "b": ["Propõe leis e executa as políticas", "Tem um comissário por país e o «direito de iniciativa»"], "dica": "É ela que apresenta as propostas de lei.", "nivel": 2 },
+        { "a": "Conselho da União Europeia", "b": ["Reúne ministros dos governos e aprova leis", "Os ministros reúnem-se conforme o tema (ambiente, educação…)"], "dica": "Representa os governos dos países.", "nivel": 2 },
+        { "a": "Tribunal de Justiça da UE", "b": ["Garante o cumprimento do direito da UE", "Julga casos em que um país não cumpre as leis europeias"], "dica": "Fica no Luxemburgo.", "nivel": 2 },
+        { "a": "Banco Central Europeu", "b": ["Mantém os preços estáveis na área do euro", "Define a política monetária do euro, em Frankfurt"], "dica": "Tem a ver com o euro.", "nivel": 2 },
+        { "a": "Conselho Europeu", "b": ["Reúne os líderes e define as grandes orientações", "Junta os chefes de Estado ou de Governo nas cimeiras"], "dica": "Não aprova leis.", "nivel": 2 },
+        { "a": "Tribunal de Contas Europeu", "b": ["Verifica se o dinheiro da UE é bem gasto", "Faz auditorias às contas da UE"], "dica": "Controla as contas.", "nivel": 3 }
+      ]
+    },
+
+    "d_valores": {
+      "selecao": { "n2": 5, "n3": 7, "minPorCategoria": 1 },
+      "itens": [
+        { "texto": "Ninguém pode ser humilhado nem sujeito a tratamentos cruéis.", "cat": "dignidade", "explicacao": "A dignidade humana é inviolável: é a base de todos os direitos.", "nivel": 2 },
+        { "texto": "Num hospital, cada doente é tratado com respeito, seja quem for.", "cat": "dignidade", "explicacao": "Respeitar cada pessoa como ser humano é respeitar a sua dignidade.", "nivel": 2 },
+        { "texto": "A tortura é proibida em qualquer circunstância.", "cat": "dignidade", "explicacao": "A proibição da tortura protege a dignidade humana.", "nivel": 3 },
+        { "texto": "Podes dar a tua opinião no jornal da escola, com respeito pelos outros.", "cat": "liberdade", "explicacao": "Liberdade de expressão.", "nivel": 2 },
+        { "texto": "Cada pessoa pode seguir a religião que quiser, ou nenhuma.", "cat": "liberdade", "explicacao": "Liberdade de pensamento e de religião.", "nivel": 2 },
+        { "texto": "Uma família muda-se de Portugal para a Bélgica para viver e trabalhar, sem precisar de autorização especial.", "cat": "liberdade", "explicacao": "Liberdade de circulação dos cidadãos da UE.", "nivel": 3 },
+        { "texto": "Os alunos podem reunir-se pacificamente para defender uma causa.", "cat": "liberdade", "explicacao": "Liberdade de reunião.", "nivel": 3 },
+        { "texto": "A turma elege o delegado por voto secreto.", "cat": "democracia", "explicacao": "Escolher representantes através do voto é democracia.", "nivel": 2 },
+        { "texto": "A assembleia da escola vota uma proposta e respeita a decisão da maioria.", "cat": "democracia", "explicacao": "Decidir por votação, respeitando a maioria (e os direitos de todos), é democracia.", "nivel": 2 },
+        { "texto": "Nas eleições europeias, os cidadãos escolhem os deputados do Parlamento Europeu.", "cat": "democracia", "explicacao": "Democracia representativa ao nível europeu.", "nivel": 3 },
+        { "texto": "Uma mulher e um homem que fazem o mesmo trabalho recebem o mesmo salário.", "cat": "igualdade", "explicacao": "Igualdade entre mulheres e homens: salário igual para trabalho igual.", "nivel": 2 },
+        { "texto": "Uma escola não pode recusar um aluno por causa da sua religião ou da sua origem.", "cat": "igualdade", "explicacao": "Igualdade e proibição da discriminação.", "nivel": 2 },
+        { "texto": "Uma pessoa com deficiência concorre a um emprego nas mesmas condições, com as adaptações necessárias.", "cat": "igualdade", "explicacao": "Igualdade de oportunidades e não discriminação.", "nivel": 3 },
+        { "texto": "Um tribunal independente resolve um conflito aplicando a lei, e todos têm de a respeitar.", "cat": "direito", "explicacao": "Estado de direito: ninguém está acima da lei e os tribunais são independentes.", "nivel": 2 },
+        { "texto": "Um ministro que desrespeite a lei também pode ser julgado.", "cat": "direito", "explicacao": "Estado de direito: a lei aplica-se a todos, incluindo quem governa.", "nivel": 2 },
+        { "texto": "Antes de aplicar uma multa, a autoridade tem de seguir as regras previstas na lei.", "cat": "direito", "explicacao": "Estado de direito: o poder público também está sujeito à lei.", "nivel": 3 }
+      ]
+    },
+
+    "d_docs": {
+      "selecao": { "n2": 5, "n3": 7, "minPorCategoria": 1 },
+      "itens": [
+        { "texto": "Declaração Universal dos Direitos Humanos (1948)", "cat": "onu", "explicacao": "Aprovada pela Assembleia Geral da ONU, em Paris, em 1948.", "nivel": 2 },
+        { "texto": "Convenção sobre os Direitos da Criança (1989)", "cat": "onu", "explicacao": "Tratado aprovado pela Assembleia Geral da ONU em 1989.", "nivel": 2 },
+        { "texto": "Assembleia Geral, que reúne quase todos os países do mundo", "cat": "onu", "explicacao": "Órgão principal da ONU.", "nivel": 3 },
+        { "texto": "Convenção Europeia dos Direitos Humanos (1950)", "cat": "coe", "explicacao": "Criada pelo Conselho da Europa.", "nivel": 2 },
+        { "texto": "Tribunal Europeu dos Direitos Humanos (Estrasburgo)", "cat": "coe", "explicacao": "Protege a Convenção Europeia dos Direitos Humanos; pertence ao Conselho da Europa.", "nivel": 2 },
+        { "texto": "Organização com 46 Estados-membros, criada em 1949", "cat": "coe", "explicacao": "É o Conselho da Europa — tem mais países do que a UE.", "nivel": 3 },
+        { "texto": "Carta dos Direitos Fundamentais (2000)", "cat": "ue", "explicacao": "É a carta de direitos da UE, obrigatória desde 2009.", "nivel": 2 },
+        { "texto": "Parlamento Europeu, eleito pelos cidadãos de 27 países", "cat": "ue", "explicacao": "Instituição da UE.", "nivel": 2 },
+        { "texto": "Tribunal de Justiça (Luxemburgo)", "cat": "ue", "explicacao": "Instituição da UE.", "nivel": 3 },
+        { "texto": "Lema «Unida na diversidade»", "cat": "ue", "explicacao": "É o lema da União Europeia, desde 2000.", "nivel": 3 }
+      ]
+    },
+
+    "d_patrimonio": {
+      "selecao": { "n2": 5, "n3": 7, "minPorCategoria": 2 },
+      "itens": [
+        { "texto": "Mosteiro dos Jerónimos e Torre de Belém (Lisboa)", "cat": "cultural", "explicacao": "Monumentos do século XVI. Património Mundial desde 1983.", "nivel": 2 },
+        { "texto": "Mosteiro da Batalha", "cat": "cultural", "explicacao": "Mosteiro gótico. Património Mundial desde 1983.", "nivel": 2 },
+        { "texto": "Centro Histórico do Porto", "cat": "cultural", "explicacao": "Conjunto urbano construído pelo ser humano. Património Mundial desde 1996.", "nivel": 2 },
+        { "texto": "Centro Histórico de Guimarães", "cat": "cultural", "explicacao": "Património Mundial desde 2001.", "nivel": 2 },
+        { "texto": "Universidade de Coimbra", "cat": "cultural", "explicacao": "Património Mundial desde 2013.", "nivel": 2 },
+        { "texto": "Centro Histórico de Évora", "cat": "cultural", "explicacao": "Património Mundial desde 1986.", "nivel": 3 },
+        { "texto": "Arte rupestre do Vale do Côa", "cat": "cultural", "explicacao": "Gravuras feitas por seres humanos há milhares de anos. Património Mundial desde 1998.", "nivel": 3 },
+        { "texto": "Alto Douro Vinhateiro", "cat": "cultural", "explicacao": "Cuidado! Parece natural, mas é uma «paisagem cultural»: as encostas em socalcos foram transformadas pelo trabalho humano. Património Mundial desde 2001.", "nivel": 2 },
+        { "texto": "Paisagem da vinha da Ilha do Pico (Açores)", "cat": "cultural", "explicacao": "Paisagem cultural: muros de pedra construídos para proteger as vinhas. Património Mundial desde 2004.", "nivel": 3 },
+        { "texto": "Acrópole de Atenas (Grécia)", "cat": "cultural", "explicacao": "Conjunto de templos da Grécia Antiga. Património Mundial desde 1987.", "nivel": 2 },
+        { "texto": "Alhambra de Granada (Espanha)", "cat": "cultural", "explicacao": "Palácio e fortaleza de época muçulmana. Património Mundial desde 1984.", "nivel": 3 },
+        { "texto": "Floresta Laurissilva (Madeira)", "cat": "natural", "explicacao": "Floresta formada pela natureza. Património Mundial desde 1999.", "nivel": 2 },
+        { "texto": "Dolomitas (Itália)", "cat": "natural", "explicacao": "Montanhas formadas pela natureza. Património Mundial desde 2009.", "nivel": 2 },
+        { "texto": "Lagos de Plitvice (Croácia)", "cat": "natural", "explicacao": "Lagos e cascatas formados pela natureza. Património Mundial desde 1979.", "nivel": 2 },
+        { "texto": "Parque Nacional do Teide (Canárias, Espanha)", "cat": "natural", "explicacao": "Vulcão e paisagem vulcânica. Património Mundial desde 2007.", "nivel": 2 },
+        { "texto": "Mar de Wadden (Países Baixos, Alemanha e Dinamarca)", "cat": "natural", "explicacao": "Zona costeira partilhada por três países — exemplo de proteção em cooperação. Património Mundial desde 2009 (alargado à parte dinamarquesa em 2014).", "nivel": 3 },
+        { "texto": "Grutas de Aggtelek e do Carso Eslovaco (Hungria e Eslováquia)", "cat": "natural", "explicacao": "Grutas partilhadas por dois países. Património Mundial desde 1995.", "nivel": 3 },
+        { "texto": "Delta do Danúbio (Roménia)", "cat": "natural", "explicacao": "Zona húmida onde o rio Danúbio chega ao mar Negro. Património Mundial desde 1991.", "nivel": 3 }
+      ]
+    },
+
+    "d_rio": {
+      "cenarios": [
+        { "rio": "Douro", "chegada": "ao Porto" },
+        { "rio": "Tejo", "chegada": "a Lisboa" },
+        { "rio": "Guadiana", "chegada": "a Vila Real de Santo António" },
+        { "rio": "Minho", "chegada": "a Caminha" }
+      ],
+      "passos": [
+        {
+          "pergunta": "Uma descarga poluente no rio {rio}, em Espanha, chega dias depois {chegada}. Qual é a melhor solução a longo prazo?",
+          "opcoes": [
+            { "texto": "Portugal e Espanha cooperam, com regras e vigilância comuns para o rio.", "certa": true, "feedback": "Certo! O {rio} nasce em Espanha e só depois chega a Portugal: os rios não param nas fronteiras. Por isso, Portugal e Espanha têm a Convenção de Albufeira (1998) para gerir em conjunto os rios que partilham." },
+            { "texto": "Portugal limpa a água sozinho quando ela chega {chegada}.", "feedback": "Isso só trata as consequências e não evita novas descargas. Pensa numa solução que envolva os dois países." },
+            { "texto": "Fechar a fronteira entre Portugal e Espanha.", "feedback": "A água não para nas fronteiras! Fechá-las não resolveria o problema. Relê a pista do mapa do rio." }
+          ]
+        },
+        {
+          "pergunta": "A poluição do ar e as alterações climáticas também não param nas fronteiras. Porque faz sentido a UE ter regras comuns, como a Lei Europeia do Clima?",
+          "opcoes": [
+            { "texto": "Porque os problemas são partilhados e as soluções funcionam melhor em conjunto.", "certa": true, "feedback": "Exatamente: chama-se interdependência. O que um país faz afeta os outros, por isso cooperar torna as soluções mais eficazes." },
+            { "texto": "Porque assim cada país deixa de ter responsabilidades.", "feedback": "Pelo contrário: as regras comuns dão responsabilidades a todos os países. Relê a pista do painel solar." },
+            { "texto": "Porque os problemas ambientais só afetam alguns países.", "feedback": "As alterações climáticas afetam todos os países, ainda que de formas diferentes." }
+          ]
+        },
+        {
+          "aberta": true,
+          "pergunta": "O teu Clube Europeu quer agir. Que ação propões primeiro? (Todas são válidas: escolhe e pensa como a justificarias.)",
+          "opcoes": [
+            { "texto": "Uma campanha na escola para reduzir o plástico e reciclar mais.", "feedback": "Boa escolha! Ações locais somadas fazem diferença. Podes partilhar os resultados com outras escolas." },
+            { "texto": "Um projeto com uma escola de outro país europeu sobre o ambiente.", "feedback": "Boa escolha! Cooperar com outra escola ajuda a comparar problemas e soluções — é cidadania europeia em ação." },
+            { "texto": "Uma ação de limpeza de uma margem de um rio, acompanhada por adultos.", "feedback": "Boa escolha! Cuidar do património natural perto da escola é uma forma concreta de responsabilidade — sempre com segurança e autorização." }
+          ]
+        }
+      ]
+    }
+  }
+}

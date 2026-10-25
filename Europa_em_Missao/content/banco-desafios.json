@@ -1,0 +1,3264 @@
+{
+  "schemaVersion": 2,
+  "language": "pt-PT",
+  "title": "Europa em Missão — Banco de desafios",
+  "sources": [
+    [
+      "DGE · Clubes Europeus",
+      "https://dge.mec.pt/clubes-europeus",
+      "Apresentação e ligações da Rede Nacional"
+    ],
+    [
+      "DGE · Linhas Orientadoras",
+      "https://dge.mec.pt/sites/default/files/DSPE/Clubes_Europeus/linhas_orientadoras_para_o_funcionamento_dos_clubes_europeus.pdf",
+      "Página 1, ponto 6: objetivos; página 2, ponto 7: métodos"
+    ],
+    [
+      "União Europeia · Princípios, países, história",
+      "https://european-union.europa.eu/principles-countries-history_pt",
+      "Princípios e valores; países; história; símbolos"
+    ],
+    [
+      "União Europeia · Países da UE",
+      "https://european-union.europa.eu/principles-countries-history/eu-countries_pt",
+      "Lista de países e respetivas bandeiras"
+    ],
+    [
+      "União Europeia · Tipos de instituições",
+      "https://european-union.europa.eu/institutions-law-budget/institutions-and-bodies/types-institutions-and-bodies_pt",
+      "Instituições: Parlamento, Comissão, Conselho da UE e Conselho Europeu"
+    ],
+    [
+      "Conselho da Europa · Como distinguir-nos",
+      "https://www.coe.int/pt/web/about-us/do-not-get-confused",
+      "Conselho da Europa, Conselho Europeu e Declaração Universal"
+    ],
+    [
+      "União Europeia · História 1945–1959",
+      "https://european-union.europa.eu/principles-countries-history/history-eu/1945-59_pt",
+      "5 de maio de 1949; 9 de maio de 1950; 25 de março de 1957"
+    ],
+    [
+      "União Europeia · História 1980–1989",
+      "https://european-union.europa.eu/principles-countries-history/history-eu/1980-89_pt",
+      "1 de janeiro de 1986: adesão de Portugal e Espanha"
+    ],
+    [
+      "ONU / UNRIC · Declaração Universal dos Direitos Humanos",
+      "https://unric.org/pt/declaracao-universal-dos-direitos-humanos/",
+      "Artigos 1.º, 2.º, 19.º, 26.º e 27.º"
+    ],
+    [
+      "União Europeia · Bandeira europeia",
+      "https://european-union.europa.eu/principles-countries-history/symbols/european-flag_pt",
+      "Simbolismo e história"
+    ],
+    [
+      "Parlamento Europeu · Legislatura 2024–2029",
+      "https://www.europarl.europa.eu/topics/pt/article/20180126STO94114/2024-2029-european-parliament-how-many-meps-per-country",
+      "Composição: 720 lugares; correção do dado desatualizado na página do Conselho da Europa"
+    ],
+    [
+      "UE · Países da UE (continuação)",
+      "https://european-union.europa.eu/principles-countries-history/eu-countries_pt?page=1",
+      "Lista complementar: Luxemburgo a Suécia; usar a lista de membros e as bandeiras, não os dados monetários"
+    ],
+    [
+      "Conselho da Europa · Estados-Membros",
+      "https://www.coe.int/pt/web/about-us/our-member-states",
+      "Lista dos Estados-Membros; distinção entre a pertença ao Conselho da Europa e à UE"
+    ],
+    [
+      "Flagpedia / FlagCDN · Imagens das bandeiras",
+      "https://flagcdn.com/",
+      "Ficheiros PNG locais provenientes de reproduções baseadas no Wikimedia Commons; conferir as bandeiras nas páginas de países da UE"
+    ]
+  ],
+  "countries": [
+    {
+      "code": "de",
+      "name": "Alemanha",
+      "description": "Três faixas horizontais: preto, vermelho e amarelo.",
+      "flag": "assets/flags/de.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "at",
+      "name": "Áustria",
+      "description": "Três faixas horizontais: vermelho, branco e vermelho.",
+      "flag": "assets/flags/at.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "be",
+      "name": "Bélgica",
+      "description": "Três faixas verticais: preto, amarelo e vermelho.",
+      "flag": "assets/flags/be.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "bg",
+      "name": "Bulgária",
+      "description": "Três faixas horizontais: branco, verde e vermelho.",
+      "flag": "assets/flags/bg.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "cz",
+      "name": "Chéquia",
+      "description": "Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste.",
+      "flag": "assets/flags/cz.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "cy",
+      "name": "Chipre",
+      "description": "Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes.",
+      "flag": "assets/flags/cy.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "hr",
+      "name": "Croácia",
+      "description": "Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro.",
+      "flag": "assets/flags/hr.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "dk",
+      "name": "Dinamarca",
+      "description": "Fundo vermelho com uma cruz nórdica branca.",
+      "flag": "assets/flags/dk.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "sk",
+      "name": "Eslováquia",
+      "description": "Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla.",
+      "flag": "assets/flags/sk.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "si",
+      "name": "Eslovénia",
+      "description": "Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha.",
+      "flag": "assets/flags/si.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "es",
+      "name": "Espanha",
+      "description": "Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga.",
+      "flag": "assets/flags/es.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "ee",
+      "name": "Estónia",
+      "description": "Três faixas horizontais: azul, preto e branco.",
+      "flag": "assets/flags/ee.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "fi",
+      "name": "Finlândia",
+      "description": "Fundo branco com uma cruz nórdica azul.",
+      "flag": "assets/flags/fi.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "fr",
+      "name": "França",
+      "description": "Três faixas verticais: azul, branco e vermelho.",
+      "flag": "assets/flags/fr.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "gr",
+      "name": "Grécia",
+      "description": "Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste.",
+      "flag": "assets/flags/gr.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "hu",
+      "name": "Hungria",
+      "description": "Três faixas horizontais: vermelho, branco e verde.",
+      "flag": "assets/flags/hu.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "ie",
+      "name": "Irlanda",
+      "description": "Três faixas verticais: verde, branco e laranja.",
+      "flag": "assets/flags/ie.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "it",
+      "name": "Itália",
+      "description": "Três faixas verticais: verde, branco e vermelho.",
+      "flag": "assets/flags/it.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "lv",
+      "name": "Letónia",
+      "description": "Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita.",
+      "flag": "assets/flags/lv.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "lt",
+      "name": "Lituânia",
+      "description": "Três faixas horizontais: amarelo, verde e vermelho.",
+      "flag": "assets/flags/lt.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "lu",
+      "name": "Luxemburgo",
+      "description": "Três faixas horizontais: vermelho, branco e azul-claro.",
+      "flag": "assets/flags/lu.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "mt",
+      "name": "Malta",
+      "description": "Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste.",
+      "flag": "assets/flags/mt.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "nl",
+      "name": "Países Baixos",
+      "description": "Três faixas horizontais: vermelho, branco e azul-escuro.",
+      "flag": "assets/flags/nl.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "pl",
+      "name": "Polónia",
+      "description": "Duas faixas horizontais: branco e vermelho.",
+      "flag": "assets/flags/pl.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "pt",
+      "name": "Portugal",
+      "description": "Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas.",
+      "flag": "assets/flags/pt.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "ro",
+      "name": "Roménia",
+      "description": "Três faixas verticais: azul, amarelo e vermelho.",
+      "flag": "assets/flags/ro.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    },
+    {
+      "code": "se",
+      "name": "Suécia",
+      "description": "Fundo azul com uma cruz nórdica amarela.",
+      "flag": "assets/flags/se.png",
+      "eu": true,
+      "refs": [
+        3,
+        11
+      ]
+    }
+  ],
+  "missions": [
+    {
+      "name": "Ateliê das Bandeiras",
+      "short": "Diversidade e pertença",
+      "x": 175,
+      "y": 170,
+      "color": "#c97848",
+      "icon": "⚑",
+      "learn": "Reconhecer bandeiras e distinguir a Europa da União Europeia.",
+      "clue": "A Europa e a União Europeia não são equivalentes. Consulta a pista específica deste desafio para observar símbolos e comparar países.",
+      "refs": [
+        3
+      ],
+      "id": "m1",
+      "slots": [
+        {
+          "id": "s1",
+          "advanced": false,
+          "variants": [
+            {
+              "id": "bandeiras-de",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Alemanha: Três faixas horizontais: preto, vermelho e amarelo. | Áustria: Três faixas horizontais: vermelho, branco e vermelho. | Dinamarca: Fundo vermelho com uma cruz nórdica branca.",
+              "explain": "As bandeiras deste conjunto identificam Alemanha, Áustria, Dinamarca. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: preto, vermelho e amarelo.",
+                  "Alemanha"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e vermelho.",
+                  "Áustria"
+                ],
+                [
+                  "Fundo vermelho com uma cruz nórdica branca.",
+                  "Dinamarca"
+                ]
+              ],
+              "options": [
+                "Alemanha",
+                "Áustria",
+                "Dinamarca"
+              ],
+              "flags": [
+                "de",
+                "at",
+                "dk"
+              ]
+            },
+            {
+              "id": "bandeiras-at",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Áustria: Três faixas horizontais: vermelho, branco e vermelho. | Bélgica: Três faixas verticais: preto, amarelo e vermelho. | Eslováquia: Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla.",
+              "explain": "As bandeiras deste conjunto identificam Áustria, Bélgica, Eslováquia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: vermelho, branco e vermelho.",
+                  "Áustria"
+                ],
+                [
+                  "Três faixas verticais: preto, amarelo e vermelho.",
+                  "Bélgica"
+                ],
+                [
+                  "Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla.",
+                  "Eslováquia"
+                ]
+              ],
+              "options": [
+                "Áustria",
+                "Bélgica",
+                "Eslováquia"
+              ],
+              "flags": [
+                "at",
+                "be",
+                "sk"
+              ]
+            },
+            {
+              "id": "bandeiras-be",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Bélgica: Três faixas verticais: preto, amarelo e vermelho. | Bulgária: Três faixas horizontais: branco, verde e vermelho. | Eslovénia: Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha.",
+              "explain": "As bandeiras deste conjunto identificam Bélgica, Bulgária, Eslovénia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas verticais: preto, amarelo e vermelho.",
+                  "Bélgica"
+                ],
+                [
+                  "Três faixas horizontais: branco, verde e vermelho.",
+                  "Bulgária"
+                ],
+                [
+                  "Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha.",
+                  "Eslovénia"
+                ]
+              ],
+              "options": [
+                "Bélgica",
+                "Bulgária",
+                "Eslovénia"
+              ],
+              "flags": [
+                "be",
+                "bg",
+                "si"
+              ]
+            },
+            {
+              "id": "bandeiras-bg",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Bulgária: Três faixas horizontais: branco, verde e vermelho. | Chéquia: Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste. | Espanha: Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga.",
+              "explain": "As bandeiras deste conjunto identificam Bulgária, Chéquia, Espanha. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: branco, verde e vermelho.",
+                  "Bulgária"
+                ],
+                [
+                  "Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste.",
+                  "Chéquia"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga.",
+                  "Espanha"
+                ]
+              ],
+              "options": [
+                "Bulgária",
+                "Chéquia",
+                "Espanha"
+              ],
+              "flags": [
+                "bg",
+                "cz",
+                "es"
+              ]
+            },
+            {
+              "id": "bandeiras-cz",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Chéquia: Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste. | Chipre: Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes. | Estónia: Três faixas horizontais: azul, preto e branco.",
+              "explain": "As bandeiras deste conjunto identificam Chéquia, Chipre, Estónia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste.",
+                  "Chéquia"
+                ],
+                [
+                  "Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes.",
+                  "Chipre"
+                ],
+                [
+                  "Três faixas horizontais: azul, preto e branco.",
+                  "Estónia"
+                ]
+              ],
+              "options": [
+                "Chéquia",
+                "Chipre",
+                "Estónia"
+              ],
+              "flags": [
+                "cz",
+                "cy",
+                "ee"
+              ]
+            },
+            {
+              "id": "bandeiras-cy",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Chipre: Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes. | Croácia: Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro. | Finlândia: Fundo branco com uma cruz nórdica azul.",
+              "explain": "As bandeiras deste conjunto identificam Chipre, Croácia, Finlândia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes.",
+                  "Chipre"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro.",
+                  "Croácia"
+                ],
+                [
+                  "Fundo branco com uma cruz nórdica azul.",
+                  "Finlândia"
+                ]
+              ],
+              "options": [
+                "Chipre",
+                "Croácia",
+                "Finlândia"
+              ],
+              "flags": [
+                "cy",
+                "hr",
+                "fi"
+              ]
+            },
+            {
+              "id": "bandeiras-hr",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Croácia: Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro. | Dinamarca: Fundo vermelho com uma cruz nórdica branca. | França: Três faixas verticais: azul, branco e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Croácia, Dinamarca, França. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro.",
+                  "Croácia"
+                ],
+                [
+                  "Fundo vermelho com uma cruz nórdica branca.",
+                  "Dinamarca"
+                ],
+                [
+                  "Três faixas verticais: azul, branco e vermelho.",
+                  "França"
+                ]
+              ],
+              "options": [
+                "Croácia",
+                "Dinamarca",
+                "França"
+              ],
+              "flags": [
+                "hr",
+                "dk",
+                "fr"
+              ]
+            },
+            {
+              "id": "bandeiras-dk",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Dinamarca: Fundo vermelho com uma cruz nórdica branca. | Eslováquia: Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla. | Grécia: Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste.",
+              "explain": "As bandeiras deste conjunto identificam Dinamarca, Eslováquia, Grécia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Fundo vermelho com uma cruz nórdica branca.",
+                  "Dinamarca"
+                ],
+                [
+                  "Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla.",
+                  "Eslováquia"
+                ],
+                [
+                  "Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste.",
+                  "Grécia"
+                ]
+              ],
+              "options": [
+                "Dinamarca",
+                "Eslováquia",
+                "Grécia"
+              ],
+              "flags": [
+                "dk",
+                "sk",
+                "gr"
+              ]
+            },
+            {
+              "id": "bandeiras-sk",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Eslováquia: Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla. | Eslovénia: Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha. | Hungria: Três faixas horizontais: vermelho, branco e verde.",
+              "explain": "As bandeiras deste conjunto identificam Eslováquia, Eslovénia, Hungria. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: branco, azul e vermelho, com um escudo de cruz dupla.",
+                  "Eslováquia"
+                ],
+                [
+                  "Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha.",
+                  "Eslovénia"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e verde.",
+                  "Hungria"
+                ]
+              ],
+              "options": [
+                "Eslováquia",
+                "Eslovénia",
+                "Hungria"
+              ],
+              "flags": [
+                "sk",
+                "si",
+                "hu"
+              ]
+            },
+            {
+              "id": "bandeiras-si",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Eslovénia: Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha. | Espanha: Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga. | Irlanda: Três faixas verticais: verde, branco e laranja.",
+              "explain": "As bandeiras deste conjunto identificam Eslovénia, Espanha, Irlanda. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: branco, azul e vermelho, com um brasão que inclui uma montanha.",
+                  "Eslovénia"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga.",
+                  "Espanha"
+                ],
+                [
+                  "Três faixas verticais: verde, branco e laranja.",
+                  "Irlanda"
+                ]
+              ],
+              "options": [
+                "Eslovénia",
+                "Espanha",
+                "Irlanda"
+              ],
+              "flags": [
+                "si",
+                "es",
+                "ie"
+              ]
+            },
+            {
+              "id": "bandeiras-es",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Espanha: Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga. | Estónia: Três faixas horizontais: azul, preto e branco. | Itália: Três faixas verticais: verde, branco e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Espanha, Estónia, Itália. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: vermelho, amarelo e vermelho, com brasão na faixa amarela, mais larga.",
+                  "Espanha"
+                ],
+                [
+                  "Três faixas horizontais: azul, preto e branco.",
+                  "Estónia"
+                ],
+                [
+                  "Três faixas verticais: verde, branco e vermelho.",
+                  "Itália"
+                ]
+              ],
+              "options": [
+                "Espanha",
+                "Estónia",
+                "Itália"
+              ],
+              "flags": [
+                "es",
+                "ee",
+                "it"
+              ]
+            },
+            {
+              "id": "bandeiras-ee",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Estónia: Três faixas horizontais: azul, preto e branco. | Finlândia: Fundo branco com uma cruz nórdica azul. | Letónia: Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita.",
+              "explain": "As bandeiras deste conjunto identificam Estónia, Finlândia, Letónia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: azul, preto e branco.",
+                  "Estónia"
+                ],
+                [
+                  "Fundo branco com uma cruz nórdica azul.",
+                  "Finlândia"
+                ],
+                [
+                  "Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita.",
+                  "Letónia"
+                ]
+              ],
+              "options": [
+                "Estónia",
+                "Finlândia",
+                "Letónia"
+              ],
+              "flags": [
+                "ee",
+                "fi",
+                "lv"
+              ]
+            },
+            {
+              "id": "bandeiras-fi",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Finlândia: Fundo branco com uma cruz nórdica azul. | França: Três faixas verticais: azul, branco e vermelho. | Lituânia: Três faixas horizontais: amarelo, verde e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Finlândia, França, Lituânia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Fundo branco com uma cruz nórdica azul.",
+                  "Finlândia"
+                ],
+                [
+                  "Três faixas verticais: azul, branco e vermelho.",
+                  "França"
+                ],
+                [
+                  "Três faixas horizontais: amarelo, verde e vermelho.",
+                  "Lituânia"
+                ]
+              ],
+              "options": [
+                "Finlândia",
+                "França",
+                "Lituânia"
+              ],
+              "flags": [
+                "fi",
+                "fr",
+                "lt"
+              ]
+            },
+            {
+              "id": "bandeiras-fr",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: França: Três faixas verticais: azul, branco e vermelho. | Grécia: Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste. | Luxemburgo: Três faixas horizontais: vermelho, branco e azul-claro.",
+              "explain": "As bandeiras deste conjunto identificam França, Grécia, Luxemburgo. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas verticais: azul, branco e vermelho.",
+                  "França"
+                ],
+                [
+                  "Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste.",
+                  "Grécia"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e azul-claro.",
+                  "Luxemburgo"
+                ]
+              ],
+              "options": [
+                "França",
+                "Grécia",
+                "Luxemburgo"
+              ],
+              "flags": [
+                "fr",
+                "gr",
+                "lu"
+              ]
+            },
+            {
+              "id": "bandeiras-gr",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Grécia: Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste. | Hungria: Três faixas horizontais: vermelho, branco e verde. | Malta: Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste.",
+              "explain": "As bandeiras deste conjunto identificam Grécia, Hungria, Malta. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Nove faixas horizontais azuis e brancas, com uma cruz branca num quadrado azul junto à haste.",
+                  "Grécia"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e verde.",
+                  "Hungria"
+                ],
+                [
+                  "Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste.",
+                  "Malta"
+                ]
+              ],
+              "options": [
+                "Grécia",
+                "Hungria",
+                "Malta"
+              ],
+              "flags": [
+                "gr",
+                "hu",
+                "mt"
+              ]
+            },
+            {
+              "id": "bandeiras-hu",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Hungria: Três faixas horizontais: vermelho, branco e verde. | Irlanda: Três faixas verticais: verde, branco e laranja. | Países Baixos: Três faixas horizontais: vermelho, branco e azul-escuro.",
+              "explain": "As bandeiras deste conjunto identificam Hungria, Irlanda, Países Baixos. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: vermelho, branco e verde.",
+                  "Hungria"
+                ],
+                [
+                  "Três faixas verticais: verde, branco e laranja.",
+                  "Irlanda"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e azul-escuro.",
+                  "Países Baixos"
+                ]
+              ],
+              "options": [
+                "Hungria",
+                "Irlanda",
+                "Países Baixos"
+              ],
+              "flags": [
+                "hu",
+                "ie",
+                "nl"
+              ]
+            },
+            {
+              "id": "bandeiras-ie",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Irlanda: Três faixas verticais: verde, branco e laranja. | Itália: Três faixas verticais: verde, branco e vermelho. | Polónia: Duas faixas horizontais: branco e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Irlanda, Itália, Polónia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas verticais: verde, branco e laranja.",
+                  "Irlanda"
+                ],
+                [
+                  "Três faixas verticais: verde, branco e vermelho.",
+                  "Itália"
+                ],
+                [
+                  "Duas faixas horizontais: branco e vermelho.",
+                  "Polónia"
+                ]
+              ],
+              "options": [
+                "Irlanda",
+                "Itália",
+                "Polónia"
+              ],
+              "flags": [
+                "ie",
+                "it",
+                "pl"
+              ]
+            },
+            {
+              "id": "bandeiras-it",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Itália: Três faixas verticais: verde, branco e vermelho. | Letónia: Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita. | Portugal: Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas.",
+              "explain": "As bandeiras deste conjunto identificam Itália, Letónia, Portugal. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas verticais: verde, branco e vermelho.",
+                  "Itália"
+                ],
+                [
+                  "Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita.",
+                  "Letónia"
+                ],
+                [
+                  "Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas.",
+                  "Portugal"
+                ]
+              ],
+              "options": [
+                "Itália",
+                "Letónia",
+                "Portugal"
+              ],
+              "flags": [
+                "it",
+                "lv",
+                "pt"
+              ]
+            },
+            {
+              "id": "bandeiras-lv",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Letónia: Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita. | Lituânia: Três faixas horizontais: amarelo, verde e vermelho. | Roménia: Três faixas verticais: azul, amarelo e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Letónia, Lituânia, Roménia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Duas faixas vermelho-escuras separadas por uma faixa branca mais estreita.",
+                  "Letónia"
+                ],
+                [
+                  "Três faixas horizontais: amarelo, verde e vermelho.",
+                  "Lituânia"
+                ],
+                [
+                  "Três faixas verticais: azul, amarelo e vermelho.",
+                  "Roménia"
+                ]
+              ],
+              "options": [
+                "Letónia",
+                "Lituânia",
+                "Roménia"
+              ],
+              "flags": [
+                "lv",
+                "lt",
+                "ro"
+              ]
+            },
+            {
+              "id": "bandeiras-lt",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Lituânia: Três faixas horizontais: amarelo, verde e vermelho. | Luxemburgo: Três faixas horizontais: vermelho, branco e azul-claro. | Suécia: Fundo azul com uma cruz nórdica amarela.",
+              "explain": "As bandeiras deste conjunto identificam Lituânia, Luxemburgo, Suécia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: amarelo, verde e vermelho.",
+                  "Lituânia"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e azul-claro.",
+                  "Luxemburgo"
+                ],
+                [
+                  "Fundo azul com uma cruz nórdica amarela.",
+                  "Suécia"
+                ]
+              ],
+              "options": [
+                "Lituânia",
+                "Luxemburgo",
+                "Suécia"
+              ],
+              "flags": [
+                "lt",
+                "lu",
+                "se"
+              ]
+            },
+            {
+              "id": "bandeiras-lu",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Luxemburgo: Três faixas horizontais: vermelho, branco e azul-claro. | Malta: Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste. | Alemanha: Três faixas horizontais: preto, vermelho e amarelo.",
+              "explain": "As bandeiras deste conjunto identificam Luxemburgo, Malta, Alemanha. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: vermelho, branco e azul-claro.",
+                  "Luxemburgo"
+                ],
+                [
+                  "Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste.",
+                  "Malta"
+                ],
+                [
+                  "Três faixas horizontais: preto, vermelho e amarelo.",
+                  "Alemanha"
+                ]
+              ],
+              "options": [
+                "Luxemburgo",
+                "Malta",
+                "Alemanha"
+              ],
+              "flags": [
+                "lu",
+                "mt",
+                "de"
+              ]
+            },
+            {
+              "id": "bandeiras-mt",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Malta: Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste. | Países Baixos: Três faixas horizontais: vermelho, branco e azul-escuro. | Áustria: Três faixas horizontais: vermelho, branco e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Malta, Países Baixos, Áustria. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Duas faixas verticais: branco e vermelho, com a Cruz de Jorge no canto superior junto à haste.",
+                  "Malta"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e azul-escuro.",
+                  "Países Baixos"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e vermelho.",
+                  "Áustria"
+                ]
+              ],
+              "options": [
+                "Malta",
+                "Países Baixos",
+                "Áustria"
+              ],
+              "flags": [
+                "mt",
+                "nl",
+                "at"
+              ]
+            },
+            {
+              "id": "bandeiras-nl",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Países Baixos: Três faixas horizontais: vermelho, branco e azul-escuro. | Polónia: Duas faixas horizontais: branco e vermelho. | Bélgica: Três faixas verticais: preto, amarelo e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Países Baixos, Polónia, Bélgica. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas horizontais: vermelho, branco e azul-escuro.",
+                  "Países Baixos"
+                ],
+                [
+                  "Duas faixas horizontais: branco e vermelho.",
+                  "Polónia"
+                ],
+                [
+                  "Três faixas verticais: preto, amarelo e vermelho.",
+                  "Bélgica"
+                ]
+              ],
+              "options": [
+                "Países Baixos",
+                "Polónia",
+                "Bélgica"
+              ],
+              "flags": [
+                "nl",
+                "pl",
+                "be"
+              ]
+            },
+            {
+              "id": "bandeiras-pl",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Polónia: Duas faixas horizontais: branco e vermelho. | Portugal: Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas. | Bulgária: Três faixas horizontais: branco, verde e vermelho.",
+              "explain": "As bandeiras deste conjunto identificam Polónia, Portugal, Bulgária. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Duas faixas horizontais: branco e vermelho.",
+                  "Polónia"
+                ],
+                [
+                  "Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas.",
+                  "Portugal"
+                ],
+                [
+                  "Três faixas horizontais: branco, verde e vermelho.",
+                  "Bulgária"
+                ]
+              ],
+              "options": [
+                "Polónia",
+                "Portugal",
+                "Bulgária"
+              ],
+              "flags": [
+                "pl",
+                "pt",
+                "bg"
+              ]
+            },
+            {
+              "id": "bandeiras-pt",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Portugal: Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas. | Roménia: Três faixas verticais: azul, amarelo e vermelho. | Chéquia: Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste.",
+              "explain": "As bandeiras deste conjunto identificam Portugal, Roménia, Chéquia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Duas faixas verticais, verde e vermelha, com o escudo sobre a esfera armilar na união das faixas.",
+                  "Portugal"
+                ],
+                [
+                  "Três faixas verticais: azul, amarelo e vermelho.",
+                  "Roménia"
+                ],
+                [
+                  "Duas faixas horizontais, branca e vermelha, e um triângulo azul junto à haste.",
+                  "Chéquia"
+                ]
+              ],
+              "options": [
+                "Portugal",
+                "Roménia",
+                "Chéquia"
+              ],
+              "flags": [
+                "pt",
+                "ro",
+                "cz"
+              ]
+            },
+            {
+              "id": "bandeiras-ro",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Roménia: Três faixas verticais: azul, amarelo e vermelho. | Suécia: Fundo azul com uma cruz nórdica amarela. | Chipre: Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes.",
+              "explain": "As bandeiras deste conjunto identificam Roménia, Suécia, Chipre. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Três faixas verticais: azul, amarelo e vermelho.",
+                  "Roménia"
+                ],
+                [
+                  "Fundo azul com uma cruz nórdica amarela.",
+                  "Suécia"
+                ],
+                [
+                  "Fundo branco com a silhueta da ilha em cor de cobre e ramos de oliveira verdes.",
+                  "Chipre"
+                ]
+              ],
+              "options": [
+                "Roménia",
+                "Suécia",
+                "Chipre"
+              ],
+              "flags": [
+                "ro",
+                "se",
+                "cy"
+              ]
+            },
+            {
+              "id": "bandeiras-se",
+              "type": "match",
+              "title": "Repara as etiquetas da exposição.",
+              "intro": "Associa cada bandeira ao país. Podes usar a imagem ou a descrição. A pista inclui o catálogo deste conjunto.",
+              "clue": "Catálogo: Suécia: Fundo azul com uma cruz nórdica amarela. | Alemanha: Três faixas horizontais: preto, vermelho e amarelo. | Croácia: Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro.",
+              "explain": "As bandeiras deste conjunto identificam Suécia, Alemanha, Croácia. As cores, a orientação e os elementos distintivos ajudam a distingui-las.",
+              "refs": [
+                3,
+                11
+              ],
+              "rows": [
+                [
+                  "Fundo azul com uma cruz nórdica amarela.",
+                  "Suécia"
+                ],
+                [
+                  "Três faixas horizontais: preto, vermelho e amarelo.",
+                  "Alemanha"
+                ],
+                [
+                  "Três faixas horizontais: vermelho, branco e azul, com um brasão axadrezado ao centro.",
+                  "Croácia"
+                ]
+              ],
+              "options": [
+                "Suécia",
+                "Alemanha",
+                "Croácia"
+              ],
+              "flags": [
+                "se",
+                "de",
+                "hr"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "match",
+              "title": "Prepara os convites para o encontro.",
+              "intro": "Coloca cada cartão no grupo certo.",
+              "options": [
+                "País da União Europeia",
+                "País europeu fora da União Europeia"
+              ],
+              "rows": [
+                [
+                  "França",
+                  "País da União Europeia"
+                ],
+                [
+                  "Itália",
+                  "País da União Europeia"
+                ],
+                [
+                  "Noruega",
+                  "País europeu fora da União Europeia"
+                ]
+              ],
+              "explain": "A pertença à Europa não implica a pertença à UE. Um encontro europeu pode incluir pessoas de países que não são membros da UE.",
+              "id": "m1-s2-original",
+              "clue": "A Europa é um espaço geográfico e cultural. A União Europeia é uma união de países. França, Itália e Alemanha são Estados-Membros. A Noruega é um país europeu que não pertence à UE.",
+              "refs": [
+                3
+              ]
+            },
+            {
+              "id": "m1-s2-v2",
+              "type": "match",
+              "title": "Organiza os convites do encontro.",
+              "intro": "Distingue países da UE de outros países europeus.",
+              "clue": "Portugal e Espanha pertencem à UE. Suíça é um país europeu que não é Estado-Membro da UE. A participação no encontro não depende de pertencer à UE.",
+              "explain": "Portugal e Espanha são Estados-Membros; Suíça não pertence à UE. A Europa é mais ampla do que a União Europeia.",
+              "refs": [
+                3,
+                11,
+                12
+              ],
+              "rows": [
+                [
+                  "Portugal",
+                  "País da União Europeia"
+                ],
+                [
+                  "Espanha",
+                  "País da União Europeia"
+                ],
+                [
+                  "Suíça",
+                  "País europeu fora da União Europeia"
+                ]
+              ],
+              "options": [
+                "País da União Europeia",
+                "País europeu fora da União Europeia"
+              ]
+            },
+            {
+              "id": "m1-s2-v3",
+              "type": "match",
+              "title": "Organiza os convites do encontro.",
+              "intro": "Distingue países da UE de outros países europeus.",
+              "clue": "Alemanha e Áustria pertencem à UE. Islândia é um país europeu que não é Estado-Membro da UE. A participação no encontro não depende de pertencer à UE.",
+              "explain": "Alemanha e Áustria são Estados-Membros; Islândia não pertence à UE. A Europa é mais ampla do que a União Europeia.",
+              "refs": [
+                3,
+                11,
+                12
+              ],
+              "rows": [
+                [
+                  "Alemanha",
+                  "País da União Europeia"
+                ],
+                [
+                  "Áustria",
+                  "País da União Europeia"
+                ],
+                [
+                  "Islândia",
+                  "País europeu fora da União Europeia"
+                ]
+              ],
+              "options": [
+                "País da União Europeia",
+                "País europeu fora da União Europeia"
+              ]
+            },
+            {
+              "id": "m1-s2-v4",
+              "type": "match",
+              "title": "Organiza os convites do encontro.",
+              "intro": "Distingue países da UE de outros países europeus.",
+              "clue": "Suécia e Finlândia pertencem à UE. Reino Unido é um país europeu que não é Estado-Membro da UE. A participação no encontro não depende de pertencer à UE.",
+              "explain": "Suécia e Finlândia são Estados-Membros; Reino Unido não pertence à UE. A Europa é mais ampla do que a União Europeia.",
+              "refs": [
+                3,
+                11,
+                12
+              ],
+              "rows": [
+                [
+                  "Suécia",
+                  "País da União Europeia"
+                ],
+                [
+                  "Finlândia",
+                  "País da União Europeia"
+                ],
+                [
+                  "Reino Unido",
+                  "País europeu fora da União Europeia"
+                ]
+              ],
+              "options": [
+                "País da União Europeia",
+                "País europeu fora da União Europeia"
+              ]
+            },
+            {
+              "id": "m1-s2-v5",
+              "type": "match",
+              "title": "Organiza os convites do encontro.",
+              "intro": "Distingue países da UE de outros países europeus.",
+              "clue": "Polónia e Chéquia pertencem à UE. Noruega é um país europeu que não é Estado-Membro da UE. A participação no encontro não depende de pertencer à UE.",
+              "explain": "Polónia e Chéquia são Estados-Membros; Noruega não pertence à UE. A Europa é mais ampla do que a União Europeia.",
+              "refs": [
+                3,
+                11,
+                12
+              ],
+              "rows": [
+                [
+                  "Polónia",
+                  "País da União Europeia"
+                ],
+                [
+                  "Chéquia",
+                  "País da União Europeia"
+                ],
+                [
+                  "Noruega",
+                  "País europeu fora da União Europeia"
+                ]
+              ],
+              "options": [
+                "País da União Europeia",
+                "País europeu fora da União Europeia"
+              ]
+            },
+            {
+              "id": "m1-s2-v6",
+              "type": "match",
+              "title": "Organiza os convites do encontro.",
+              "intro": "Distingue países da UE de outros países europeus.",
+              "clue": "Malta e Chipre pertencem à UE. Suíça é um país europeu que não é Estado-Membro da UE. A participação no encontro não depende de pertencer à UE.",
+              "explain": "Malta e Chipre são Estados-Membros; Suíça não pertence à UE. A Europa é mais ampla do que a União Europeia.",
+              "refs": [
+                3,
+                11,
+                12
+              ],
+              "rows": [
+                [
+                  "Malta",
+                  "País da União Europeia"
+                ],
+                [
+                  "Chipre",
+                  "País da União Europeia"
+                ],
+                [
+                  "Suíça",
+                  "País europeu fora da União Europeia"
+                ]
+              ],
+              "options": [
+                "País da União Europeia",
+                "País europeu fora da União Europeia"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "advanced": true,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Investiga uma etiqueta suspeita.",
+              "intro": "Uma etiqueta diz: «As 12 estrelas da bandeira representam os países da UE.» Que correção deves afixar?",
+              "options": [
+                "O número de estrelas deve aumentar sempre que um país adere.",
+                "As 12 estrelas simbolizam unidade, solidariedade e harmonia; não contam países.",
+                "Cada estrela representa uma língua oficial."
+              ],
+              "answer": 1,
+              "explain": "O círculo de 12 estrelas mantém-se. A bandeira foi adotada pelo Conselho da Europa em 1955 e pelas Comunidades Europeias em 1985.",
+              "refs": [
+                9
+              ],
+              "id": "m1-s3-original",
+              "clue": "A Europa é um espaço geográfico e cultural. A União Europeia é uma união de países. França, Itália e Alemanha são Estados-Membros. A Noruega é um país europeu que não pertence à UE."
+            },
+            {
+              "id": "m1-s3-v2",
+              "type": "choice",
+              "title": "Consulta o arquivo da bandeira.",
+              "intro": "Quem adotou a bandeira europeia em 1955?",
+              "clue": "A bandeira apresenta 12 estrelas em círculo, associadas à unidade, solidariedade e harmonia. Foi adotada pelo Conselho da Europa em 1955 e pelas Comunidades Europeias em 1985.",
+              "explain": "O Conselho da Europa adotou a bandeira em 1955; é uma organização distinta da UE.",
+              "refs": [
+                9
+              ],
+              "options": [
+                "O Conselho da Europa",
+                "A ONU",
+                "A Comissão Europeia"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m1-s3-v3",
+              "type": "choice",
+              "title": "Completa a legenda de 1985.",
+              "intro": "Que acontecimento corresponde a 1985?",
+              "clue": "A bandeira apresenta 12 estrelas em círculo, associadas à unidade, solidariedade e harmonia. Foi adotada pelo Conselho da Europa em 1955 e pelas Comunidades Europeias em 1985.",
+              "explain": "Os dirigentes das Comunidades Europeias adotaram a bandeira em 1985.",
+              "refs": [
+                9
+              ],
+              "options": [
+                "A criação da ONU",
+                "A adoção da bandeira pelas Comunidades Europeias",
+                "A adesão de todos os países europeus à UE"
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m1-s3-v4",
+              "type": "choice",
+              "title": "Mantém o símbolo coerente.",
+              "intro": "Uma equipa quer acrescentar uma estrela quando entrar um novo membro. O que deves explicar?",
+              "clue": "A bandeira apresenta 12 estrelas em círculo, associadas à unidade, solidariedade e harmonia. Foi adotada pelo Conselho da Europa em 1955 e pelas Comunidades Europeias em 1985.",
+              "explain": "O número de estrelas não corresponde ao de Estados-Membros.",
+              "refs": [
+                9
+              ],
+              "options": [
+                "As estrelas não contam países e o círculo de 12 mantém-se",
+                "Deve acrescentar uma estrela por língua",
+                "Deve retirar todas as estrelas"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m1-s3-v5",
+              "type": "choice",
+              "title": "Escolhe uma legenda fundamentada.",
+              "intro": "Que legenda explica o círculo de estrelas?",
+              "clue": "A bandeira apresenta 12 estrelas em círculo, associadas à unidade, solidariedade e harmonia. Foi adotada pelo Conselho da Europa em 1955 e pelas Comunidades Europeias em 1985.",
+              "explain": "Um símbolo comum pode representar união sem apagar a diversidade dos povos.",
+              "refs": [
+                9
+              ],
+              "options": [
+                "Mostra as fronteiras de cada país",
+                "Simboliza unidade, solidariedade e harmonia",
+                "Prova que todos os países têm a mesma cultura"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Casa das Instituições",
+      "short": "Quem faz o quê?",
+      "x": 490,
+      "y": 135,
+      "color": "#657fb0",
+      "icon": "▥",
+      "learn": "Associar instituições às suas funções e distinguir os três Conselhos.",
+      "clue": "As instituições têm funções diferentes. A pista de cada desafio ajuda-te a distinguir quem propõe, quem representa e quem define prioridades.",
+      "refs": [
+        4,
+        5
+      ],
+      "id": "m2",
+      "slots": [
+        {
+          "id": "s1",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "match",
+              "title": "Entrega os documentos nos gabinetes certos.",
+              "intro": "Associa cada documento à instituição competente.",
+              "options": [
+                "Parlamento Europeu",
+                "Comissão Europeia",
+                "Conselho da União Europeia"
+              ],
+              "rows": [
+                [
+                  "Proposta de nova legislação europeia",
+                  "Comissão Europeia"
+                ],
+                [
+                  "Representação dos cidadãos, eleitos diretamente",
+                  "Parlamento Europeu"
+                ],
+                [
+                  "Reunião de ministros dos governos dos países da UE",
+                  "Conselho da União Europeia"
+                ]
+              ],
+              "explain": "No processo legislativo ordinário, a Comissão apresenta a proposta; o Parlamento e o Conselho da UE atuam como colegisladores. Este esquema simplifica um processo com várias fases.",
+              "id": "m2-s1-original",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "refs": [
+                4,
+                5
+              ]
+            },
+            {
+              "id": "m2-s1-v2",
+              "type": "match",
+              "title": "Encaminha o dossiê legislativo.",
+              "intro": "Associa cada documento ao destinatário indicado pela sua função.",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "No processo legislativo ordinário, a Comissão propõe; o Parlamento e o Conselho da UE decidem em conjunto. Este é um esquema introdutório.",
+              "refs": [
+                4
+              ],
+              "rows": [
+                [
+                  "Minuta de proposta legislativa",
+                  "Comissão Europeia"
+                ],
+                [
+                  "Voz dos cidadãos eleitos diretamente",
+                  "Parlamento Europeu"
+                ],
+                [
+                  "Reunião de ministros nacionais",
+                  "Conselho da União Europeia"
+                ]
+              ],
+              "options": [
+                "Comissão Europeia",
+                "Parlamento Europeu",
+                "Conselho da União Europeia"
+              ]
+            },
+            {
+              "id": "m2-s1-v3",
+              "type": "match",
+              "title": "Encaminha o dossiê legislativo.",
+              "intro": "Associa cada documento ao destinatário indicado pela sua função.",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "No processo legislativo ordinário, a Comissão propõe; o Parlamento e o Conselho da UE decidem em conjunto. Este é um esquema introdutório.",
+              "refs": [
+                4
+              ],
+              "rows": [
+                [
+                  "Iniciativa para propor nova legislação",
+                  "Comissão Europeia"
+                ],
+                [
+                  "Representação dos governos na aprovação de leis",
+                  "Conselho da União Europeia"
+                ],
+                [
+                  "Representação dos cidadãos na aprovação de leis",
+                  "Parlamento Europeu"
+                ]
+              ],
+              "options": [
+                "Comissão Europeia",
+                "Conselho da União Europeia",
+                "Parlamento Europeu"
+              ]
+            },
+            {
+              "id": "m2-s1-v4",
+              "type": "match",
+              "title": "Encaminha o dossiê legislativo.",
+              "intro": "Associa cada documento ao destinatário indicado pela sua função.",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "No processo legislativo ordinário, a Comissão propõe; o Parlamento e o Conselho da UE decidem em conjunto. Este é um esquema introdutório.",
+              "refs": [
+                4
+              ],
+              "rows": [
+                [
+                  "Documento destinado aos eurodeputados",
+                  "Parlamento Europeu"
+                ],
+                [
+                  "Agenda dos ministros dos países da UE",
+                  "Conselho da União Europeia"
+                ],
+                [
+                  "Preparação de uma proposta legislativa",
+                  "Comissão Europeia"
+                ]
+              ],
+              "options": [
+                "Parlamento Europeu",
+                "Conselho da União Europeia",
+                "Comissão Europeia"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Desbloqueia a porta do arquivo.",
+              "intro": "O letreiro diz: «Conselho da Europa: instituição da UE». Escolhe a placa que o deve substituir.",
+              "options": [
+                "Conselho da Europa: outro nome do Conselho da União Europeia.",
+                "Conselho da Europa: organização internacional distinta da UE, dedicada aos direitos humanos, à democracia e ao Estado de direito.",
+                "Conselho da Europa: reunião dos ministros da UE."
+              ],
+              "answer": 1,
+              "explain": "Os nomes são próximos, mas as organizações diferem. O Conselho Europeu e o Conselho da UE são instituições da União Europeia; o Conselho da Europa não é.",
+              "id": "m2-s2-original",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "refs": [
+                4,
+                5
+              ]
+            },
+            {
+              "id": "m2-s2-v2",
+              "type": "choice",
+              "title": "Corrige o nome no documento.",
+              "intro": "Em um cartaz da exposição, o Conselho da Europa é apresentado como instituição da UE. Que correção fazes?",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "O Conselho da Europa não é uma instituição da União Europeia. Os nomes Conselho Europeu e Conselho da UE designam instituições da UE.",
+              "refs": [
+                4,
+                5
+              ],
+              "options": [
+                "É uma organização internacional distinta da UE, dedicada aos direitos humanos, à democracia e ao Estado de direito.",
+                "É apenas uma abreviatura do Conselho da União Europeia.",
+                "É outro nome do Parlamento Europeu."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m2-s2-v3",
+              "type": "choice",
+              "title": "Corrige o nome no documento.",
+              "intro": "Em a legenda de uma fotografia institucional, o Conselho da Europa é apresentado como instituição da UE. Que correção fazes?",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "O Conselho da Europa não é uma instituição da União Europeia. Os nomes Conselho Europeu e Conselho da UE designam instituições da UE.",
+              "refs": [
+                4,
+                5
+              ],
+              "options": [
+                "É uma organização internacional distinta da UE, dedicada aos direitos humanos, à democracia e ao Estado de direito.",
+                "É apenas uma abreviatura do Conselho da União Europeia.",
+                "É outro nome do Parlamento Europeu."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m2-s2-v4",
+              "type": "choice",
+              "title": "Corrige o nome no documento.",
+              "intro": "Em um convite com o destinatário errado, o Conselho da Europa é apresentado como instituição da UE. Que correção fazes?",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "O Conselho da Europa não é uma instituição da União Europeia. Os nomes Conselho Europeu e Conselho da UE designam instituições da UE.",
+              "refs": [
+                4,
+                5
+              ],
+              "options": [
+                "É uma organização internacional distinta da UE, dedicada aos direitos humanos, à democracia e ao Estado de direito.",
+                "É apenas uma abreviatura do Conselho da União Europeia.",
+                "É outro nome do Parlamento Europeu."
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "advanced": true,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "A quem envias as prioridades?",
+              "intro": "Um documento define a orientação política geral da UE. Qual é o destino adequado?",
+              "options": [
+                "Conselho da Europa",
+                "Conselho Europeu",
+                "Comissão Europeia, porque aprova sozinha todas as leis"
+              ],
+              "answer": 1,
+              "explain": "O Conselho Europeu define orientações e prioridades políticas gerais. Não deve ser confundido com o Conselho da UE, onde se reúnem ministros.",
+              "id": "m2-s3-original",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "refs": [
+                4,
+                5
+              ]
+            },
+            {
+              "id": "m2-s3-v2",
+              "type": "choice",
+              "title": "Verifica o destinatário do pedido.",
+              "intro": "Que órgão reúne chefes de Estado ou de Governo para definir as prioridades gerais da UE?",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "Confere a função, não apenas a semelhança do nome. O Conselho Europeu define prioridades, o Conselho da UE reúne ministros e o Parlamento representa os cidadãos.",
+              "refs": [
+                4,
+                5
+              ],
+              "options": [
+                "Conselho Europeu",
+                "Conselho da União Europeia",
+                "Conselho da Europa"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m2-s3-v3",
+              "type": "choice",
+              "title": "Verifica o destinatário do pedido.",
+              "intro": "Um grupo de ministros nacionais vai discutir legislação. Que instituição participa?",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "Confere a função, não apenas a semelhança do nome. O Conselho Europeu define prioridades, o Conselho da UE reúne ministros e o Parlamento representa os cidadãos.",
+              "refs": [
+                4,
+                5
+              ],
+              "options": [
+                "Conselho Europeu",
+                "Conselho da União Europeia",
+                "Conselho da Europa"
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m2-s3-v4",
+              "type": "choice",
+              "title": "Verifica o destinatário do pedido.",
+              "intro": "Quem representa os cidadãos através de eleição direta?",
+              "clue": "Em regra, a Comissão Europeia propõe legislação. O Parlamento Europeu representa os cidadãos e o Conselho da União Europeia representa os governos: ambos participam na sua aprovação. O Conselho Europeu reúne chefes de Estado ou de Governo e define prioridades. O Conselho da Europa é uma organização distinta da UE.",
+              "explain": "Confere a função, não apenas a semelhança do nome. O Conselho Europeu define prioridades, o Conselho da UE reúne ministros e o Parlamento representa os cidadãos.",
+              "refs": [
+                4,
+                5
+              ],
+              "options": [
+                "Conselho da Europa",
+                "Comissão Europeia",
+                "Parlamento Europeu"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arquivo do Tempo",
+      "short": "Caminhos da integração",
+      "x": 790,
+      "y": 190,
+      "color": "#b18b4e",
+      "icon": "◷",
+      "learn": "Ordenar marcos da construção europeia e compreender a cooperação para a paz.",
+      "clue": "A integração europeia fez-se por etapas. Consulta as datas da pista e distingue as Comunidades Europeias da designação atual União Europeia.",
+      "refs": [
+        6,
+        7
+      ],
+      "id": "m3",
+      "slots": [
+        {
+          "id": "s1",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "order",
+              "title": "Reconstrói a linha do tempo.",
+              "intro": "Usa os botões de subir e descer. Coloca os acontecimentos do mais antigo para o mais recente.",
+              "items": [
+                "Adesão de Portugal às Comunidades Europeias",
+                "Declaração Schuman",
+                "Assinatura dos Tratados de Roma"
+              ],
+              "answer": [
+                "Declaração Schuman",
+                "Assinatura dos Tratados de Roma",
+                "Adesão de Portugal às Comunidades Europeias"
+              ],
+              "explain": "1950 → 1957 → 1986. A integração europeia construiu-se por etapas. A adesão portuguesa ocorreu em 1 de janeiro de 1986.",
+              "id": "m3-s1-original",
+              "clue": "1949: criação do Conselho da Europa. 1950: Declaração Schuman. 1957: assinatura dos Tratados de Roma. 1986: Portugal e Espanha aderem às Comunidades Europeias. Em 1986 ainda não se usava a designação União Europeia para estas Comunidades.",
+              "refs": [
+                6,
+                7
+              ]
+            },
+            {
+              "id": "m3-s1-v2",
+              "type": "order",
+              "title": "Reconstrói uma gaveta do arquivo.",
+              "intro": "Ordena os três acontecimentos do mais antigo para o mais recente.",
+              "clue": "Criação do Conselho da Europa: 1949 | Declaração Schuman: 1950 | Assinatura dos Tratados de Roma: 1957",
+              "explain": "A sequência é 1949 → 1950 → 1957. Distingue o acontecimento da data e a instituição a que se refere.",
+              "refs": [
+                6,
+                7,
+                9
+              ],
+              "items": [
+                "Assinatura dos Tratados de Roma",
+                "Declaração Schuman",
+                "Criação do Conselho da Europa"
+              ],
+              "answer": [
+                "Criação do Conselho da Europa",
+                "Declaração Schuman",
+                "Assinatura dos Tratados de Roma"
+              ]
+            },
+            {
+              "id": "m3-s1-v3",
+              "type": "order",
+              "title": "Reconstrói uma gaveta do arquivo.",
+              "intro": "Ordena os três acontecimentos do mais antigo para o mais recente.",
+              "clue": "Adoção da bandeira pelo Conselho da Europa: 1955 | Adoção da bandeira pelas Comunidades Europeias: 1985 | Adesão de Portugal e Espanha às Comunidades Europeias: 1986",
+              "explain": "A sequência é 1955 → 1985 → 1986. Distingue o acontecimento da data e a instituição a que se refere.",
+              "refs": [
+                6,
+                7,
+                9
+              ],
+              "items": [
+                "Adesão de Portugal e Espanha às Comunidades Europeias",
+                "Adoção da bandeira pelas Comunidades Europeias",
+                "Adoção da bandeira pelo Conselho da Europa"
+              ],
+              "answer": [
+                "Adoção da bandeira pelo Conselho da Europa",
+                "Adoção da bandeira pelas Comunidades Europeias",
+                "Adesão de Portugal e Espanha às Comunidades Europeias"
+              ]
+            },
+            {
+              "id": "m3-s1-v4",
+              "type": "order",
+              "title": "Reconstrói uma gaveta do arquivo.",
+              "intro": "Ordena os três acontecimentos do mais antigo para o mais recente.",
+              "clue": "Criação do Conselho da Europa: 1949 | Assinatura dos Tratados de Roma: 1957 | Adesão de Portugal e Espanha às Comunidades Europeias: 1986",
+              "explain": "A sequência é 1949 → 1957 → 1986. Distingue o acontecimento da data e a instituição a que se refere.",
+              "refs": [
+                6,
+                7,
+                9
+              ],
+              "items": [
+                "Adesão de Portugal e Espanha às Comunidades Europeias",
+                "Assinatura dos Tratados de Roma",
+                "Criação do Conselho da Europa"
+              ],
+              "answer": [
+                "Criação do Conselho da Europa",
+                "Assinatura dos Tratados de Roma",
+                "Adesão de Portugal e Espanha às Comunidades Europeias"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Escolhe a legenda do arquivo.",
+              "intro": "Porque é que a cooperação económica aparece no início deste percurso?",
+              "options": [
+                "Porque todos os países europeus tinham o mesmo governo.",
+                "Porque a partilha de interesses e recursos foi pensada para aproximar países e apoiar a paz.",
+                "Porque as diferenças culturais tinham desaparecido."
+              ],
+              "answer": 1,
+              "explain": "O plano Schuman propôs uma gestão comum do carvão e do aço. A aproximação entre países era um objetivo político de paz; não eliminou diferenças nem todos os conflitos.",
+              "id": "m3-s2-original",
+              "clue": "1949: criação do Conselho da Europa. 1950: Declaração Schuman. 1957: assinatura dos Tratados de Roma. 1986: Portugal e Espanha aderem às Comunidades Europeias. Em 1986 ainda não se usava a designação União Europeia para estas Comunidades.",
+              "refs": [
+                6,
+                7
+              ]
+            },
+            {
+              "id": "m3-s2-v2",
+              "type": "choice",
+              "title": "Revê a interpretação histórica.",
+              "intro": "A exposição explica a gestão comum de carvão e aço. Que ideia deves destacar?",
+              "clue": "O plano Schuman propôs cooperação em interesses económicos para aproximar países e apoiar a paz. A cooperação não tornou todas as culturas iguais nem eliminou todos os conflitos.",
+              "explain": "Partilhar interesses económicos foi pensado para apoiar a aproximação e a paz, sem eliminar a diversidade.",
+              "refs": [
+                1,
+                6
+              ],
+              "options": [
+                "A aproximação entre países através de interesses comuns",
+                "A eliminação de todas as línguas nacionais",
+                "A existência de um único governo europeu para todos os países"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m3-s2-v3",
+              "type": "choice",
+              "title": "Revê a interpretação histórica.",
+              "intro": "Uma legenda diz que a cooperação acabou com todos os conflitos na Europa. Qual é a revisão rigorosa?",
+              "clue": "O plano Schuman propôs cooperação em interesses económicos para aproximar países e apoiar a paz. A cooperação não tornou todas as culturas iguais nem eliminou todos os conflitos.",
+              "explain": "Um objetivo de paz não equivale a uma garantia de ausência de conflitos.",
+              "refs": [
+                1,
+                6
+              ],
+              "options": [
+                "É uma garantia válida para sempre",
+                "A cooperação apoiou a aproximação, mas não eliminou todos os conflitos",
+                "Não houve qualquer objetivo de paz"
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m3-s2-v4",
+              "type": "choice",
+              "title": "Revê a interpretação histórica.",
+              "intro": "Como explicas a relação entre a cooperação e as diferenças culturais?",
+              "clue": "O plano Schuman propôs cooperação em interesses económicos para aproximar países e apoiar a paz. A cooperação não tornou todas as culturas iguais nem eliminou todos os conflitos.",
+              "explain": "O pluralismo e a cooperação podem coexistir; são objetivos educativos dos Clubes Europeus.",
+              "refs": [
+                1,
+                6
+              ],
+              "options": [
+                "Cooperar exige abandonar todas as diferenças",
+                "As diferenças impedem qualquer acordo",
+                "É possível cooperar em objetivos comuns respeitando diferenças"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "advanced": true,
+          "variants": [
+            {
+              "type": "match",
+              "title": "Completa a gaveta de 1949.",
+              "intro": "Distingue os dois marcos.",
+              "options": [
+                "1949",
+                "1950"
+              ],
+              "rows": [
+                [
+                  "Criação do Conselho da Europa",
+                  "1949"
+                ],
+                [
+                  "Declaração Schuman",
+                  "1950"
+                ]
+              ],
+              "explain": "O Conselho da Europa foi criado em 5 de maio de 1949. A Declaração Schuman foi apresentada em 9 de maio de 1950; esta última data é celebrada como Dia da Europa pela UE.",
+              "id": "m3-s3-original",
+              "clue": "1949: criação do Conselho da Europa. 1950: Declaração Schuman. 1957: assinatura dos Tratados de Roma. 1986: Portugal e Espanha aderem às Comunidades Europeias. Em 1986 ainda não se usava a designação União Europeia para estas Comunidades.",
+              "refs": [
+                6,
+                7
+              ]
+            },
+            {
+              "id": "m3-s3-v2",
+              "type": "match",
+              "title": "Atribui as datas corretas.",
+              "intro": "Associa os documentos à data indicada no arquivo.",
+              "clue": "Criação do Conselho da Europa: 1949 | Adesão de Portugal e Espanha às Comunidades Europeias: 1986",
+              "explain": "Cada data corresponde a um marco específico; os nomes das organizações e das Comunidades devem ser usados com rigor.",
+              "refs": [
+                6,
+                7,
+                9
+              ],
+              "rows": [
+                [
+                  "Criação do Conselho da Europa",
+                  "1949"
+                ],
+                [
+                  "Adesão de Portugal e Espanha às Comunidades Europeias",
+                  "1986"
+                ]
+              ],
+              "options": [
+                "1949",
+                "1986"
+              ]
+            },
+            {
+              "id": "m3-s3-v3",
+              "type": "match",
+              "title": "Atribui as datas corretas.",
+              "intro": "Associa os documentos à data indicada no arquivo.",
+              "clue": "Adoção da bandeira pelo Conselho da Europa: 1955 | Adoção da bandeira pelas Comunidades Europeias: 1985",
+              "explain": "Cada data corresponde a um marco específico; os nomes das organizações e das Comunidades devem ser usados com rigor.",
+              "refs": [
+                6,
+                7,
+                9
+              ],
+              "rows": [
+                [
+                  "Adoção da bandeira pelo Conselho da Europa",
+                  "1955"
+                ],
+                [
+                  "Adoção da bandeira pelas Comunidades Europeias",
+                  "1985"
+                ]
+              ],
+              "options": [
+                "1955",
+                "1985"
+              ]
+            },
+            {
+              "id": "m3-s3-v4",
+              "type": "match",
+              "title": "Atribui as datas corretas.",
+              "intro": "Associa os documentos à data indicada no arquivo.",
+              "clue": "Declaração Schuman: 1950 | Assinatura dos Tratados de Roma: 1957",
+              "explain": "Cada data corresponde a um marco específico; os nomes das organizações e das Comunidades devem ser usados com rigor.",
+              "refs": [
+                6,
+                7,
+                9
+              ],
+              "rows": [
+                [
+                  "Declaração Schuman",
+                  "1950"
+                ],
+                [
+                  "Assinatura dos Tratados de Roma",
+                  "1957"
+                ]
+              ],
+              "options": [
+                "1950",
+                "1957"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ponte dos Direitos",
+      "short": "Igualdade e participação",
+      "x": 225,
+      "y": 410,
+      "color": "#bc6d7a",
+      "icon": "♡",
+      "learn": "Aplicar a igualdade e o direito à educação e respeitar a diversidade cultural.",
+      "clue": "Os direitos humanos pertencem a todas as pessoas. Observa a barreira do cenário e pensa nas condições necessárias para participar.",
+      "refs": [
+        8,
+        5
+      ],
+      "id": "m4",
+      "slots": [
+        {
+          "id": "s1",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Ajuda a equipa de acolhimento.",
+              "intro": "Cenário fictício: uma colega recém-chegada ainda está a aprender português. A equipa sugere que fique de fora da exposição. Que decisão abre a ponte?",
+              "options": [
+                "Preparar apoio linguístico e formas diversas de participação, ouvindo a colega.",
+                "Deixá-la assistir, mas impedir que apresente o seu trabalho.",
+                "Adiar a sua participação até falar sem erros."
+              ],
+              "answer": 0,
+              "explain": "A inclusão cria condições para participar. A língua não pode servir de pretexto para discriminar. Esta é uma aplicação educativa dos artigos 2.º, 26.º e 27.º.",
+              "id": "m4-s1-original",
+              "clue": "A Declaração Universal dos Direitos Humanos foi adotada pela ONU em 1948. Os direitos pertencem a todas as pessoas. Os artigos 1.º e 2.º afirmam a igualdade e a não discriminação; o artigo 26.º trata a educação; o artigo 27.º, a participação na vida cultural.",
+              "refs": [
+                8,
+                5
+              ]
+            },
+            {
+              "id": "m4-s1-v2",
+              "type": "choice",
+              "title": "Cria condições para participar.",
+              "intro": "Uma exposição só pode ser visitada por escadas. Uma colega não consegue entrar. Que plano propões?",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "A participação exige condições adequadas e critérios que respeitem os direitos. Ouvir os destinatários ajuda a identificar barreiras; a decisão é uma aplicação educativa da DUDH.",
+              "refs": [
+                8
+              ],
+              "options": [
+                "Deixá-la de fora para manter o plano.",
+                "Ouvir a colega e organizar um acesso e uma participação adequados.",
+                "Enviar apenas o resultado da votação e encerrar a discussão."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m4-s1-v3",
+              "type": "choice",
+              "title": "Cria condições para participar.",
+              "intro": "A equipa quer ouvir apenas quem costuma falar mais nas reuniões. Como distribuis a palavra?",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "A participação exige condições adequadas e critérios que respeitem os direitos. Ouvir os destinatários ajuda a identificar barreiras; a decisão é uma aplicação educativa da DUDH.",
+              "refs": [
+                8
+              ],
+              "options": [
+                "Dar toda a palavra a uma única pessoa.",
+                "Criar formas orais e escritas de participação e ouvir diferentes contributos.",
+                "Excluir opiniões diferentes antes de as ouvir."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m4-s1-v4",
+              "type": "choice",
+              "title": "Cria condições para participar.",
+              "intro": "Uma colega quer apresentar uma criação cultural diferente das restantes. Como decides a participação?",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "A participação exige condições adequadas e critérios que respeitem os direitos. Ouvir os destinatários ajuda a identificar barreiras; a decisão é uma aplicação educativa da DUDH.",
+              "refs": [
+                8
+              ],
+              "options": [
+                "Recusar porque a criação é diferente.",
+                "Ouvir a proposta e definir critérios claros, inclusivos e respeitadores dos direitos.",
+                "Permitir apenas que assista sem mostrar o trabalho."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "match",
+              "title": "Repara as tábuas da ponte.",
+              "intro": "Associa cada compromisso ao direito que o sustenta.",
+              "options": [
+                "Educação — artigo 26.º",
+                "Participação cultural — artigo 27.º",
+                "Não discriminação — artigo 2.º"
+              ],
+              "rows": [
+                [
+                  "Garantir oportunidades de aprendizagem",
+                  "Educação — artigo 26.º"
+                ],
+                [
+                  "Dar acesso à exposição e à criação artística",
+                  "Participação cultural — artigo 27.º"
+                ],
+                [
+                  "Não excluir alguém pela sua origem ou língua",
+                  "Não discriminação — artigo 2.º"
+                ]
+              ],
+              "explain": "Os direitos relacionam-se. A educação, a participação cultural e a não discriminação apoiam uma comunidade plural.",
+              "id": "m4-s2-original",
+              "clue": "A Declaração Universal dos Direitos Humanos foi adotada pela ONU em 1948. Os direitos pertencem a todas as pessoas. Os artigos 1.º e 2.º afirmam a igualdade e a não discriminação; o artigo 26.º trata a educação; o artigo 27.º, a participação na vida cultural.",
+              "refs": [
+                8,
+                5
+              ]
+            },
+            {
+              "id": "m4-s2-v2",
+              "type": "match",
+              "title": "Liga os compromissos aos direitos.",
+              "intro": "Relaciona cada medida com o artigo mais diretamente indicado.",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "Os direitos relacionam-se. Nesta associação, escolhe o artigo diretamente ligado à ação descrita, sem concluir que os outros deixam de se aplicar.",
+              "refs": [
+                8
+              ],
+              "rows": [
+                [
+                  "Dar oportunidades de aprender",
+                  "Educação — artigo 26.º"
+                ],
+                [
+                  "Ouvir ideias sem excluir pela língua",
+                  "Não discriminação — artigo 2.º"
+                ],
+                [
+                  "Dar acesso à criação artística",
+                  "Participação cultural — artigo 27.º"
+                ]
+              ],
+              "options": [
+                "Educação — artigo 26.º",
+                "Não discriminação — artigo 2.º",
+                "Participação cultural — artigo 27.º"
+              ]
+            },
+            {
+              "id": "m4-s2-v3",
+              "type": "match",
+              "title": "Liga os compromissos aos direitos.",
+              "intro": "Relaciona cada medida com o artigo mais diretamente indicado.",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "Os direitos relacionam-se. Nesta associação, escolhe o artigo diretamente ligado à ação descrita, sem concluir que os outros deixam de se aplicar.",
+              "refs": [
+                8
+              ],
+              "rows": [
+                [
+                  "Respeitar a expressão de uma opinião",
+                  "Liberdade de opinião e expressão — artigo 19.º"
+                ],
+                [
+                  "Apoiar a aprendizagem",
+                  "Educação — artigo 26.º"
+                ],
+                [
+                  "Participar na vida cultural",
+                  "Participação cultural — artigo 27.º"
+                ]
+              ],
+              "options": [
+                "Liberdade de opinião e expressão — artigo 19.º",
+                "Educação — artigo 26.º",
+                "Participação cultural — artigo 27.º"
+              ]
+            },
+            {
+              "id": "m4-s2-v4",
+              "type": "match",
+              "title": "Liga os compromissos aos direitos.",
+              "intro": "Relaciona cada medida com o artigo mais diretamente indicado.",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "Os direitos relacionam-se. Nesta associação, escolhe o artigo diretamente ligado à ação descrita, sem concluir que os outros deixam de se aplicar.",
+              "refs": [
+                8
+              ],
+              "rows": [
+                [
+                  "Não excluir pela origem nacional",
+                  "Não discriminação — artigo 2.º"
+                ],
+                [
+                  "Permitir a apresentação de ideias",
+                  "Liberdade de opinião e expressão — artigo 19.º"
+                ],
+                [
+                  "Garantir oportunidades de educação",
+                  "Educação — artigo 26.º"
+                ]
+              ],
+              "options": [
+                "Não discriminação — artigo 2.º",
+                "Liberdade de opinião e expressão — artigo 19.º",
+                "Educação — artigo 26.º"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "advanced": true,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Avalia a origem de uma afirmação.",
+              "intro": "Um cartaz diz que a Declaração Universal foi criada pela UE apenas para os seus cidadãos. Como o corriges?",
+              "options": [
+                "Foi adotada pela ONU em 1948 e tem alcance universal.",
+                "Foi criada pelo Conselho Europeu em 1986.",
+                "Aplica-se apenas a quem vive na Europa."
+              ],
+              "answer": 0,
+              "explain": "A Declaração é universal. Não é uma lei criada pela UE nem é o mesmo documento que a Convenção Europeia dos Direitos Humanos.",
+              "id": "m4-s3-original",
+              "clue": "A Declaração Universal dos Direitos Humanos foi adotada pela ONU em 1948. Os direitos pertencem a todas as pessoas. Os artigos 1.º e 2.º afirmam a igualdade e a não discriminação; o artigo 26.º trata a educação; o artigo 27.º, a participação na vida cultural.",
+              "refs": [
+                8,
+                5
+              ]
+            },
+            {
+              "id": "m4-s3-v2",
+              "type": "choice",
+              "title": "Analisa o alcance dos direitos.",
+              "intro": "Uma pessoa sem nacionalidade de um país da UE tem direitos humanos?",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "A nacionalidade não limita a dignidade humana nem transforma a DUDH num documento exclusivo da UE.",
+              "refs": [
+                8,
+                5
+              ],
+              "options": [
+                "Sim: os direitos humanos têm alcance universal.",
+                "Não: só existem para cidadãos da UE.",
+                "Só se falar uma língua oficial da UE."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m4-s3-v3",
+              "type": "choice",
+              "title": "Analisa o alcance dos direitos.",
+              "intro": "Qual é a forma rigorosa de identificar a DUDH?",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "A DUDH é distinta dos documentos próprios da UE e da Convenção Europeia dos Direitos Humanos.",
+              "refs": [
+                8,
+                5
+              ],
+              "options": [
+                "Um regulamento escolar europeu",
+                "Uma declaração adotada pela ONU em 1948",
+                "Uma lista de direitos apenas para Estados-Membros"
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m4-s3-v4",
+              "type": "choice",
+              "title": "Analisa o alcance dos direitos.",
+              "intro": "Uma legenda diz que a igualdade só se aplica entre pessoas com a mesma língua. Como a corriges?",
+              "clue": "A DUDH foi adotada pela ONU em 1948 e tem alcance universal. O artigo 2.º trata a não discriminação; o 19.º, a liberdade de opinião e expressão; o 26.º, a educação; e o 27.º, a participação cultural.",
+              "explain": "O artigo 2.º afirma a não discriminação, incluindo por língua e origem. A igualdade não exige uniformidade cultural.",
+              "refs": [
+                8,
+                5
+              ],
+              "options": [
+                "Mantendo a exclusão",
+                "Limitando-a à turma",
+                "A não discriminação abrange, entre outros aspetos, a língua e a origem."
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jardim do Património",
+      "short": "Construir com responsabilidade",
+      "x": 555,
+      "y": 420,
+      "color": "#44886d",
+      "icon": "♧",
+      "learn": "Conciliar ambiente, património e participação através de um orçamento e de cooperação.",
+      "clue": "Os cenários e os custos são fictícios. Cumpre os objetivos indicados na pista e respeita o orçamento. Numa situação real, seria preciso recolher dados e avaliar os efeitos.",
+      "refs": [
+        1
+      ],
+      "id": "m5",
+      "slots": [
+        {
+          "id": "s1",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "budget",
+              "title": "Constrói um plano para a praça.",
+              "intro": "Escolhe ações até 6 créditos. Tens de cumprir três objetivos: rio protegido, mural conservado e participação acessível.",
+              "options": [
+                "Monitorizar o rio com as duas comunidades · 2 créditos",
+                "Conservar o mural com apoio técnico · 2 créditos",
+                "Criar acesso e materiais inclusivos · 2 créditos",
+                "Instalar um palco luminoso · 4 créditos",
+                "Pintar por cima do mural · 1 crédito"
+              ],
+              "costs": [
+                2,
+                2,
+                2,
+                4,
+                1
+              ],
+              "answer": [
+                0,
+                1,
+                2
+              ],
+              "explain": "O plano cumpre os três objetivos com 6 créditos. O palco não resolve esses objetivos; cobrir o mural apaga o património. Esta é uma solução dentro das regras do cenário, não uma avaliação técnica de uma obra real.",
+              "id": "m5-s1-original",
+              "clue": "Neste cenário fictício, tens 6 créditos. O projeto tem de proteger o rio e o mural antigo e permitir que toda a turma participe. Os custos são regras do jogo, não preços reais. A cooperação é necessária porque o rio atravessa duas comunidades.",
+              "refs": [
+                1
+              ],
+              "limit": 6
+            },
+            {
+              "id": "m5-s1-v2",
+              "type": "budget",
+              "title": "Constrói um plano para biblioteca.",
+              "intro": "Cenário fictício: escolhe ações que cumpram os três objetivos dentro do orçamento.",
+              "clue": "Tens 7 créditos. Os objetivos são: preparar uma exposição acessível, conservar documentos e partilhar memórias. As três ações correspondentes custam 2, 3, 2 créditos. Os valores são regras fictícias, não preços reais.",
+              "explain": "O conjunto que responde aos três objetivos custa 7 créditos. Poupar sem cumprir um objetivo não basta. Esta solução vale dentro das regras do cenário; não demonstra efeitos reais de uma intervenção.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Criar materiais acessíveis · 2 créditos",
+                "Conservar documentos com apoio técnico · 3 créditos",
+                "Recolher memórias com a comunidade · 2 créditos",
+                "Comprar decoração sem relação com os objetivos · 4 créditos",
+                "Excluir parte da turma para reduzir custos · 1 crédito"
+              ],
+              "costs": [
+                2,
+                3,
+                2,
+                4,
+                1
+              ],
+              "limit": 7,
+              "answer": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "id": "m5-s1-v3",
+              "type": "budget",
+              "title": "Constrói um plano para pátio.",
+              "intro": "Cenário fictício: escolhe ações que cumpram os três objetivos dentro do orçamento.",
+              "clue": "Tens 8 créditos. Os objetivos são: cuidar do jardim, conservar o painel e incluir a turma. As três ações correspondentes custam 3, 2, 3 créditos. Os valores são regras fictícias, não preços reais.",
+              "explain": "O conjunto que responde aos três objetivos custa 8 créditos. Poupar sem cumprir um objetivo não basta. Esta solução vale dentro das regras do cenário; não demonstra efeitos reais de uma intervenção.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Organizar cuidados do jardim com parceiros · 3 créditos",
+                "Conservar o painel com apoio técnico · 2 créditos",
+                "Preparar participação acessível · 3 créditos",
+                "Comprar decoração sem relação com os objetivos · 5 créditos",
+                "Excluir parte da turma para reduzir custos · 1 crédito"
+              ],
+              "costs": [
+                3,
+                2,
+                3,
+                5,
+                1
+              ],
+              "limit": 8,
+              "answer": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "id": "m5-s1-v4",
+              "type": "budget",
+              "title": "Constrói um plano para arquivo.",
+              "intro": "Cenário fictício: escolhe ações que cumpram os três objetivos dentro do orçamento.",
+              "clue": "Tens 6 créditos. Os objetivos são: conservar fotografias, recolher testemunhos e permitir consulta acessível. As três ações correspondentes custam 2, 2, 2 créditos. Os valores são regras fictícias, não preços reais.",
+              "explain": "O conjunto que responde aos três objetivos custa 6 créditos. Poupar sem cumprir um objetivo não basta. Esta solução vale dentro das regras do cenário; não demonstra efeitos reais de uma intervenção.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Conservar as fotografias · 2 créditos",
+                "Ouvir a comunidade sobre as memórias · 2 créditos",
+                "Criar formas acessíveis de consulta · 2 créditos",
+                "Comprar decoração sem relação com os objetivos · 4 créditos",
+                "Excluir parte da turma para reduzir custos · 1 crédito"
+              ],
+              "costs": [
+                2,
+                2,
+                2,
+                4,
+                1
+              ],
+              "limit": 6,
+              "answer": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "id": "m5-s1-v5",
+              "type": "budget",
+              "title": "Constrói um plano para encontro.",
+              "intro": "Cenário fictício: escolhe ações que cumpram os três objetivos dentro do orçamento.",
+              "clue": "Tens 9 créditos. Os objetivos são: acolher os participantes, partilhar culturas e avaliar o encontro. As três ações correspondentes custam 3, 3, 3 créditos. Os valores são regras fictícias, não preços reais.",
+              "explain": "O conjunto que responde aos três objetivos custa 9 créditos. Poupar sem cumprir um objetivo não basta. Esta solução vale dentro das regras do cenário; não demonstra efeitos reais de uma intervenção.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Preparar acolhimento inclusivo · 3 créditos",
+                "Construir uma mostra cultural com parceiros · 3 créditos",
+                "Recolher opiniões para avaliação · 3 créditos",
+                "Comprar decoração sem relação com os objetivos · 5 créditos",
+                "Excluir parte da turma para reduzir custos · 1 crédito"
+              ],
+              "costs": [
+                3,
+                3,
+                3,
+                5,
+                1
+              ],
+              "limit": 9,
+              "answer": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "id": "m5-s1-v6",
+              "type": "budget",
+              "title": "Constrói um plano para mural.",
+              "intro": "Cenário fictício: escolhe ações que cumpram os três objetivos dentro do orçamento.",
+              "clue": "Tens 7 créditos. Os objetivos são: conservar o mural, observar a margem do rio e ouvir os destinatários. As três ações correspondentes custam 2, 3, 2 créditos. Os valores são regras fictícias, não preços reais.",
+              "explain": "O conjunto que responde aos três objetivos custa 7 créditos. Poupar sem cumprir um objetivo não basta. Esta solução vale dentro das regras do cenário; não demonstra efeitos reais de uma intervenção.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Pedir conservação do mural com apoio técnico · 2 créditos",
+                "Monitorizar a margem com a comunidade vizinha · 3 créditos",
+                "Organizar uma consulta acessível à turma · 2 créditos",
+                "Comprar decoração sem relação com os objetivos · 5 créditos",
+                "Excluir parte da turma para reduzir custos · 1 crédito"
+              ],
+              "costs": [
+                2,
+                3,
+                2,
+                5,
+                1
+              ],
+              "limit": 7,
+              "answer": [
+                0,
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "O rio continua para lá da praça.",
+              "intro": "A comunidade vizinha também usa o rio. Que passo torna o plano mais responsável?",
+              "options": [
+                "Agir só no nosso troço e ignorar o resto.",
+                "Partilhar observações e combinar ações com a comunidade vizinha.",
+                "Afirmar que uma limpeza resolve toda a poluição para sempre."
+              ],
+              "answer": 1,
+              "explain": "A interdependência pede coordenação. Partilhar informação e responsabilidades é coerente com os objetivos dos Clubes Europeus. Os efeitos reais dependeriam de dados e acompanhamento.",
+              "id": "m5-s2-original",
+              "clue": "Neste cenário fictício, tens 6 créditos. O projeto tem de proteger o rio e o mural antigo e permitir que toda a turma participe. Os custos são regras do jogo, não preços reais. A cooperação é necessária porque o rio atravessa duas comunidades.",
+              "refs": [
+                1
+              ]
+            },
+            {
+              "id": "m5-s2-v2",
+              "type": "choice",
+              "title": "Combina a ação com os parceiros.",
+              "intro": "Duas escolas usam o mesmo espaço natural. Como distribuem responsabilidades?",
+              "clue": "Os Clubes Europeus promovem cooperação, compreensão da interdependência e responsabilidade pelo ambiente e património. Os efeitos de ações reais precisam de dados e acompanhamento.",
+              "explain": "A cooperação permite confrontar informação e partilhar responsabilidades. Uma decisão responsável não garante por si só o resultado; é preciso acompanhar e avaliar.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Cada uma ignora o que a outra observa.",
+                "Combinam recolha de informação, responsabilidades e acompanhamento.",
+                "Prometem resolver tudo sem observar o local."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m5-s2-v3",
+              "type": "choice",
+              "title": "Combina a ação com os parceiros.",
+              "intro": "Uma exposição reúne memórias de duas comunidades. Como as envolves?",
+              "clue": "Os Clubes Europeus promovem cooperação, compreensão da interdependência e responsabilidade pelo ambiente e património. Os efeitos de ações reais precisam de dados e acompanhamento.",
+              "explain": "A cooperação permite confrontar informação e partilhar responsabilidades. Uma decisão responsável não garante por si só o resultado; é preciso acompanhar e avaliar.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Escolhes uma versão sem ouvir ninguém.",
+                "Eliminas todos os contributos diferentes.",
+                "Ouves as comunidades, comparas fontes e explicas as diferenças."
+              ],
+              "answer": 2
+            },
+            {
+              "id": "m5-s2-v4",
+              "type": "choice",
+              "title": "Combina a ação com os parceiros.",
+              "intro": "Um parceiro tem dados sobre o rio. Que passo ajuda a fundamentar o plano?",
+              "clue": "Os Clubes Europeus promovem cooperação, compreensão da interdependência e responsabilidade pelo ambiente e património. Os efeitos de ações reais precisam de dados e acompanhamento.",
+              "explain": "A cooperação permite confrontar informação e partilhar responsabilidades. Uma decisão responsável não garante por si só o resultado; é preciso acompanhar e avaliar.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Comparar os dados e combinar observações com a outra comunidade.",
+                "Ignorar os dados que não confirmem a primeira ideia.",
+                "Afirmar uma causa antes de investigar."
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "advanced": true,
+          "variants": [
+            {
+              "type": "match",
+              "title": "Separa prova de previsão.",
+              "intro": "Analisa o registo fictício da equipa.",
+              "options": [
+                "Observação do cenário",
+                "Hipótese a testar",
+                "Proposta de ação"
+              ],
+              "rows": [
+                [
+                  "No registo da visita aparecem resíduos na margem",
+                  "Observação do cenário"
+                ],
+                [
+                  "Os resíduos podem ter vindo de montante",
+                  "Hipótese a testar"
+                ],
+                [
+                  "Vamos recolher dados com a outra comunidade",
+                  "Proposta de ação"
+                ]
+              ],
+              "explain": "Uma observação descreve o que foi registado; uma hipótese precisa de ser investigada; uma proposta diz o que fazer. O cenário não prova a origem dos resíduos.",
+              "id": "m5-s3-original",
+              "clue": "Neste cenário fictício, tens 6 créditos. O projeto tem de proteger o rio e o mural antigo e permitir que toda a turma participe. Os custos são regras do jogo, não preços reais. A cooperação é necessária porque o rio atravessa duas comunidades.",
+              "refs": [
+                1
+              ]
+            },
+            {
+              "id": "m5-s3-v2",
+              "type": "match",
+              "title": "Analisa o registo de exposição.",
+              "intro": "O registo é fictício. Separa o que está observado, o que precisa de teste e o que se propõe fazer.",
+              "clue": "Uma observação descreve o registo do cenário; uma hipótese aponta uma explicação ou possibilidade ainda por testar; uma proposta indica uma ação.",
+              "explain": "O registo não demonstra a hipótese. São necessários dados adicionais; a ação proposta serve para investigar e não para apresentar uma certeza prematura.",
+              "refs": [
+                1
+              ],
+              "rows": [
+                [
+                  "No registo da visita faltam legendas em duas peças",
+                  "Observação do cenário"
+                ],
+                [
+                  "Talvez as legendas façam falta à compreensão",
+                  "Hipótese a testar"
+                ],
+                [
+                  "Vamos ouvir visitantes e testar legendas",
+                  "Proposta de ação"
+                ]
+              ],
+              "options": [
+                "Observação do cenário",
+                "Hipótese a testar",
+                "Proposta de ação"
+              ]
+            },
+            {
+              "id": "m5-s3-v3",
+              "type": "match",
+              "title": "Analisa o registo de jardim.",
+              "intro": "O registo é fictício. Separa o que está observado, o que precisa de teste e o que se propõe fazer.",
+              "clue": "Uma observação descreve o registo do cenário; uma hipótese aponta uma explicação ou possibilidade ainda por testar; uma proposta indica uma ação.",
+              "explain": "O registo não demonstra a hipótese. São necessários dados adicionais; a ação proposta serve para investigar e não para apresentar uma certeza prematura.",
+              "refs": [
+                1
+              ],
+              "rows": [
+                [
+                  "No registo há uma zona com plantas danificadas",
+                  "Observação do cenário"
+                ],
+                [
+                  "Os danos podem estar relacionados com a passagem de pessoas",
+                  "Hipótese a testar"
+                ],
+                [
+                  "Vamos observar a zona e comparar registos",
+                  "Proposta de ação"
+                ]
+              ],
+              "options": [
+                "Observação do cenário",
+                "Hipótese a testar",
+                "Proposta de ação"
+              ]
+            },
+            {
+              "id": "m5-s3-v4",
+              "type": "match",
+              "title": "Analisa o registo de arquivo.",
+              "intro": "O registo é fictício. Separa o que está observado, o que precisa de teste e o que se propõe fazer.",
+              "clue": "Uma observação descreve o registo do cenário; uma hipótese aponta uma explicação ou possibilidade ainda por testar; uma proposta indica uma ação.",
+              "explain": "O registo não demonstra a hipótese. São necessários dados adicionais; a ação proposta serve para investigar e não para apresentar uma certeza prematura.",
+              "refs": [
+                1
+              ],
+              "rows": [
+                [
+                  "Duas fotografias do registo não têm data identificada",
+                  "Observação do cenário"
+                ],
+                [
+                  "Podem ter sido tiradas no mesmo evento",
+                  "Hipótese a testar"
+                ],
+                [
+                  "Vamos comparar documentos e recolher testemunhos",
+                  "Proposta de ação"
+                ]
+              ],
+              "options": [
+                "Observação do cenário",
+                "Hipótese a testar",
+                "Proposta de ação"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pavilhão do Futuro",
+      "short": "A tua ação europeia",
+      "x": 835,
+      "y": 430,
+      "color": "#295f83",
+      "icon": "✦",
+      "learn": "Mobilizar conhecimentos e construir uma ação de cidadania ativa, verificável e inclusiva.",
+      "clue": "Uma ação de cidadania ativa precisa de participação, cooperação e avaliação. Distingue factos, opiniões e hipóteses.",
+      "refs": [
+        1,
+        8,
+        9
+      ],
+      "id": "m6",
+      "slots": [
+        {
+          "id": "s1",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "match",
+              "title": "Verifica a exposição antes de abrir.",
+              "intro": "Classifica os cartões para que o público saiba o que está a ler.",
+              "options": [
+                "Facto verificável",
+                "Interpretação ou opinião",
+                "Hipótese a testar"
+              ],
+              "rows": [
+                [
+                  "A bandeira europeia tem 12 estrelas",
+                  "Facto verificável"
+                ],
+                [
+                  "Este é o símbolo mais bonito da exposição",
+                  "Interpretação ou opinião"
+                ],
+                [
+                  "Talvez os visitantes aprendam mais com legendas bilingues",
+                  "Hipótese a testar"
+                ]
+              ],
+              "explain": "Um facto pode ser confirmado em fontes; uma apreciação estética expressa uma opinião; uma previsão de aprendizagem precisa de dados para ser testada.",
+              "id": "m6-s1-original",
+              "clue": "Um Clube Europeu pode transformar conhecimento em ação: ouvir a comunidade, cooperar, respeitar direitos e avaliar resultados. Distingue factos verificáveis de interpretações e previsões.",
+              "refs": [
+                1,
+                8,
+                9
+              ]
+            },
+            {
+              "id": "m6-s1-v2",
+              "type": "match",
+              "title": "Revê os cartões da exposição.",
+              "intro": "Classifica cada afirmação para orientar o público.",
+              "clue": "A adesão portuguesa ocorreu em 1 de janeiro de 1986. Preferências são opiniões; previsões de aprendizagem exigem dados.",
+              "explain": "Distingue uma afirmação que pode ser confirmada, uma apreciação e uma previsão que requer dados. Identificar uma hipótese não significa que ela esteja demonstrada.",
+              "refs": [
+                7
+              ],
+              "rows": [
+                [
+                  "Portugal aderiu às Comunidades Europeias em 1986",
+                  "Facto verificável"
+                ],
+                [
+                  "O arquivo é o local mais interessante da praça",
+                  "Interpretação ou opinião"
+                ],
+                [
+                  "Talvez uma linha do tempo ajude os visitantes a aprender",
+                  "Hipótese a testar"
+                ]
+              ],
+              "options": [
+                "Facto verificável",
+                "Interpretação ou opinião",
+                "Hipótese a testar"
+              ]
+            },
+            {
+              "id": "m6-s1-v3",
+              "type": "match",
+              "title": "Revê os cartões da exposição.",
+              "intro": "Classifica cada afirmação para orientar o público.",
+              "clue": "No processo ordinário, a Comissão propõe e Parlamento e Conselho da UE decidem. Uma preferência estética é uma opinião; uma previsão precisa de teste.",
+              "explain": "Distingue uma afirmação que pode ser confirmada, uma apreciação e uma previsão que requer dados. Identificar uma hipótese não significa que ela esteja demonstrada.",
+              "refs": [
+                4
+              ],
+              "rows": [
+                [
+                  "A Comissão Europeia propõe legislação no processo ordinário",
+                  "Facto verificável"
+                ],
+                [
+                  "A Casa das Instituições é o edifício mais bonito",
+                  "Interpretação ou opinião"
+                ],
+                [
+                  "Talvez um esquema torne as funções mais claras",
+                  "Hipótese a testar"
+                ]
+              ],
+              "options": [
+                "Facto verificável",
+                "Interpretação ou opinião",
+                "Hipótese a testar"
+              ]
+            },
+            {
+              "id": "m6-s1-v4",
+              "type": "match",
+              "title": "Revê os cartões da exposição.",
+              "intro": "Classifica cada afirmação para orientar o público.",
+              "clue": "O Conselho da Europa é uma organização distinta da UE. Apreciações simbólicas são interpretações; efeitos de uma atividade exigem avaliação.",
+              "explain": "Distingue uma afirmação que pode ser confirmada, uma apreciação e uma previsão que requer dados. Identificar uma hipótese não significa que ela esteja demonstrada.",
+              "refs": [
+                5
+              ],
+              "rows": [
+                [
+                  "O Conselho da Europa é distinto da União Europeia",
+                  "Facto verificável"
+                ],
+                [
+                  "A ponte é o melhor símbolo da cooperação",
+                  "Interpretação ou opinião"
+                ],
+                [
+                  "Talvez a discussão em pares ajude a justificar escolhas",
+                  "Hipótese a testar"
+                ]
+              ],
+              "options": [
+                "Facto verificável",
+                "Interpretação ou opinião",
+                "Hipótese a testar"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "advanced": false,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Abre o encontro do Clube Europeu.",
+              "intro": "Que plano reúne participação, diversidade e avaliação?",
+              "options": [
+                "Escolher tudo sem ouvir a turma e contar apenas fotografias.",
+                "Convidar a turma a construir uma exposição acessível, cooperar com parceiros e recolher opiniões para melhorar.",
+                "Mostrar bandeiras sem explicar o que significam e excluir países fora da UE."
+              ],
+              "answer": 1,
+              "explain": "Este plano aplica cidadania ativa, cooperação e respeito pela diversidade. É uma escolha pedagógica fundamentada nos objetivos da DGE; há outras formas válidas de organizar um clube.",
+              "id": "m6-s2-original",
+              "clue": "Um Clube Europeu pode transformar conhecimento em ação: ouvir a comunidade, cooperar, respeitar direitos e avaliar resultados. Distingue factos verificáveis de interpretações e previsões.",
+              "refs": [
+                1,
+                8,
+                9
+              ]
+            },
+            {
+              "id": "m6-s2-v2",
+              "type": "choice",
+              "title": "Prepara um encontro de culturas.",
+              "intro": "Que forma de organização combina cidadania ativa e avaliação?",
+              "clue": "Os objetivos dos Clubes Europeus incluem cidadania ativa, cooperação, compreensão das diferenças e responsabilidade. Um plano precisa de participação e de critérios para avaliar.",
+              "explain": "Ouvir, cooperar e avaliar torna o plano coerente com esses objetivos. É uma proposta educativa; outras soluções responsáveis podem ser discutidas fora das opções do jogo.",
+              "refs": [
+                1,
+                8
+              ],
+              "options": [
+                "Decidir tudo sem ouvir os destinatários.",
+                "Ouvir a turma e parceiros, criar participação acessível e combinar como recolher opiniões e exemplos.",
+                "Contar materiais para provar que todos aprenderam."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m6-s2-v3",
+              "type": "choice",
+              "title": "Prepara uma exposição de património.",
+              "intro": "Que forma de organização combina cidadania ativa e avaliação?",
+              "clue": "Os objetivos dos Clubes Europeus incluem cidadania ativa, cooperação, compreensão das diferenças e responsabilidade. Um plano precisa de participação e de critérios para avaliar.",
+              "explain": "Ouvir, cooperar e avaliar torna o plano coerente com esses objetivos. É uma proposta educativa; outras soluções responsáveis podem ser discutidas fora das opções do jogo.",
+              "refs": [
+                1,
+                8
+              ],
+              "options": [
+                "Decidir tudo sem ouvir os destinatários.",
+                "Ouvir a turma e parceiros, criar participação acessível e combinar como recolher opiniões e exemplos.",
+                "Contar materiais para provar que todos aprenderam."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m6-s2-v4",
+              "type": "choice",
+              "title": "Prepara uma campanha sobre direitos humanos.",
+              "intro": "Que forma de organização combina cidadania ativa e avaliação?",
+              "clue": "Os objetivos dos Clubes Europeus incluem cidadania ativa, cooperação, compreensão das diferenças e responsabilidade. Um plano precisa de participação e de critérios para avaliar.",
+              "explain": "Ouvir, cooperar e avaliar torna o plano coerente com esses objetivos. É uma proposta educativa; outras soluções responsáveis podem ser discutidas fora das opções do jogo.",
+              "refs": [
+                1,
+                8
+              ],
+              "options": [
+                "Decidir tudo sem ouvir os destinatários.",
+                "Ouvir a turma e parceiros, criar participação acessível e combinar como recolher opiniões e exemplos.",
+                "Contar materiais para provar que todos aprenderam."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "advanced": true,
+          "variants": [
+            {
+              "type": "choice",
+              "title": "Como saber se o encontro ajudou?",
+              "intro": "Escolhe a conclusão que respeita os limites da evidência.",
+              "options": [
+                "Todos ficaram mais tolerantes, porque vieram à exposição.",
+                "Podemos recolher exemplos e opiniões antes e depois; estes dados ajudam a avaliar, mas não provam todos os efeitos.",
+                "Basta contar cartazes para provar que todos aprenderam."
+              ],
+              "answer": 1,
+              "explain": "A avaliação requer evidência adequada. Presença e quantidade de materiais não demonstram, por si só, aprendizagem ou mudança de atitudes.",
+              "id": "m6-s3-original",
+              "clue": "Um Clube Europeu pode transformar conhecimento em ação: ouvir a comunidade, cooperar, respeitar direitos e avaliar resultados. Distingue factos verificáveis de interpretações e previsões.",
+              "refs": [
+                1,
+                8,
+                9
+              ]
+            },
+            {
+              "id": "m6-s3-v2",
+              "type": "choice",
+              "title": "Tira uma conclusão responsável.",
+              "intro": "A equipa contou 40 visitantes. Que conclusão pode apresentar?",
+              "clue": "A avaliação deve usar evidência adequada ao que se quer saber. Presença não demonstra aprendizagem; opiniões e exemplos ajudam, mas têm limites.",
+              "explain": "Uma conclusão responsável diz o que os dados permitem afirmar e o que ainda é incerto. A participação num encontro não prova, por si só, mudança de atitudes.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Está provado que todos mudaram de opinião.",
+                "A contagem informa sobre presença; para avaliar aprendizagem são necessárias outras evidências.",
+                "A contagem prova que o projeto não serviu para nada."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "m6-s3-v3",
+              "type": "choice",
+              "title": "Tira uma conclusão responsável.",
+              "intro": "A turma quer testar se as legendas ajudam. Qual é um passo adequado?",
+              "clue": "A avaliação deve usar evidência adequada ao que se quer saber. Presença não demonstra aprendizagem; opiniões e exemplos ajudam, mas têm limites.",
+              "explain": "Uma conclusão responsável diz o que os dados permitem afirmar e o que ainda é incerto. A participação num encontro não prova, por si só, mudança de atitudes.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Recolher exemplos de compreensão e opiniões antes e depois de testar as legendas.",
+                "Afirmar o sucesso sem observar os visitantes.",
+                "Contar só a tinta usada na impressão."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "m6-s3-v4",
+              "type": "choice",
+              "title": "Tira uma conclusão responsável.",
+              "intro": "Algumas opiniões foram recolhidas no final do encontro. Como as usas?",
+              "clue": "A avaliação deve usar evidência adequada ao que se quer saber. Presença não demonstra aprendizagem; opiniões e exemplos ajudam, mas têm limites.",
+              "explain": "Uma conclusão responsável diz o que os dados permitem afirmar e o que ainda é incerto. A participação num encontro não prova, por si só, mudança de atitudes.",
+              "refs": [
+                1
+              ],
+              "options": [
+                "Como prova de todos os efeitos em toda a comunidade.",
+                "Ignorando todas as opiniões diferentes.",
+                "Como contributos para melhorar, indicando quem participou e os limites do registo."
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

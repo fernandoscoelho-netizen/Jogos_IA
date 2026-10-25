@@ -1,0 +1,148 @@
+/* Leitura confortável no ecrã; a composição de impressão mantém-se própria. */
+@media screen {
+ body{font-size:16px;line-height:1.7}
+ .eyebrow,.spotlight-copy .eyebrow,.city-copy .eyebrow,.task-card .eyebrow,.fact-banner .eyebrow,.city-question .eyebrow{font-size:11px;letter-spacing:1.2px}
+ .header nav a{font-size:15px}
+ .brand small{font-size:10px;letter-spacing:1.3px}
+ .passport-link,.passport-link span{font-size:13px}
+ .hero{padding-top:42px;padding-bottom:42px}
+ .hero p{font-size:16px;line-height:1.8}
+ .hero-stats,.hero-stats span{font-size:13px}
+ .hero-stats b{font-size:18px}
+ .primary,.secondary{font-size:15px;padding:12px 18px;min-height:44px}
+ .text-link,.city-copy .text-link,.spotlight-copy .text-link,.timeline-event .text-link{font-size:14px}
+ .hero-actions{flex-wrap:wrap}
+ .travel-strip,.travel-strip button{font-size:14px}
+ .section-heading h2{font-size:28px}
+ .section-heading p,.page-intro p{font-size:16px}
+ .counter-chip{font-size:13px;white-space:normal}
+ #europeMap{height:410px}
+ .map-legend,.icon-button{font-size:12px}
+ .map-caption,.map-caption>span,.map-credit{font-size:11px;line-height:1.6}
+ .map-marker .pin-label{font-size:18px;stroke-width:4px}
+ .spotlight-copy p,.city-copy p,.institution-card p,.task-card p,.timeline-event p{font-size:15px;line-height:1.75}
+ .city-copy h3{font-size:23px}
+ .city-copy{padding:21px}
+ .spotlight-copy{padding:23px}
+ .country-badge{font-size:11px}
+ .stamp-mini{font-size:10px}
+ .filters button{font-size:13px;min-height:38px}
+ .filters{gap:5px}
+ .fact-banner p,.fact-banner a:not(.primary){font-size:14px}
+ .fact-banner{flex-wrap:wrap}
+ .fact-banner h3{font-size:23px}
+ .footer .text-link,.footer p,.school-identity b{font-size:12px;line-height:1.6}
+ .school-identity>span{font-size:14px}
+ .notice p,.history-tip{font-size:15px;line-height:1.75}
+ .search-label,.catalog-toolbar>span{font-size:14px}
+ input[type=search]{font-size:16px;min-height:44px}
+ .institution-card h3{font-size:21px}
+ .institution-card .verb,.institution-card .location{font-size:14px}
+ .institution-card{padding:25px}
+ .law-lab p,.law-detail,.law-detail p{font-size:15px;line-height:1.75}
+ .law-detail h3{font-size:19px}
+ .law-steps button{font-size:13px}
+ .law-steps button b{font-size:16px}
+ .timeline-event h3{font-size:23px}
+ .timeline-event small{font-size:12px}
+ .task-card h3{font-size:22px}
+ .task-card .task-status,.question-kicker{font-size:14px}
+ .question-title{font-size:25px}
+ .option,.city-question .option{font-size:16px;line-height:1.7;padding:14px 17px}
+ .option .letter{font-size:13px;width:30px;height:30px}
+ .feedback,.info-content p,.info-content li{font-size:15px;line-height:1.8}
+ .feedback a,.source-link{font-size:13px}
+ .match-row label,.match-row select,.order-item>span:nth-child(2){font-size:16px}
+ .match-row select{min-height:44px}
+ .order-controls button{width:40px;height:40px;font-size:18px}
+ .map-options button{font-size:14px;min-height:40px}
+ .review-list{font-size:14px}
+ .score-result p{font-size:16px}
+ .passport-summary p,.passport-progress{font-size:15px}
+ .passport-score span{font-size:11px}
+ .stamps{grid-template-columns:repeat(3,1fr)}
+ .stamp h3{font-size:17px}
+ .stamp p,.stamp button{font-size:13px;line-height:1.7}
+ .badge h3{font-size:17px}
+ .badge p,.privacy-note{font-size:14px;line-height:1.7}
+ .dialog-content>p,.dialog-content .place-note{font-size:16px;line-height:1.8}
+ .dialog-content h3{font-size:21px}
+ .mini-institutions button{font-size:14px;min-height:42px}
+ .source-list li{font-size:14px}
+ .info-content h3{font-size:20px}
+ .toast{font-size:15px}
+}
+@media screen and (max-width:1100px){
+ .header{flex-wrap:wrap}
+ .header nav{gap:19px}
+ .institution-grid{grid-template-columns:repeat(2,1fr)}
+ .badges{grid-template-columns:repeat(2,1fr)}
+ .footer{flex-wrap:wrap}
+ .school-identity{flex-wrap:wrap}
+ .fact-banner>.primary{margin-left:0}
+}
+@media screen and (max-width:800px){
+ .header nav a{font-size:14px}
+ .hero{grid-template-columns:1fr;padding:30px}
+ .hero h1{font-size:38px}
+ .hero-art{height:260px;max-width:390px;width:100%;margin:auto}
+ .ticket{width:285px}
+ .explorer{grid-template-columns:1fr}
+ .spotlight{display:grid;grid-template-columns:.8fr 1fr}
+ .spotlight-art svg{height:100%;min-height:230px}
+ .section-heading{flex-wrap:wrap}
+ .map-toolbar{flex-wrap:wrap}
+ .match-row{grid-template-columns:1fr;gap:10px}
+ .section-heading h2{font-size:26px}
+}
+@media screen and (max-width:560px){
+ .brand small{font-size:8px}
+ .passport-link,.passport-link span{font-size:11px}
+ .passport-link{padding:8px}
+ .header nav{gap:20px}
+ .hero{padding:27px 23px}
+ .hero h1{font-size:35px}
+ .hero p{font-size:16px}
+ .hero-stats,.hero-stats span{font-size:12px}
+ .travel-strip{flex-wrap:wrap;align-items:flex-start}
+ .travel-strip>div{max-width:none}
+ .city-grid,.task-grid,.institution-grid{grid-template-columns:1fr}
+ .city-art svg{height:165px}
+ .city-copy .eyebrow,.spotlight-copy .eyebrow{font-size:11px}
+ .city-copy h3{font-size:24px}
+ .spotlight{display:flex}
+ .spotlight-art svg{width:100%;height:165px;min-height:0;margin-left:0}
+ .counter-chip{font-size:13px}
+ .filters button,.history-filters button{font-size:12px;padding:9px}
+ .fact-banner{display:block;padding:23px}
+ .fact-stars{display:inline-block;margin-bottom:12px}
+ .fact-banner>.primary{margin-top:12px}
+ .footer p{font-size:11px}
+ .school-identity img{width:220px;max-width:100%}
+ .school-identity>span{border-left:0;padding-left:0}
+ .catalog-toolbar{align-items:flex-start;flex-direction:column}
+ .search-label{width:100%}
+ .law-steps{flex-direction:column;align-items:stretch}
+ .law-steps>span{display:none}
+ .law-steps button b{display:inline;margin-left:10px}
+ .timeline-item{grid-template-columns:55px 1fr;gap:14px}
+ .timeline-event{padding:18px}
+ .timeline-event h3{font-size:21px}
+ .activity-head{flex-wrap:wrap}
+ .activity-head .secondary{font-size:13px;min-height:42px}
+ .question-title{font-size:22px}
+ .order-item{flex-wrap:wrap}
+ .order-item>span:nth-child(2){flex-basis:calc(100% - 50px);font-size:15px}
+ .order-item .order-controls{margin-left:auto}
+ .stamps{grid-template-columns:repeat(2,1fr)}
+ .stamp h3{font-size:16px}
+ .badges{grid-template-columns:1fr}
+ .passport-summary{flex-wrap:wrap}
+ .passport-score{text-align:left}
+ .passport-score span{font-size:11px}
+ .map-legend{font-size:11px}
+ .map-caption{flex-wrap:wrap}
+ .map-caption>span{max-width:none}
+ .source-list{columns:1}
+ .primary,.secondary{max-width:100%;white-space:normal}
+}

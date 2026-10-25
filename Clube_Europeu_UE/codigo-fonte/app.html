@@ -1,0 +1,512 @@
+<title>O Clube Europeu foi conhecer a UE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Página clara do Clube Europeu: cabeçalho branco, cartões com bordas finas, mapa + painel lado a lado, grelha de cidades. Tema claro por opção. */
+:root {
+  color-scheme: light;
+  --azul: #2459A2; --azul-2: #386BB4; --eu: #003399; --ceu: #EAF2FF; --palido: #F5F8FC; --fundo: #FBFCFE;
+  --amarelo: #FFCC00; --dourado: #AD8016; --sol: #F1D57A; --tinta: #28405D; --titulo: #244B7A; --suave: #64758A;
+  --linha: #DFE7F1; --branco: #FFFFFF; --verde: #317263; --verde-bg: #E6F3EE; --vermelho: #A63446; --vermelho-bg: #FBEDEF;
+  --mapa-mar: #F2F7FE; --mapa-terra: #E3E9F2; --mapa-ue: #B9CDF0; --mapa-ue2: #8DAEE6; --rota: #C9981E;
+  --f-titulo: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-texto: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --raio: 16px;
+}
+* { box-sizing: border-box }
+body { background: var(--fundo); color: var(--tinta); font: 16px/1.65 var(--f-texto) }
+h1, h2, h3, h4 { font-family: var(--f-titulo); color: var(--titulo); line-height: 1.2; text-wrap: balance; margin: 0 }
+button, input, select, textarea { font: inherit; color: inherit }
+button { cursor: pointer; border: 0; background: none }
+a { color: var(--azul) }
+:focus-visible { outline: 3px solid #C9981E; outline-offset: 3px }
+.eyebrow { display: block; font-size: 11px; letter-spacing: 1.4px; font-weight: 700; color: var(--azul); text-transform: uppercase }
+.eyebrow i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #8BADE3; margin-right: 7px; vertical-align: 2px }
+.mono { font-family: var(--f-mono) }
+.muted { color: var(--suave) }
+
+.primario { display: inline-flex; align-items: center; justify-content: center; gap: 14px; background: var(--azul-2); color: #fff; border: 1px solid var(--azul-2); border-radius: 8px; padding: 11px 18px; min-height: 44px; font-weight: 600; font-size: 15px; text-decoration: none; transition: background .2s, transform .2s }
+.primario:hover { background: #285895; transform: translateY(-1px) }
+.secundario { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #fff; color: var(--azul); border: 1px solid #CFDCEE; border-radius: 8px; padding: 11px 16px; min-height: 44px; font-weight: 600; font-size: 15px }
+.secundario:hover { border-color: var(--azul-2) }
+.ligacao { color: var(--azul); font-weight: 600; font-size: 15px; display: inline-flex; gap: 8px; align-items: center; padding: 6px 0 }
+.primario:disabled, .secundario:disabled { opacity: .5; cursor: not-allowed; transform: none }
+.peq { min-height: 36px; padding: 7px 12px; font-size: 14px }
+.primario svg, .secundario svg { width: 18px; height: 18px }
+.chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--linha); background: #fff; border-radius: 999px; padding: 7px 14px; font-size: 13px; color: var(--suave) }
+.chip b { color: var(--titulo) }
+.ponto-azul { width: 7px; height: 7px; border-radius: 50%; background: #8BADE3 }
+
+/* Cabeçalho */
+.cabecalho { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--linha);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 14px }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: #fff }
+.cab-in { max-width: 1340px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--titulo); min-width: 0 }
+.marca svg { width: 46px; height: 32px; border-radius: 5px; flex: none }
+.marca b { font: 800 17px var(--f-titulo); display: block; line-height: 1.2 }
+.marca small { display: block; font-size: 10px; letter-spacing: 1.3px; color: var(--suave); text-transform: uppercase }
+.cab-nav { display: flex; gap: 24px; align-items: center }
+.cab-nav button { color: var(--suave); font-size: 15px; padding: 10px 0; position: relative }
+.cab-nav button:hover { color: var(--azul) }
+.cab-nav button[aria-current="true"] { color: var(--azul); font-weight: 700 }
+.cab-nav button[aria-current="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 2px; background: var(--azul) }
+.passaporte-btn { display: flex; align-items: center; gap: 10px; border: 1px solid #D4E1F2; border-radius: 9px; background: #F4F8FF; padding: 9px 14px; font-size: 14px; color: var(--azul) }
+.passaporte-btn svg { width: 20px; height: 20px }
+.passaporte-btn b { border-left: 1px solid #D7E3F4; padding-left: 10px; font-variant-numeric: tabular-nums }
+
+main { max-width: 1340px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 26px 40px }
+
+/* Hero inicial */
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 30px; align-items: center; background: linear-gradient(110deg, #EFF5FF, #F2F6FD 55%, #EAF2FF); border: 1px solid #E1EAF8; border-radius: 22px; padding: 44px; overflow: hidden; position: relative }
+.hero h1 { font-size: clamp(34px, 4vw, 52px); letter-spacing: -1.6px; font-weight: 800; margin: 16px 0 }
+.hero h1 em { font-style: normal; color: #2761B0; position: relative; white-space: nowrap }
+.hero h1 em::after { content: ""; position: absolute; bottom: -3px; left: 0; right: 10px; height: 5px; border-radius: 4px; background: rgba(241, 213, 112, .6) }
+.hero p { color: #5B7391; font-size: 17px; line-height: 1.8; margin: 0 0 22px; max-width: 34em }
+.hero-numeros { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; font-size: 14px; color: var(--suave) }
+.hero-numeros b { color: var(--azul); font: 800 20px var(--f-titulo); margin-right: 4px }
+.hero-numeros .hero-nota { border-left: 1px solid #C9D7EA; padding-left: 18px }
+.hero-arte { position: relative; min-height: 330px; display: grid; place-items: center }
+.orbe { position: absolute; border-radius: 50%; border: 1px solid #D5E2F5 }
+.orbe.um { width: 320px; height: 320px; right: -40px; top: -10px; background: radial-gradient(circle, #E3EDFC 0 55%, transparent 56%) }
+.orbe.dois { width: 420px; height: 420px; right: -90px; top: -60px }
+.bilhete { position: relative; width: min(340px, 100%); background: #FFFDF8; border: 1px solid #E5E9F0; border-radius: 14px; box-shadow: 0 24px 50px rgba(36, 75, 122, .13); transform: rotate(3deg); overflow: hidden }
+.bilhete-topo { background: #F7F1E1; display: flex; justify-content: space-between; padding: 12px 18px; font-size: 10px; letter-spacing: 2px; color: #6F6A5A }
+.bilhete-topo span:last-child { color: #DFBD54 }
+.bilhete-titulo { padding: 16px 18px 0; font: 700 17px var(--f-titulo); color: var(--titulo) }
+.bilhete .ilus { height: 110px; margin: 6px 0 }
+.bilhete .ilus svg { width: 100%; height: 100% }
+.bilhete-base { border-top: 1px dashed #D9DFE8; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; padding: 12px 18px 16px; font-size: 13px }
+.bilhete-base small { display: block; font-size: 9px; letter-spacing: 1.6px; color: var(--suave) }
+.bilhete-base b { color: var(--titulo) }
+.bilhete-base > div:last-child { text-align: right }
+.bilhete-base span { color: #8BADE3; letter-spacing: 2px; font-size: 12px }
+.nota-flutuante { position: absolute; left: 2%; bottom: 2%; background: #FFF6D8; border: 1px solid #F1E3B0; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #6D5A1E; transform: rotate(-3deg); box-shadow: 0 10px 24px rgba(0,0,0,.06) }
+
+.cartao { background: #fff; border: 1px solid var(--linha); border-radius: var(--raio) }
+.form-inicio { margin-top: 22px; padding: 28px; display: grid; gap: 18px }
+.form-inicio h2 { font-size: 24px }
+.campos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+.campo { display: grid; gap: 6px; min-width: 0 }
+.campo label, .campo .lbl { font-weight: 600; font-size: 14px; color: var(--titulo) }
+.campo input, .campo select, .codigo, .diario textarea { min-height: 46px; border: 1px solid #CFDCEE; border-radius: 8px; padding: 10px 12px; background: var(--palido); width: 100% }
+.campo input:focus, .codigo:focus, .diario textarea:focus { border-color: var(--azul-2); background: #fff; outline: none; box-shadow: 0 0 0 3px rgba(56,107,180,.15) }
+.niveis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px }
+.nivel { border: 1px solid var(--linha); border-radius: 12px; padding: 14px 16px; background: var(--palido); text-align: left; display: grid; gap: 2px }
+.nivel b { font: 800 16px var(--f-titulo); color: var(--titulo) }
+.nivel span { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--azul); font-weight: 700 }
+.nivel small { color: var(--suave); font-size: 14px; line-height: 1.5 }
+.nivel[aria-pressed="true"] { border-color: var(--azul-2); background: var(--ceu); box-shadow: inset 0 0 0 1px var(--azul-2) }
+.acoes { display: flex; gap: 12px; flex-wrap: wrap; align-items: center }
+
+/* Faixa e títulos de secção */
+.faixa { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; border-bottom: 1px solid var(--linha); padding: 4px 0 18px; color: var(--suave) }
+.faixa > div { display: flex; gap: 10px; align-items: center }
+.faixa svg { width: 20px; height: 20px; color: var(--azul) }
+.cab-secao { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin: 30px 0 18px }
+.cab-secao h2 { font-size: clamp(24px, 2.6vw, 30px); letter-spacing: -.6px; margin-top: 8px }
+.cab-secao p { margin: 6px 0 0; color: var(--suave) }
+
+/* Explorador: mapa + destaque */
+.explorador { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 20px; align-items: stretch }
+.mapa-cartao { background: #EEF4FD; border: 1px solid #DCE6F4; border-radius: var(--raio); position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 520px }
+.mapa-barra { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 16px 0 }
+.camadas { display: flex; gap: 4px; background: #fff; border: 1px solid var(--linha); border-radius: 10px; padding: 4px; flex-wrap: wrap }
+.camadas button { border-radius: 7px; padding: 6px 12px; font-size: 13px; color: var(--suave); font-weight: 600 }
+.camadas button[aria-pressed="true"] { background: var(--ceu); color: var(--azul) }
+.zoom { display: flex; gap: 6px }
+.zoom button { width: 34px; height: 34px; border-radius: 8px; background: #fff; border: 1px solid var(--linha); color: var(--azul); font-size: 18px; display: grid; place-items: center }
+.mapa-area { position: relative; flex: 1; min-height: 380px; touch-action: none }
+#mapa { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; user-select: none }
+#mapa.arrastar { cursor: grabbing }
+.pais { stroke: #fff; stroke-width: .6; fill: var(--mapa-terra); transition: fill .35s }
+.pais.ue { cursor: pointer }
+.pais.ue:hover, .pais.sel { filter: brightness(.94) saturate(1.2) }
+.mar-txt { font: italic 500 9px var(--f-texto); fill: #9DB2CF; letter-spacing: 1.5px; text-transform: uppercase }
+.rota-feita { fill: none; stroke: var(--azul); stroke-linecap: round; opacity: .85 }
+.rota-prox { fill: none; stroke: var(--rota); stroke-linecap: round }
+.cidade { cursor: pointer }
+.cidade .halo { fill: var(--sol); opacity: .45; transform-box: fill-box; transform-origin: center }
+.cidade .pto { fill: #fff; stroke: var(--azul) }
+.cidade.feita .pto { fill: var(--azul); stroke: #fff }
+.cidade.atual .pto { fill: var(--dourado); stroke: #fff }
+.cidade.atual .halo { animation: pulsar 2s ease-in-out infinite }
+.cidade.bloq { opacity: .6 }
+.cidade text { font-family: var(--f-texto); font-weight: 700; fill: var(--titulo); paint-order: stroke; stroke: #F2F7FE; stroke-linejoin: round }
+@keyframes pulsar { 50% { opacity: .08; transform: scale(1.8) } }
+.mapa-rodape { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 0 16px 12px; font-size: 12px; color: var(--suave) }
+.legenda { display: flex; gap: 14px; flex-wrap: wrap; align-items: center }
+.legenda i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: 0 }
+.ficha { position: absolute; right: 14px; top: 14px; width: min(250px, calc(100% - 28px)); background: #fff; border: 1px solid var(--linha); border-radius: 12px; padding: 12px 14px; box-shadow: 0 14px 30px rgba(36,75,122,.12) }
+.ficha h3 { font-size: 16px; margin-bottom: 6px }
+.ficha dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0; font-size: 14px }
+.ficha dt { color: var(--suave) }
+.ficha dd { margin: 0; font-weight: 600; color: var(--titulo) }
+.ficha button { position: absolute; top: 6px; right: 8px; color: var(--suave); font-size: 18px; width: 28px; height: 28px }
+
+.destaque { background: #fff; border: 1px solid #DCE6F4; border-radius: var(--raio); overflow: hidden; display: flex; flex-direction: column }
+.destaque .ilus { position: relative; background: #EEF4FD; aspect-ratio: 600 / 240; max-width: 100% }
+.destaque .ilus svg { width: 100%; height: 100%; display: block }
+.etiqueta { position: absolute; left: 14px; top: 14px; background: #fff; border: 1px solid var(--linha); border-radius: 7px; padding: 3px 9px; font-size: 12px; color: var(--suave) }
+.destaque-corpo { padding: 22px 24px 24px; display: grid; gap: 14px; align-content: start; flex: 1 }
+.destaque-corpo h3 { font-size: 26px; letter-spacing: -.4px }
+.destaque-corpo p { margin: 0; color: var(--suave) }
+.progresso-etapa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px }
+.progresso-etapa span { font-size: 12px; color: var(--suave); border-top: 3px solid var(--linha); padding-top: 6px }
+.progresso-etapa span.ok { border-color: var(--azul-2); color: var(--azul); font-weight: 600 }
+.transportes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px }
+.transp { border: 1px solid var(--linha); border-radius: 12px; background: var(--palido); padding: 12px 14px; text-align: left; display: grid; gap: 3px; min-width: 0 }
+.transp svg { width: 24px; height: 24px; color: var(--azul) }
+.transp b { font: 700 16px var(--f-titulo); color: var(--titulo) }
+.transp small { color: var(--suave); font-size: 13px; line-height: 1.45 }
+.transp[aria-pressed="true"] { border-color: var(--azul-2); background: var(--ceu); box-shadow: inset 0 0 0 1px var(--azul-2) }
+.transp:disabled { opacity: .55; cursor: not-allowed }
+.totais { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; border-top: 1px solid var(--linha); padding-top: 14px }
+.totais b { display: block; font: 800 18px var(--f-titulo); color: var(--titulo); font-variant-numeric: tabular-nums }
+.totais span { font-size: 12px; color: var(--suave) }
+
+/* Grelha de cidades */
+.grelha-cidades { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px }
+.cid { background: #fff; border: 1px solid #DCE6F4; border-radius: var(--raio); overflow: hidden; display: flex; flex-direction: column; text-align: left; transition: transform .2s, box-shadow .2s }
+.cid:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(36,75,122,.1) }
+.cid .ilus { position: relative; background: #EEF4FD; aspect-ratio: 600 / 220; max-width: 100% }
+.cid .ilus svg { width: 100%; height: 100%; display: block }
+.cid-corpo { padding: 18px 20px 0; display: grid; gap: 6px; flex: 1; align-content: start }
+.cid-corpo h3 { font-size: 22px }
+.cid-corpo p { margin: 0; color: var(--suave); font-size: 15px }
+.cid-pe { margin: 16px 20px 0; padding: 14px 0 16px; border-top: 1px solid var(--linha); display: flex; justify-content: space-between; align-items: center; color: var(--azul); font-weight: 600; font-size: 14px }
+.cid-pe svg { width: 16px; height: 16px }
+.cid.bloq { opacity: .62 }
+.cid.bloq .cid-pe { color: var(--suave) }
+.cid .num { position: absolute; right: 14px; top: 14px; font: 600 12px var(--f-mono); color: var(--suave); background: #fff; border-radius: 7px; padding: 3px 8px; border: 1px solid var(--linha) }
+.cid .mini-carimbo { position: absolute; right: 10px; bottom: -6px; width: 74px; height: 74px }
+
+/* Faixa do hino */
+.faixa-hino { margin-top: 30px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 26px; align-items: center; background: linear-gradient(110deg, #F0F5FE, #FBF8EE); border: 1px solid #E1EAF8; border-radius: 20px; padding: 28px 32px }
+.faixa-hino svg.est { width: 96px; height: 96px }
+.faixa-hino h3 { font-size: 22px; margin: 6px 0 }
+.faixa-hino p { margin: 0; color: var(--suave) }
+
+/* Rodapé */
+.rodape { border-top: 1px solid var(--linha); background: #fff; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 26px }
+.rod-in { max-width: 1340px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--suave) }
+.escola { display: flex; align-items: center; gap: 18px }
+.escola img { height: 48px; width: auto }
+.escola span b { color: var(--titulo); display: block }
+.rod-in p { margin: 2px 0 }
+
+/* Diálogos */
+dialog { border: 0; padding: 0; border-radius: 22px; background: #fff; color: var(--tinta); width: min(940px, calc(100% - 24px)); max-height: calc(100% - 24px); box-shadow: 0 30px 80px rgba(20, 40, 80, .3) }
+dialog::backdrop { background: rgba(24, 44, 82, .45); backdrop-filter: blur(3px) }
+.dlg-corpo { padding: 24px max(24px, env(safe-area-inset-right, 0px)) 28px max(24px, env(safe-area-inset-left, 0px)); display: grid; gap: 20px }
+.dlg-cab { display: flex; justify-content: space-between; align-items: start; gap: 12px }
+.dlg-cab h2 { font-size: 26px; margin-top: 6px }
+.fechar { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linha); background: #fff; color: var(--titulo); font-size: 22px; line-height: 1; flex: none; display: grid; place-items: center }
+.postal { position: relative; background: #EEF4FD; aspect-ratio: 600 / 220; max-width: 100% }
+.postal svg { width: 100%; height: 100%; display: block }
+.postal .fechar { position: absolute; top: 14px; right: 14px }
+.postal .etiqueta { top: 14px }
+.cidade-cab { display: grid; gap: 6px }
+.cidade-cab h2 { font-size: clamp(28px, 4vw, 38px); letter-spacing: -1px }
+.passos { display: flex; gap: 4px; flex-wrap: wrap; background: var(--palido); border: 1px solid var(--linha); border-radius: 12px; padding: 4px }
+.passos button { border-radius: 9px; padding: 8px 14px; font-weight: 600; font-size: 14px; color: var(--suave); display: inline-flex; gap: 8px; align-items: center }
+.passos button .n { width: 22px; height: 22px; border-radius: 50%; border: 1px solid currentColor; display: grid; place-items: center; font-size: 11px }
+.passos button.feito .n { background: var(--azul-2); border-color: var(--azul-2); color: #fff }
+.passos button[aria-selected="true"] { background: #fff; color: var(--azul); box-shadow: 0 1px 4px rgba(36,75,122,.12) }
+.passos button:disabled { opacity: .5; cursor: not-allowed }
+.fala { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 14px; align-items: start }
+.balao { background: var(--ceu); border-radius: 4px 16px 16px 16px; padding: 14px 18px }
+.balao .quem { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center }
+.balao b { color: var(--titulo) }
+.balao small { color: var(--suave) }
+.balao p { margin: 8px 0 0 }
+.som-btn { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--azul); font-weight: 600; border: 1px solid #CFDCEE; border-radius: 999px; padding: 5px 12px; background: #fff }
+.som-btn svg { width: 16px; height: 16px }
+.secao { display: grid; gap: 12px }
+.secao > h3 { font-size: 18px }
+.grelha2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px }
+.inst { border: 1px solid var(--linha); border-radius: 12px; padding: 16px; display: grid; gap: 6px; align-content: start }
+.inst b { font: 700 16px var(--f-titulo); color: var(--titulo) }
+.inst p { margin: 0; font-size: 15px }
+.inst small { color: var(--suave); display: flex; gap: 6px; align-items: center }
+.dupla { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px }
+.cronologia { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; border-left: 2px solid #CFDCEE; padding-left: 16px }
+.cronologia li { display: grid; grid-template-columns: 50px 1fr; gap: 10px; position: relative }
+.cronologia li::before { content: ""; position: absolute; left: -22px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--sol); border: 2px solid #fff }
+.cronologia b { font-family: var(--f-mono); color: var(--azul) }
+.factos { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px }
+.factos li { padding-left: 22px; position: relative }
+.factos li::before { content: "✦"; position: absolute; left: 0; color: #DFBD54 }
+.expressoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px }
+.expr { display: flex; justify-content: space-between; gap: 10px; align-items: center; background: var(--palido); border: 1px solid var(--linha); border-radius: 12px; padding: 12px 14px }
+.expr b { font: 700 17px var(--f-titulo); color: var(--titulo); display: block }
+.expr small { color: var(--suave) }
+.expr button { width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 1px solid #CFDCEE; color: var(--azul); display: grid; place-items: center; flex: none }
+.expr button svg { width: 18px; height: 18px }
+.nota { background: #FFF8E1; border: 1px solid #F1E3B0; border-radius: 10px; padding: 10px 14px; font-size: 14px; color: #5E4D16 }
+.lista-ligacoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px }
+.lista-ligacoes a { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; text-decoration: none; border: 1px solid var(--linha); border-radius: 12px; padding: 12px 14px; color: var(--tinta) }
+.lista-ligacoes a:hover { border-color: var(--azul-2); background: var(--palido) }
+.lista-ligacoes .ico { width: 36px; height: 36px; border-radius: 9px; background: var(--ceu); color: var(--azul); display: grid; place-items: center }
+.lista-ligacoes .ico svg { width: 18px; height: 18px }
+.lista-ligacoes b { display: block; color: var(--titulo); font-size: 15px; line-height: 1.35 }
+.lista-ligacoes small { color: var(--suave) }
+
+/* Quiz e desafios */
+.pergunta { border: 1px solid var(--linha); border-radius: 14px; padding: 16px 18px; display: grid; gap: 12px; margin: 0 }
+.pergunta legend { font: 700 16px var(--f-titulo); color: var(--titulo); padding: 0 6px }
+.opcoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px }
+.opcao { display: flex; gap: 10px; align-items: center; border: 1px solid #CFDCEE; border-radius: 10px; padding: 10px 14px; cursor: pointer; background: #fff }
+.opcao:hover { border-color: var(--azul-2) }
+.opcao input { width: 18px; height: 18px; accent-color: var(--azul-2); flex: none }
+.opcao.riscada { opacity: .4; text-decoration: line-through; pointer-events: none }
+.certa { border-color: var(--verde) !important; background: var(--verde-bg) !important }
+.errada { border-color: var(--vermelho) !important; background: var(--vermelho-bg) !important }
+.feedback { border-radius: 10px; padding: 10px 14px; display: flex; gap: 10px; align-items: start; font-size: 15px }
+.feedback svg { width: 20px; height: 20px; flex: none; margin-top: 2px }
+.feedback.ok { background: var(--verde-bg); color: var(--verde) }
+.feedback.erro { background: var(--vermelho-bg); color: var(--vermelho) }
+.feedback p { margin: 0; color: var(--tinta) }
+.resultado { display: flex; gap: 16px; align-items: center; background: var(--palido); border: 1px solid var(--linha); border-radius: 14px; padding: 16px 18px }
+.resultado b.grande { font: 800 32px var(--f-titulo); color: var(--azul) }
+.sel-item { display: flex; gap: 12px; align-items: center; border: 1px solid #CFDCEE; border-radius: 10px; padding: 12px 14px; cursor: pointer; background: #fff }
+.sel-item input { width: 20px; height: 20px; accent-color: var(--azul-2); flex: none }
+.sel-item small { display: block; color: var(--suave) }
+.par { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; align-items: center; border: 1px solid #CFDCEE; border-radius: 10px; padding: 10px 14px; background: #fff }
+.par b { color: var(--titulo) }
+.par select { width: 100%; min-height: 42px; border: 1px solid #CFDCEE; border-radius: 8px; background: var(--palido); padding: 6px 10px }
+.ordem { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
+.ordem li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 12px; align-items: center; border: 1px solid #CFDCEE; border-radius: 10px; padding: 8px 12px; background: #fff }
+.ordem .n { font: 600 13px var(--f-mono); color: var(--suave) }
+.ordem li.fixa { border-style: dashed }
+.ordem .setas { display: flex; gap: 4px }
+.ordem .setas button { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--linha); background: var(--palido); color: var(--azul); font-weight: 700 }
+.minimapa { border: 1px solid #DCE6F4; border-radius: 14px; background: var(--mapa-mar); overflow: hidden }
+.minimapa svg { width: 100%; height: auto; display: block; max-height: 440px }
+.minimapa .pais { cursor: pointer }
+.minimapa .pais:hover { filter: brightness(.92) }
+.minimapa .alvo-sel { fill: var(--azul-2) !important }
+.minimapa .alvo-certo { fill: var(--verde) !important }
+.minimapa .alvo-errado { fill: var(--vermelho) !important }
+.bandeira-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: center }
+.bandeira-wrap svg { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 10px 26px rgba(36,75,122,.18) }
+.controlos { display: grid; gap: 14px }
+.diario textarea { min-height: 100px; resize: vertical }
+.carimbo-grande { display: grid; place-items: center; padding: 6px }
+.carimbo-grande .carimbo { width: 170px; height: 170px }
+.carimbo { transform: rotate(var(--rot)) }
+.carimbar { animation: carimbar .55s cubic-bezier(.2, 1.6, .5, 1) both }
+@keyframes carimbar { from { transform: scale(2.2) rotate(var(--rot)); opacity: 0 } to { transform: scale(1) rotate(var(--rot)); opacity: 1 } }
+
+/* Viagem */
+.viagem-dados { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px }
+.viagem-dados div { background: var(--palido); border: 1px solid var(--linha); border-radius: 12px; padding: 12px 14px }
+.viagem-dados b { display: block; font: 800 20px var(--f-titulo); color: var(--titulo); font-variant-numeric: tabular-nums }
+.viagem-dados span { font-size: 12px; color: var(--suave) }
+.fronteiras { display: flex; flex-wrap: wrap; align-items: center; gap: 8px }
+.fronteiras .pais-chip { background: var(--ceu); color: var(--azul); border-radius: 999px; padding: 5px 12px; font-weight: 600; font-size: 14px }
+.fronteiras .seta { color: #8BADE3 }
+
+/* Passaporte */
+.passaporte { display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); gap: 20px }
+.capa { background: linear-gradient(160deg, #23467F, #1A3563); color: #E9D28A; border-radius: 14px; padding: 26px 18px; display: grid; justify-items: center; gap: 10px; text-align: center; align-content: center; min-height: 340px }
+.capa .t1 { font: 700 11px var(--f-titulo); letter-spacing: 3px }
+.capa .t2 { font: 800 21px var(--f-titulo); color: #F3E2AE }
+.capa svg { width: 110px }
+.dados { border: 1px solid var(--linha); border-radius: 14px; padding: 18px; background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(36,89,162,.035) 14px 15px), var(--palido); display: grid; gap: 12px; align-content: start }
+.dados dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 16px; margin: 0 }
+.dados dt { font-size: 11px; text-transform: uppercase; color: var(--suave); letter-spacing: 1px }
+.dados dd { margin: 0; font-weight: 700; color: var(--titulo) }
+.mrz { font: 500 12px var(--f-mono); overflow-x: auto; white-space: pre; background: #fff; border: 1px solid var(--linha); border-radius: 8px; padding: 8px 10px; color: var(--titulo) }
+.paginas { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px }
+.vaga { aspect-ratio: 1; border: 1px dashed #CFDCEE; border-radius: 12px; display: grid; place-items: center; text-align: center; font-size: 12px; color: var(--suave); padding: 8px; background: var(--palido); max-width: 100% }
+.vaga .sigla { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid #C5D3E8; display: grid; place-items: center; font: 600 15px var(--f-titulo); color: #A9B9D0; margin: 0 auto 4px }
+.vaga .carimbo { width: 100%; height: 100% }
+.distincoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px }
+.dist { border: 1px solid var(--linha); border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center }
+.dist .med { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--palido); border: 1px dashed #C5D3E8; color: #A9B9D0 }
+.dist .med svg { width: 20px; height: 20px }
+.dist.ganha .med { background: var(--sol); border: 0; color: #5E4D16 }
+.dist b { color: var(--titulo); font-size: 15px }
+.dist small { display: block; color: var(--suave); font-size: 13px; line-height: 1.4 }
+
+/* Recursos */
+.abas { display: flex; gap: 4px; background: var(--palido); border: 1px solid var(--linha); border-radius: 12px; padding: 4px; width: fit-content; max-width: 100%; flex-wrap: wrap }
+.abas button { border-radius: 9px; padding: 8px 16px; font-weight: 600; font-size: 14px; color: var(--suave) }
+.abas button[aria-selected="true"] { background: #fff; color: var(--azul); box-shadow: 0 1px 4px rgba(36,75,122,.12) }
+.hino { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 24px; align-items: center }
+.hino .hino-est { width: 170px; height: 170px; max-width: 100% }
+.hino .e { transition: r .15s }
+.ola { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px }
+.ola button { border: 1px solid var(--linha); background: var(--palido); border-radius: 10px; padding: 9px 12px; text-align: left; display: grid }
+.ola button b { font: 700 16px var(--f-titulo); color: var(--titulo) }
+.ola button small { color: var(--suave) }
+.ola button.ouvida { border-color: #E2C566; background: #FFF8E1 }
+
+/* Relatório */
+.tabela-wrap { overflow-x: auto; border: 1px solid var(--linha); border-radius: 12px }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 760px }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--linha); text-align: left; vertical-align: top }
+th { background: var(--palido); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--suave) }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums }
+.codigo { min-height: 90px; font: 12px var(--f-mono); word-break: break-all }
+.toast { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--titulo); color: #fff; padding: 11px 20px; border-radius: 10px; font-weight: 600; z-index: 100; max-width: calc(100% - 32px); box-shadow: 0 12px 30px rgba(0,0,0,.2) }
+
+/* Certificado */
+.certificado { border: 1px solid #DCE6F4; background: #fff; border-radius: 16px; padding: 40px 32px; text-align: center; display: grid; gap: 12px; justify-items: center; position: relative; overflow: hidden }
+.certificado::before { content: ""; position: absolute; inset: 10px; border: 1px solid #E8D9A4; border-radius: 10px; pointer-events: none }
+.certificado .c-titulo { font: 800 clamp(22px, 4vw, 32px) var(--f-titulo); color: var(--titulo); letter-spacing: -.5px }
+.certificado .c-nome { font: 800 clamp(24px, 5vw, 38px) var(--f-titulo); color: #2761B0; position: relative }
+.certificado .c-nome::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 5px; border-radius: 4px; background: rgba(241, 213, 112, .6) }
+.certificado p { margin: 0; max-width: 38em; color: var(--suave) }
+.certificado .c-carimbos { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px }
+.certificado .c-carimbos .carimbo { width: 58px; height: 58px }
+.certificado img { height: 40px; width: auto }
+
+[hidden] { display: none !important }
+
+@media (max-width: 1000px) {
+  .explorador { grid-template-columns: 1fr }
+  .hero { grid-template-columns: 1fr; padding: 30px 24px }
+  .hero-arte { min-height: 260px }
+  .cab-nav { display: none }
+  .dupla { grid-template-columns: 1fr }
+  .viagem-dados { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+}
+@media (max-width: 640px) {
+  .campos, .niveis { grid-template-columns: 1fr }
+  .marca small { display: none }
+  .passaporte-btn > span { display: none }
+  .mapa-cartao { min-height: 440px }
+  .passaporte, .bandeira-wrap, .hino, .par { grid-template-columns: 1fr }
+  .capa { min-height: 0 }
+  .faixa-hino { grid-template-columns: 1fr; padding: 22px }
+  .ficha { top: auto; bottom: 10px }
+  dialog { width: 100%; max-height: 100%; border-radius: 0 }
+  .transportes { grid-template-columns: 1fr }
+  .orbe { display: none }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } }
+</style>
+
+<header class="cabecalho">
+  <div class="cab-in">
+    <a class="marca" href="#" id="marca" aria-label="Clube Europeu, início">
+      <svg viewBox="0 0 46 32" aria-hidden="true" id="logo-bandeira"></svg>
+      <span><b>Clube Europeu</b><small>Uma viagem de descoberta</small></span>
+    </a>
+    <nav class="cab-nav" aria-label="Navegação">
+      <button type="button" data-ir="viagem" aria-current="true">Viagem</button>
+      <button type="button" data-ir="recursos">Hino e línguas</button>
+      <button type="button" data-ir="ligacoes">Vídeos e fontes</button>
+      <button type="button" data-ir="professor">Para docentes</button>
+    </nav>
+    <button type="button" class="passaporte-btn" id="b-passaporte"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h11a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm0 2v16h11V4zm5.5 3a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm-3 10h6v1.5h-6z"/></svg><span>O meu passaporte</span><b id="contador">0/13</b></button>
+  </div>
+</header>
+
+<main id="principal">
+  <!-- Início -->
+  <section id="inicio" aria-labelledby="t-inicio">
+    <div class="hero">
+      <div>
+        <span class="eyebrow"><i></i>Curiosidade sem fronteiras</span>
+        <h1 id="t-inicio">O Clube Europeu<br>foi conhecer a <em>UE…</em></h1>
+        <p>Do Porto a Roma, de comboio ou de avião. Em cada cidade conheces instituições, histórias e pessoas, resolves desafios e carimbas o teu passaporte europeu.</p>
+        <div class="hero-numeros"><span><b>13</b>cidades</span><span><b>24</b>línguas</span><span><b>3</b>níveis</span><span class="hero-nota">Sem pressa. Com curiosidade.</span></div>
+      </div>
+      <div class="hero-arte" aria-hidden="true">
+        <div class="orbe dois"></div><div class="orbe um"></div>
+        <div class="bilhete">
+          <div class="bilhete-topo"><span>CLUBE EUROPEU</span><span>✦ ✦ ✦</span></div>
+          <div class="bilhete-titulo">O mundo fica maior<br>quando o descobrimos.</div>
+          <div class="ilus" id="bilhete-ilus"></div>
+          <div class="bilhete-base"><div><small>PARTIDA</small><b>Porto</b></div><span>····✈····</span><div><small>DESTINO</small><b>Roma</b></div></div>
+        </div>
+        <div class="nota-flutuante">✦ Unida na diversidade</div>
+      </div>
+    </div>
+    <form class="cartao form-inicio" id="form-inicio">
+      <div><span class="eyebrow">Antes de partir</span><h2>Recebe o teu passaporte</h2></div>
+      <div class="campos">
+        <div class="campo"><label for="i-nome">Nome do viajante</label><input id="i-nome" required autocomplete="name" placeholder="Ex.: Maria Silva"></div>
+        <div class="campo"><label for="i-turma">Turma</label><input id="i-turma" placeholder="Ex.: 8.º B"></div>
+        <div class="campo"><label for="i-escola">Escola</label><input id="i-escola" placeholder="Nome da escola"></div>
+      </div>
+      <div class="campo"><span class="lbl" id="lbl-nivel">Escolhe o teu nível</span>
+        <div class="niveis" role="group" aria-labelledby="lbl-nivel" id="i-niveis"></div>
+      </div>
+      <div class="acoes">
+        <button class="primario" type="submit">Começar a viagem <span aria-hidden="true">↗</span></button>
+        <button class="secundario" type="button" id="i-continuar" hidden>Continuar a minha viagem</button>
+        <button class="ligacao" type="button" id="i-codigo">Tenho um código de progresso <span aria-hidden="true">↗</span></button>
+      </div>
+      <p class="muted" style="margin:0;font-size:14px">O progresso fica guardado neste navegador. Para mudar de computador ou entregar o trabalho, usa o código de progresso do passaporte.</p>
+    </form>
+  </section>
+
+  <!-- Jogo -->
+  <section id="jogo" hidden>
+    <div class="faixa"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg><span id="faixa-txt"></span></div><button class="ligacao" type="button" id="b-como">Como jogar <span aria-hidden="true">↗</span></button></div>
+
+    <div class="cab-secao">
+      <div><span class="eyebrow">O teu mapa de viagem</span><h2>Do Porto a Roma, uma cidade de cada vez.</h2><p>Abre a cidade onde estás, resolve as etapas e escolhe como seguir viagem.</p></div>
+      <span class="chip"><span class="ponto-azul"></span><b id="chip-carimbos">0</b> de 13 carimbos</span>
+    </div>
+
+    <div class="explorador">
+      <div class="mapa-cartao">
+        <div class="mapa-barra">
+          <div class="camadas" role="group" aria-label="O que mostrar no mapa">
+            <button type="button" data-camada="ue" aria-pressed="true">Estados-Membros</button>
+            <button type="button" data-camada="euro" aria-pressed="false">Euro</button>
+            <button type="button" data-camada="schengen" aria-pressed="false">Schengen</button>
+            <button type="button" data-camada="adesao" aria-pressed="false">Adesão</button>
+          </div>
+          <div class="zoom"><button type="button" id="z-menos" aria-label="Afastar">−</button><button type="button" id="z-mais" aria-label="Aproximar">+</button><button type="button" id="z-europa" aria-label="Ver a Europa inteira" title="Europa inteira">⤢</button></div>
+        </div>
+        <div class="mapa-area">
+          <svg id="mapa" role="img" aria-label="Mapa interativo da Europa com a rota da viagem"></svg>
+          <div class="ficha" id="ficha" hidden></div>
+        </div>
+        <div class="mapa-rodape"><div class="legenda" id="legenda"></div><span>Clica num país da UE para ver a ficha · Natural Earth</span></div>
+      </div>
+      <article class="destaque" id="destaque" aria-live="polite"></article>
+    </div>
+
+    <div class="cab-secao">
+      <div><span class="eyebrow">As tuas paragens</span><h2>Treze cidades que contam a Europa.</h2></div>
+    </div>
+    <div class="grelha-cidades" id="grelha"></div>
+
+    <section class="faixa-hino" aria-labelledby="t-hino-faixa">
+      <svg class="est" viewBox="0 0 96 96" aria-hidden="true" id="est-faixa"></svg>
+      <div><span class="eyebrow">Ouve a Europa</span><h3 id="t-hino-faixa">Um hino sem palavras, 24 línguas oficiais.</h3><p>Toca a «Ode à Alegria», diz olá nas 24 línguas da UE e encontra vídeos curtos oficiais.</p></div>
+      <button class="primario" type="button" id="b-recursos2">Abrir <span aria-hidden="true">→</span></button>
+    </section>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="rod-in">
+    <div class="escola"><img src="/*LOGO*/" alt="Agrupamento de Escolas de São Pedro da Cova" width="264" height="60"><span>Clube Europeu<b>Descobrir. Compreender. Participar.</b></span></div>
+    <div><p>Recurso educativo independente · não é um sítio oficial da UE</p><p>Conteúdos verificados em outubro de 2026 em fontes oficiais da UE · Cartografia: Natural Earth</p></div>
+  </div>
+</footer>
+
+<dialog id="dlg-cidade" aria-labelledby="dc-titulo"></dialog>
+<dialog id="dlg-viagem" aria-labelledby="dv-titulo"></dialog>
+<dialog id="dlg-passaporte" aria-labelledby="dp-titulo"></dialog>
+<dialog id="dlg-recursos" aria-labelledby="dr-titulo"></dialog>
+<dialog id="dlg-prof" aria-labelledby="dpr-titulo"></dialog>
+<dialog id="dlg-cert" aria-labelledby="dce-titulo"></dialog>
+<dialog id="dlg-info" aria-labelledby="di-titulo"></dialog>
+
+<script>
+/*MAPA*/
+/*CONTEUDO*/
+/*CENAS*/
+/*APP*/
+</script>
