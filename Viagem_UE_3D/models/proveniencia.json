@@ -1,0 +1,221 @@
+[
+  {
+    "generator": "Blender 4.0.2",
+    "file": "porto-reference.glb",
+    "bytes": 10465352,
+    "materials": 31,
+    "meshes": 84,
+    "source": "scripts/build-porto.py",
+    "seed": 1886,
+    "copyright": "Original work created for the user project",
+    "license": "CC BY 4.0 for this original Porto model and its generated textures; attribution: Clube Europeu — O Expresso das Estrelas, 2026.",
+    "references": [
+      "https://servicos.infraestruturasdeportugal.pt/pt-pt/node/6542",
+      "https://backoffice.visitporto.travel/pt-PT/centro-historico"
+    ],
+    "limitations": "Compressed artistic layout; architectural details and terrain are interpretative. No photogrammetry or metric architectural survey."
+  },
+  {
+    "city": "lisboa",
+    "file": "lisboa-reference.glb",
+    "bytes": 4046792,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/lisboa/lisboa.blend",
+    "materials": 21,
+    "meshes": 51,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://imovel.patrimoniocultural.gov.pt/detalhes.php?code=70631",
+      "https://www.emsa.europa.eu/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "paris",
+    "file": "paris-reference.glb",
+    "bytes": 4726108,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/paris/paris.blend",
+    "materials": 29,
+    "meshes": 62,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.toureiffel.paris/en/the-monument/history",
+      "https://www.diplomatie.gouv.fr/en/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "bruxelas",
+    "file": "bruxelas-reference.glb",
+    "bytes": 2808904,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/bruxelas/bruxelas.blend",
+    "materials": 18,
+    "meshes": 46,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.consilium.europa.eu/en/europa-building-story/",
+      "https://commission.europa.eu/about/organisation/commission-brussels_en"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "haia",
+    "file": "haia-reference.glb",
+    "bytes": 3596204,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/haia/haia.blend",
+    "materials": 22,
+    "meshes": 50,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.vredespaleis.nl/peace-palace/architecture/architecture/?lang=en",
+      "https://www.europol.europa.eu/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "maastricht",
+    "file": "maastricht-reference.glb",
+    "bytes": 3514492,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/maastricht/maastricht.blend",
+    "materials": 23,
+    "meshes": 54,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.visitmaastricht.com/en/locations/1335944557/sint-servaasbrug-bridge",
+      "https://www.limburg.nl/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "luxemburgo",
+    "file": "luxemburgo-reference.glb",
+    "bytes": 2477404,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/luxemburgo/luxemburgo.blend",
+    "materials": 26,
+    "meshes": 60,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://curia.europa.eu/site/jcms/d2_5102/en/the-court-s-buildings",
+      "https://www.visitschengen.lu/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "estrasburgo",
+    "file": "estrasburgo-reference.glb",
+    "bytes": 3351376,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/estrasburgo/estrasburgo.blend",
+    "materials": 20,
+    "meshes": 53,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.strasbourg.eu/web/strasbourg-int/european-parliament",
+      "https://visiting.europarl.europa.eu/en/visitor-offer/strasbourg"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "frankfurt",
+    "file": "frankfurt-reference.glb",
+    "bytes": 2405668,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/frankfurt/frankfurt.blend",
+    "materials": 23,
+    "meshes": 55,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.ecb.europa.eu/ecb/premises/html/index.en.html"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "praga",
+    "file": "praga-reference.glb",
+    "bytes": 4429308,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/praga/praga.blend",
+    "materials": 29,
+    "meshes": 65,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://prague.eu/en/objevujte/charles-bridge-karluv-most/",
+      "https://www.euspa.europa.eu/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "varsovia",
+    "file": "varsovia-reference.glb",
+    "bytes": 2436644,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/varsovia/varsovia.blend",
+    "materials": 25,
+    "meshes": 54,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://pkin.pl/",
+      "https://www.frontex.europa.eu/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "zagreb",
+    "file": "zagreb-reference.glb",
+    "bytes": 4986112,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/zagreb/zagreb.blend",
+    "materials": 30,
+    "meshes": 62,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://www.infozagreb.hr/en/",
+      "https://erasmus-plus.ec.europa.eu/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  },
+  {
+    "city": "roma",
+    "file": "roma-reference.glb",
+    "bytes": 4496988,
+    "generator": "Blender 4.0.2",
+    "source": "scripts/build-europe.py; art/roma/roma.blend",
+    "materials": 23,
+    "meshes": 51,
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 for this original model and its generated textures",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "references": [
+      "https://colosseo.it/en/area/the-colosseum/",
+      "https://www.museicapitolini.org/"
+    ],
+    "limitations": "Artistic reconstruction with compressed layout. Secondary institutions may be approximated; space/Frontex/Erasmus installations are explicitly educational models. No third-party models or photographs incorporated."
+  }
+]
