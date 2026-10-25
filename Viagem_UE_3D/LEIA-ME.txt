@@ -1,0 +1,21 @@
+O EXPRESSO DAS ESTRELAS — 13 CIDADES, EDIÇÃO 5.0
+
+PARA JOGAR
+1. Extrai TODO o ZIP para uma pasta.
+2. Abre index.html por duplo clique. Conserva as pastas assets e models ao lado.
+3. Recebe o bilhete e segue a viagem. Não precisas de instalar Node.js ou Blender.
+
+EXPLORAR
+Cada cidade tem um modelo GLB próprio com materiais, texturas e animações. Usa as cinco vistas para observar os monumentos e abrir as atividades. O quiz e o desafio desbloqueiam o diário; o carimbo permite seguir para a cidade seguinte. As deslocações continuam a ser simulações educativas.
+
+COMPUTADORES ESCOLARES
+Começa em qualidade Média. Se necessário, escolhe Baixa ou Modo 2D nas definições. A opção Reduzir movimento suspende as animações de ambiente e as transições de câmara. Medir desempenho faz uma medição local de 10 segundos; mantém a janela visível. Os resultados variam com o computador.
+
+GUARDAR
+Guarda o código de progresso do passaporte no fim de cada aula. É necessário para continuar noutro computador, navegador ou pasta. O armazenamento do navegador pode não persistir em modo privado. A aplicação não envia diários para servidores.
+
+PARTILHAR
+Copia toda esta pasta para os computadores dos alunos. Pode também ser servida num servidor estático da escola. Por HTTP é carregado o GLB de cada cidade. Por duplo clique, o transporte JS local fornece os mesmos bytes ao carregador. Os modelos são abertos apenas quando a cidade é visitada; a memória conserva no máximo duas cenas de origem. As ligações e vídeos externos precisam de Internet.
+
+CRÉDITOS
+Modelos e texturas originais para Clube Europeu — O Expresso das Estrelas, 2026, CC BY 4.0; ver models/proveniencia.json e CREDITOS.json. Os dioramas são reconstruções artísticas com distâncias e proporções adaptadas. Os núcleos espaciais de Praga, Frontex de Varsóvia e Erasmus+ de Zagreb são instalações didáticas. Não são reproduções de sedes de agências.

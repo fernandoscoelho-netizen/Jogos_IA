@@ -1,0 +1,58 @@
+{
+  "project": "O Expresso das Estrelas — Clube Europeu",
+  "europeEdition": {
+    "version": "5.0",
+    "cities": 13,
+    "source": "scripts/build-porto.py e scripts/build-europe.py; fontes editáveis em art/<cidade>/",
+    "provenance": "models/proveniencia.json contém origem, referências e licença de cada modelo",
+    "author": "Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0 para os treze modelos GLB originais e as imagens geradas para os seus materiais",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "assets": "Geometria, texturas e clips criados neste projeto. Nenhum modelo ou imagem de terceiros incorporado.",
+    "loading": "Por cidade; no máximo duas cenas de origem descodificadas em memória. Transporte local JS apenas na abertura por file:.",
+    "fidelity": "Dioramas artísticos de implantação comprimida. Os núcleos didáticos e as aproximações institucionais são identificados na interface e na proveniência."
+  },
+  "portoReference": {
+    "version": "4.0",
+    "asset": "models/porto-reference.glb",
+    "source": "scripts/build-porto.py; art/porto/porto-reference.blend",
+    "author": "Modelação e texturas originais criadas para Clube Europeu — O Expresso das Estrelas, 2026",
+    "license": "CC BY 4.0, apenas para este novo modelo e as suas texturas originais",
+    "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+    "tools": "Blender 4.0.2, exportação glTF 2.0, Three.js 0.180.0",
+    "animation": "Clips GLB: metro, dois rabelos, oito peões e bandeiras; água animada por shader na aplicação",
+    "visualReference": "Littlest Tokyo, de Glen Fox, visto no exemplo oficial de Three.js; nenhum ficheiro, modelo ou textura desse autor foi incorporado",
+    "architecturalReferences": ["https://servicos.infraestruturasdeportugal.pt/pt-pt/node/6542", "https://backoffice.visitporto.travel/pt-PT/centro-historico"],
+    "fidelity": "Miniatura interpretativa Porto/Gaia, com implantação e proporções comprimidas. Não é fotogrametria nem levantamento arquitetónico. Modelo integrado na edição europeia 5.0."
+  },
+  "generatedModels": {
+    "role": "Representações leves de recurso quando o GLB não está disponível",
+    "author": "Geometria procedural criada para este projeto",
+    "source": "src/landmarks.ts e src/engine.ts",
+    "usage": "Uso e adaptação no projeto do utilizador",
+    "materials": "Texturas Canvas procedurais, mapas de relevo e materiais físicos criados no projeto; reflexos gerados com RoomEnvironment/PMREM de Three.js (MIT); sem fotografias ou modelos externos descarregados.",
+    "fidelity": "Reconstruções artísticas simplificadas; proporções e implantação adaptadas. Não são levantamentos arquitetónicos nem modelos fotogramétricos."
+  },
+  "map": {
+    "author": "Natural Earth",
+    "source": "Cartografia já incluída no projeto original; world-atlas countries-50m",
+    "license": "Domínio público",
+    "reference": "https://www.naturalearthdata.com/about/terms-of-use/"
+  },
+  "schoolLogo": {
+    "author": "Agrupamento de Escolas de São Pedro da Cova",
+    "source": "Fornecido no projeto original pelo utilizador",
+    "license": "Direitos do titular; conservado para uso neste projeto. Nenhuma licença aberta presumida."
+  },
+  "educationalContent": {
+    "source": "Projeto original Clube-Europeu-ue_V2.zip fornecido pelo utilizador",
+    "license": "Direitos do respetivo titular; conservado e adaptado no âmbito do pedido. Nenhuma licença aberta presumida."
+  },
+  "sound": {"source":"Síntese de ruído no código; melodia original sintetizada; vozes do navegador","externalRecordings":false},
+  "fonts": {"source":"Fontes de sistema locais, sem downloads"},
+  "thirdPartySoftware": [
+    {"name":"Three.js","version":"0.180.0","license":"MIT","source":"https://github.com/mrdoob/three.js"},
+    {"name":"Vite","version":"7.1.12","license":"MIT","source":"https://github.com/vitejs/vite"},
+    {"name":"TypeScript","version":"5.9.3","license":"Apache-2.0","source":"https://github.com/microsoft/TypeScript"}
+  ]
+}
