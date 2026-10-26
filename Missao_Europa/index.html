@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Missão Europa — O Segredo das 12 Estrelas</title>
+  <meta name="description" content="Jogo educativo do Clube Europeu do Agrupamento de Escolas de São Pedro da Cova sobre a Europa e a União Europeia (2.º e 3.º ciclos).">
+  <link rel="icon" href="img/logos/clube-europeu.png">
+  <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <a class="visually-hidden-focusable salto" href="#zonaJogo">Saltar para o jogo</a>
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="barra-topo">
+    <div class="container-fluid d-flex align-items-center gap-2 gap-md-3 py-2">
+      <div class="logos d-flex align-items-center gap-2">
+        <span class="logo-chip"><img src="img/logos/agrupamento-spc.png" alt="Agrupamento de Escolas de São Pedro da Cova" class="logo-agr"></span>
+        <img src="img/logos/clube-europeu.png" alt="Clube Europeu do Agrupamento de Escolas de São Pedro da Cova" class="logo-clube">
+      </div>
+      <h1 class="titulo-jogo mb-0 flex-grow-1">Missão Europa <span class="d-none d-md-inline">— O Segredo das 12 Estrelas</span></h1>
+      <nav class="d-flex gap-1 gap-md-2" aria-label="Menu do jogo">
+        <button class="btn btn-sm btn-ouro" id="btnCaderno" type="button" data-bs-toggle="offcanvas" data-bs-target="#caderno" aria-controls="caderno" title="Caderno de descobertas (tecla C)">
+          <span aria-hidden="true">📒</span><span class="d-none d-sm-inline"> Caderno</span><span class="visually-hidden"> de descobertas</span>
+          <span class="badge text-bg-light ms-1" id="contaCaderno">0</span>
+        </button>
+        <button class="btn btn-sm btn-outline-light" id="btnSom" type="button" data-bs-toggle="modal" data-bs-target="#modalSom" title="Som">
+          <span aria-hidden="true" id="iconeSom">🔇</span><span class="d-none d-sm-inline"> Som</span><span class="visually-hidden"> — definições de som</span>
+        </button>
+        <button class="btn btn-sm btn-outline-light" id="btnAjuda" type="button" data-bs-toggle="modal" data-bs-target="#modalAjuda" title="Como jogar (tecla H)">
+          <span aria-hidden="true">❔</span><span class="d-none d-sm-inline"> Ajuda</span><span class="visually-hidden"> — como jogar</span>
+        </button>
+        <button class="btn btn-sm btn-outline-light" id="btnTerminar" type="button" title="Ver o resultado da sessão">
+          <span aria-hidden="true">🏁</span><span class="d-none d-lg-inline"> Terminar</span><span class="visually-hidden"> sessão e ver resultado</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== ÁREA DE JOGO ===================== -->
+  <main id="zonaJogo" class="container-fluid py-3">
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <div class="moldura-mundo">
+          <div class="cabeca-sala d-flex justify-content-between align-items-center px-3 py-2">
+            <h2 class="h5 mb-0" id="nomeSala">Átrio do Clube Europeu</h2>
+            <span class="small opacity-75" id="progressoSala"></span>
+          </div>
+          <div id="mundo" class="mundo" tabindex="0" role="application"
+               aria-label="Mundo do jogo. Usa as setas ou W A S D para andar, e a tecla E, Enter ou Espaço para investigar o objeto mais próximo."
+               aria-describedby="dicaMundo"></div>
+          <p id="dicaMundo" class="dica-mundo small mb-0 px-3 py-2">
+            <span class="d-none d-md-inline"><kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd> ou <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> para andar · <kbd>E</kbd> / <kbd>Enter</kbd> para investigar · </span>
+            Toca ou clica num ponto para andar até lá; toca num objeto para o investigar.
+          </p>
+        </div>
+      </div>
+
+      <aside class="col-lg-4" aria-label="Painel da missão">
+        <section class="painel mb-3" aria-labelledby="tMissao">
+          <h2 class="h6 painel-titulo" id="tMissao">A tua missão</h2>
+          <p class="mb-2" id="textoObjetivo">Recupera as 12 estrelas da bandeira do clube: há duas em cada sala.</p>
+          <div class="estrelas-painel" id="estrelasPainel" role="img" aria-label="0 de 12 estrelas recuperadas"></div>
+          <div class="d-flex justify-content-between small mt-2">
+            <span>Pontos: <strong id="pontos">0</strong></span>
+            <span>Pistas: <strong id="contaPistas">0</strong></span>
+            <span>Nível: <strong id="nivelTexto">—</strong></span>
+          </div>
+        </section>
+
+        <section class="painel mb-3" aria-labelledby="tNestaSala">
+          <h2 class="h6 painel-titulo" id="tNestaSala">Nesta sala</h2>
+          <p class="small mb-2 opacity-75">Também podes escolher aqui o que queres investigar.</p>
+          <div id="listaObjetos" class="d-grid gap-1 lista-objetos"></div>
+        </section>
+
+        <section class="painel" aria-labelledby="tMensagens">
+          <h2 class="h6 painel-titulo" id="tMensagens">Mensagens</h2>
+          <div id="mensagem" class="mensagem" role="status" aria-live="polite">Bem-vindo(a) ao Clube Europeu!</div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="rodape small text-center py-2">
+    Clube Europeu · Agrupamento de Escolas de São Pedro da Cova · Ilustrações esquemáticas, não são reconstruções exatas.
+    <button class="btn btn-link btn-sm link-rodape p-0 align-baseline" type="button" data-bs-toggle="modal" data-bs-target="#modalFontes">Fontes e notas de rigor</button>
+  </footer>
+
+  <!-- ===================== ECRÃ INICIAL ===================== -->
+  <section id="ecraInicio" class="ecra" aria-labelledby="tInicio">
+    <div class="ecra-conteudo">
+      <div class="d-flex justify-content-center align-items-center gap-3 mb-3 flex-wrap">
+        <span class="logo-chip logo-chip-grande"><img src="img/logos/agrupamento-spc.png" alt="Agrupamento de Escolas de São Pedro da Cova" class="logo-agr-grande"></span>
+        <img src="img/logos/clube-europeu.png" alt="Clube Europeu" class="logo-clube-grande">
+      </div>
+      <h1 id="tInicio" class="display-6 fw-bold mb-1">Missão Europa</h1>
+      <p class="lead mb-3">O Segredo das 12 Estrelas</p>
+      <div class="historia mb-4">
+        <p>Esta manhã, o Clube Europeu da tua escola encontrou o pedestal vazio: <strong>as 12 estrelas da bandeira desapareceram!</strong></p>
+        <p class="mb-0">Estão escondidas nas seis salas da Casa da Europa. Investiga os objetos, recolhe pistas no teu caderno e resolve os desafios para as recuperar. Podes errar e tentar outra vez as vezes que quiseres.</p>
+      </div>
+      <fieldset class="mb-3">
+        <legend class="h6">Escolhe o teu nível</legend>
+        <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
+          <input type="radio" class="btn-check" name="nivel" id="nivel2" value="2" checked>
+          <label class="btn btn-nivel" for="nivel2"><strong>Explorador</strong><br><span class="small">2.º ciclo · 5.º e 6.º anos</span></label>
+          <input type="radio" class="btn-check" name="nivel" id="nivel3" value="3">
+          <label class="btn btn-nivel" for="nivel3"><strong>Embaixador</strong><br><span class="small">3.º ciclo · 7.º, 8.º e 9.º anos</span></label>
+        </div>
+      </fieldset>
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <button class="btn btn-ouro btn-lg" id="btnComecar" type="button">Começar a missão</button>
+        <button class="btn btn-outline-light btn-lg d-none" id="btnContinuar" type="button">Continuar a missão guardada</button>
+        <button class="btn btn-outline-light btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#modalAjuda">Como jogar</button>
+      </div>
+      <p class="small mt-3 mb-0 opacity-75">O som começa desligado. Podes ligá-lo no botão «Som». Não é necessária ligação à Internet.</p>
+    </div>
+  </section>
+
+  <!-- ===================== ECRÃ FINAL ===================== -->
+  <section id="ecraFinal" class="ecra d-none" aria-labelledby="tFinal" tabindex="-1">
+    <div class="ecra-conteudo ecra-final">
+      <img src="img/logos/clube-europeu.png" alt="" class="logo-clube-grande mb-2">
+      <h1 id="tFinal" class="h2 fw-bold">Resultado da sessão</h1>
+      <p class="lead" id="finalResumo"></p>
+      <div class="row g-3 text-start">
+        <div class="col-md-5">
+          <div class="cartao-final">
+            <h2 class="h6">Números da missão</h2>
+            <ul class="list-unstyled mb-0" id="finalNumeros"></ul>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="cartao-final">
+            <h2 class="h6">Aprendizagens trabalhadas</h2>
+            <ul class="mb-0 lista-aprendizagens" id="finalAprendizagens"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap gap-2 justify-content-center mt-4">
+        <button class="btn btn-ouro" id="btnVoltarJogo" type="button">Voltar ao jogo</button>
+        <button class="btn btn-outline-light" id="btnFinalCaderno" type="button">Rever o caderno</button>
+        <button class="btn btn-outline-light" id="btnImprimir" type="button">Imprimir resultado</button>
+        <button class="btn btn-outline-light" id="btnReiniciar" type="button">Recomeçar do início</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MODAL: PISTA ===================== -->
+  <div class="modal fade" id="modalPista" tabindex="-1" aria-labelledby="tPista" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-tema">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="tPista">Pista</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <span class="badge mb-2" id="pistaTipo">Facto</span>
+          <p id="pistaTexto" class="mb-2"></p>
+          <p class="small fonte mb-0" id="pistaFonte"></p>
+        </div>
+        <div class="modal-footer">
+          <span class="small me-auto" id="pistaNota">Guardado no caderno ✓</span>
+          <button type="button" class="btn btn-ouro" data-bs-dismiss="modal">Continuar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: DESAFIO ===================== -->
+  <div class="modal fade" id="modalDesafio" tabindex="-1" aria-labelledby="tDesafio" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+      <div class="modal-content modal-tema">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="tDesafio">Desafio</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar desafio (podes voltar mais tarde)"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small aprendizagem mb-2" id="desafioAprendizagem"></p>
+          <div id="desafioCorpo"></div>
+          <div id="desafioFeedback" class="mt-3" role="status" aria-live="polite"></div>
+        </div>
+        <div class="modal-footer" id="desafioRodape"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: SOM ===================== -->
+  <div class="modal fade" id="modalSom" tabindex="-1" aria-labelledby="tSom" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-tema">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="tSom">Som</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" role="switch" id="somLigado">
+            <label class="form-check-label" for="somLigado"><strong>Ligar o som</strong> (desligado por defeito)</label>
+          </div>
+          <fieldset class="mb-3" id="grupoModo">
+            <legend class="h6">Música de fundo</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="modoSom" id="modoAmbiente" value="ambiente" checked>
+              <label class="form-check-label" for="modoAmbiente">Ambiente discreto</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="modoSom" id="modoMelodia" value="melodia">
+              <label class="form-check-label" for="modoMelodia">Melodia suave de jogo <span class="small opacity-75">(inspirada no «Hino à Alegria»)</span></label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="modoSom" id="modoNenhuma" value="nenhuma">
+              <label class="form-check-label" for="modoNenhuma">Sem música (só efeitos)</label>
+            </div>
+          </fieldset>
+          <label for="volumeSom" class="form-label">Volume: <span id="volumeValor">50</span>%</label>
+          <input type="range" class="form-range" id="volumeSom" min="0" max="100" step="5" value="50">
+          <div class="form-check form-switch mt-2">
+            <input class="form-check-input" type="checkbox" role="switch" id="efeitosLigados" checked>
+            <label class="form-check-label" for="efeitosLigados">Efeitos sonoros delicados</label>
+          </div>
+          <p class="small mt-3 mb-0 opacity-75" id="avisoSom">Todo o som é gerado pelo navegador; não são usados ficheiros de áudio.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light" id="btnSilenciar">Desligar todo o som</button>
+          <button type="button" class="btn btn-ouro" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: AJUDA ===================== -->
+  <div class="modal fade" id="modalAjuda" tabindex="-1" aria-labelledby="tAjuda" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content modal-tema">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="tAjuda">Como jogar</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <h3 class="h6">Objetivo</h3>
+          <p>Recupera as <strong>12 estrelas</strong> da bandeira do Clube Europeu. Há <strong>2 estrelas em cada uma das 6 salas</strong>. Quando tiveres as 12, leva-as ao pedestal no átrio.</p>
+          <h3 class="h6">Como se joga</h3>
+          <ol>
+            <li><strong>Desloca-te</strong> pela sala e entra pelas portas.</li>
+            <li><strong>Investiga os objetos</strong> (com o ícone 🔍): cada um dá-te uma pista, que fica guardada no <strong>caderno de descobertas</strong>.</li>
+            <li>As <strong>estações com estrela</strong> ⭐ guardam os desafios. Só abrem quando tiveres as pistas necessárias (🔒).</li>
+            <li>Resolve o desafio: associar, classificar, ordenar, construir ou tomar decisões. Se errares, lê a explicação e <strong>tenta outra vez</strong>.</li>
+          </ol>
+          <h3 class="h6">Controlos</h3>
+          <div class="table-responsive">
+            <table class="table table-sm tabela-tema mb-3">
+              <tbody>
+                <tr><th scope="row">Teclado</th><td>Setas ou W A S D para andar · E, Enter ou Espaço para investigar · C abre o caderno · H abre esta ajuda · Tab percorre os botões</td></tr>
+                <tr><th scope="row">Rato</th><td>Clica num ponto para andar até lá; clica num objeto para o investigar.</td></tr>
+                <tr><th scope="row">Ecrã tátil</th><td>Toca num ponto para andar; toca num objeto para o investigar.</td></tr>
+                <tr><th scope="row">Lista «Nesta sala»</th><td>Botões com todos os objetos e portas da sala — alternativa acessível ao mundo do jogo.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="h6">Perguntas sempre diferentes</h3>
+          <p>Cada vez que abres um desafio, o jogo sorteia novas perguntas de um banco maior (por exemplo, bandeiras escolhidas entre os 27 países da UE). Depois de recuperares uma estrela, podes voltar à estação e treinar com um novo sorteio, sem pontos.</p>
+          <h3 class="h6">Pontos</h3>
+          <p class="mb-2">Cada desafio vale até 3 pontos: 3 se acertares à primeira, 2 à segunda e 1 a partir daí. Não há limite de tempo e nunca perdes estrelas.</p>
+          <h3 class="h6">Tipos de informação no caderno</h3>
+          <p class="mb-0"><span class="badge tipo-facto">Facto</span> informação comprovada por fontes · <span class="badge tipo-rigor">Nota de rigor</span> confusões frequentes e simplificações · <span class="badge tipo-projecao">Facto e projeção</span> separa o que já é lei do que é previsão · nos desafios, as perguntas de <strong>interpretação</strong> aceitam várias respostas.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ouro" data-bs-dismiss="modal">Percebi!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: FONTES ===================== -->
+  <div class="modal fade" id="modalFontes" tabindex="-1" aria-labelledby="tFontes" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content modal-tema">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="tFontes">Fontes e notas de rigor</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body" id="fontesCorpo"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ouro" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== CADERNO (offcanvas) ===================== -->
+  <div class="offcanvas offcanvas-end caderno" tabindex="-1" id="caderno" aria-labelledby="tCaderno">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5" id="tCaderno">📒 Caderno de descobertas</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar o caderno"></button>
+    </div>
+    <div class="offcanvas-body" id="cadernoCorpo"></div>
+  </div>
+
+  <!-- Bibliotecas locais (funciona sem Internet) -->
+  <script src="lib/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="lib/p5/p5.min.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="dados/banco-perguntas.js"></script>
+  <script src="js/som.js"></script>
+  <script src="js/desafios.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mundo.js"></script>
+</body>
+</html>

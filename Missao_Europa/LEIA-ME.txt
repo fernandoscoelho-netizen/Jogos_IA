@@ -1,0 +1,65 @@
+MISSÃO EUROPA — O SEGREDO DAS 12 ESTRELAS
+Jogo educativo do Clube Europeu do Agrupamento de Escolas de São Pedro da Cova
+2.º ciclo (nível «Explorador») e 3.º ciclo (nível «Embaixador»)
+=====================================================================
+
+COMO ABRIR O JOGO
+1. Descompacta o ficheiro ZIP para uma pasta (botão direito › «Extrair tudo»).
+2. Abre a pasta «jogo» e faz duplo clique em «index.html».
+3. O jogo abre no navegador (Chrome, Edge, Firefox ou Safari atualizados).
+
+Não é preciso instalar nada nem ter ligação à Internet: todas as bibliotecas
+(p5.js 2.3.4 e Bootstrap 5.3.8), bandeiras e logótipos estão incluídos.
+A Internet só é necessária para abrir as ligações às fontes (opcional).
+
+COMO JOGAR
+- Objetivo: recuperar as 12 estrelas da bandeira do clube (2 em cada uma das 6 salas)
+  e levá-las ao pedestal do átrio.
+- Investiga os objetos (lupa) para recolher pistas; ficam no «Caderno de descobertas».
+- As estações com estrela abrem os desafios quando tiveres as pistas necessárias.
+- Não há limite de tempo. Podes errar e tentar outra vez; cada desafio vale até 3 pontos.
+
+CONTROLOS
+- Teclado: setas ou W A S D (andar) · E, Enter ou Espaço (investigar) ·
+  C (caderno) · H (ajuda) · Tab (percorrer botões).
+- Rato / ecrã tátil: clicar ou tocar num ponto para andar; num objeto para o investigar.
+- Lista «Nesta sala»: botões com todos os objetos (alternativa acessível).
+
+SOM
+Começa desligado. No botão «Som» podes ligar, escolher «Ambiente discreto» ou
+«Melodia suave de jogo», ajustar o volume e desligar os efeitos.
+
+PERGUNTAS SORTEADAS (banco de perguntas em JSON)
+Cada vez que um desafio é aberto, o jogo sorteia um novo conjunto de itens a partir
+de «dados/banco-perguntas.json» (ex.: bandeiras dos 27 países da UE, 24 línguas
+oficiais, 17 acontecimentos, 18 bens do Património Mundial, cenários variados).
+Depois de ganhar uma estrela, o aluno pode voltar à estação e treinar com novo sorteio.
+
+Para alterar ou acrescentar perguntas:
+1. Edita «dados/banco-perguntas.json» (com o Bloco de Notas ou outro editor).
+   Mantém a estrutura; «nivel»: 2 = ambos os ciclos, 3 = só 3.º ciclo.
+2. No jogo, abre «Fontes e notas de rigor» (rodapé) › «Carregar banco (.json)».
+   O jogo valida o ficheiro e indica eventuais erros. O banco fica guardado nesse
+   navegador; «Repor banco original» volta ao banco inicial.
+Nota técnica: se o jogo for publicado num servidor web, lê diretamente o ficheiro
+JSON. Ao abrir por duplo clique, usa a cópia «dados/banco-perguntas.js».
+
+PROGRESSO
+O progresso fica guardado no navegador (botão «Continuar a missão guardada»).
+No fim, o ecrã «Resultado da sessão» mostra estrelas, pontos, pistas, tempo e as
+aprendizagens trabalhadas, e pode ser impresso.
+
+CONTEÚDO DA PASTA
+index.html ........................ página do jogo
+css/estilo.css .................... aspeto visual
+js/dados.js ....................... salas, pistas, desafios e fontes
+js/desafios.js .................... motor dos desafios e sorteio
+js/mundo.js ....................... mundo explorável (p5.js)
+js/app.js ......................... interface, caderno, resultado
+js/som.js ......................... som gerado pelo navegador
+dados/banco-perguntas.json ........ banco de perguntas (editável)
+dados/banco-perguntas.js .......... cópia do banco para uso sem servidor
+lib/ .............................. p5.js e Bootstrap (com licenças)
+img/bandeiras/ .................... bandeiras (flag-icons, licença MIT)
+img/logos/ ........................ logótipos do Agrupamento e do Clube Europeu
+notas-professor.html .............. fontes, correções científicas e mapa de aprendizagens
