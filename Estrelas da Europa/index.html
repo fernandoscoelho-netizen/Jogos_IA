@@ -1,0 +1,1326 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Estrelas da Europa 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap">
+<style>
+/* Layout: ecrã inteiro — tabuleiro 3D numa esplanada europeia; interface em vidro azul UE com filetes dourados */
+:root{
+  --eu:#003399; --eu-d:#0A2463; --navy:#0B1B3F; --gold:#FFCC00; --gold-d:#C9A227;
+  --paper:#FBF7EE; --ink:#0B1B3F; --ink-2:#4A5677; --glass:rgba(8,22,58,.84); --glass-2:rgba(8,22,58,.66);
+  --line:rgba(255,204,0,.5); --soft:rgba(255,255,255,.16); --ok:#1E8E4A; --bad:#C8352E; --dim:rgba(5,12,32,.38);
+  --f-d:'Fraunces',Georgia,'Times New Roman',serif;
+  --f-b:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--navy);color:#fff;font-family:var(--f-b);font-size:16px;overflow:hidden;-webkit-tap-highlight-color:transparent}
+#app{position:relative;height:100%;overflow:hidden}
+#stage{position:absolute;inset:0}
+#stage canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
+.ui{position:absolute;pointer-events:none;z-index:5}
+.ui>*{pointer-events:auto}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.glass{background:var(--glass);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+
+#hud{top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:14px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-d);font-weight:700;font-size:21px;line-height:1;color:var(--gold);background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 16px 7px 8px;box-shadow:0 10px 30px rgba(0,0,0,.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#clock{font-family:var(--f-d);font-weight:700;font-size:20px;color:#fff;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-variant-numeric:tabular-nums}
+#clock.low{border-color:var(--bad);color:#FFB4AE}
+.spacer{flex:1}
+.hudbtns{display:flex;gap:8px}
+.hb{width:46px;height:46px;display:grid;place-items:center;background:var(--glass);border:1px solid var(--line);border-radius:50%;color:var(--gold);font-family:var(--f-d);font-weight:700;font-size:15px;letter-spacing:.04em;padding:0;box-shadow:0 8px 22px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .1s,background .15s}
+.hb:hover{background:rgba(0,51,153,.9)}
+.hb:active{transform:scale(.94)}
+.hb svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hb[aria-pressed="false"]{color:rgba(255,255,255,.5);border-color:var(--soft)}
+
+#players{top:80px;left:max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:8px}
+.pchip{display:flex;align-items:center;gap:10px;background:var(--glass);border:1px solid var(--soft);border-radius:14px;padding:7px 14px 7px 9px;min-width:0;box-shadow:0 8px 22px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .25s,border-color .25s}
+.pchip.cur{border-color:var(--gold);transform:translateX(6px);box-shadow:0 0 0 1px var(--gold),0 10px 26px rgba(0,0,0,.3)}
+.pchip .pn{font-family:var(--f-d);font-weight:700;font-size:17px;line-height:1.15;max-width:9.5em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pchip .ps{font-size:13px;color:rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
+.pchip .sc{font-family:var(--f-d);font-weight:700;font-size:23px;color:var(--gold);margin-left:auto;padding-left:8px;font-variant-numeric:tabular-nums}
+
+#turnbar{left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:14px;background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:9px 9px 9px 16px;box-shadow:0 16px 40px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);max-width:calc(100% - 32px)}
+.tb-who{display:flex;align-items:center;gap:8px;font-family:var(--f-d);font-weight:700;font-size:19px;line-height:1.1;min-width:0}
+.tb-who span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tbDice{font-family:var(--f-d);font-weight:700;font-size:24px;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--paper);color:var(--eu);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+#hint{left:max(16px,env(safe-area-inset-left,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));font-size:13px;color:rgba(255,255,255,.85);background:var(--glass-2);padding:5px 12px;border-radius:999px;pointer-events:none}
+#pickmsg{left:50%;bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 86px);transform:translateX(-50%);background:var(--gold);color:var(--navy);border-radius:14px;padding:11px 18px;font-family:var(--f-d);font-weight:700;font-size:18px;box-shadow:0 12px 30px rgba(0,0,0,.3);text-align:center;max-width:calc(100% - 32px);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{transform:translateX(-50%) scale(1.03)}}
+#toasts{top:80px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;width:min(540px,calc(100% - 32px));pointer-events:none}
+.toast{background:var(--glass);border:1px solid var(--line);color:#fff;border-radius:999px;padding:9px 18px;font-weight:700;font-size:16px;text-align:center;box-shadow:0 10px 26px rgba(0,0,0,.3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:tin .3s ease-out}
+@keyframes tin{from{opacity:0;transform:translateY(-8px)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:6px 22px;background:var(--gold);color:var(--navy);border:0;border-radius:12px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 8px 20px rgba(0,0,0,.25);font-family:var(--f-d);font-weight:700;font-size:19px;line-height:1;transition:transform .1s,filter .15s}
+.btn:hover:not(:disabled){filter:brightness(1.06)}
+.btn:active:not(:disabled){transform:translateY(2px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.big{min-height:56px;font-size:22px;padding:6px 28px}
+.btn.blue{background:var(--eu);color:#fff;box-shadow:inset 0 0 0 1px var(--line),0 8px 20px rgba(0,0,0,.25)}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.btn svg{width:26px;height:26px}
+
+.layer{position:absolute;inset:0;display:grid;place-items:center;padding:16px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));background:var(--dim);z-index:20}
+#qmodal{z-index:15}
+.panel{width:min(580px,100%);max-height:100%;overflow:auto;background:var(--glass);border:1px solid var(--line);border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:26px;display:flex;flex-direction:column;gap:16px;color:#fff}
+.panel h1{font-family:var(--f-d);font-weight:700;font-size:clamp(38px,8vw,58px);line-height:.98;margin:0;text-align:center;text-wrap:balance;color:var(--gold);letter-spacing:-.01em}
+.panel h2{font-family:var(--f-d);font-weight:700;font-size:30px;line-height:1.08;margin:0;text-wrap:balance}
+.lead{margin:0;text-align:center;font-size:18px;color:rgba(255,255,255,.82);text-wrap:balance}
+.logo{display:grid;place-items:center}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.row.end{justify-content:space-between}
+.field{display:flex;flex-direction:column;gap:8px}
+.lbl{font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{min-height:46px;min-width:46px;padding:4px 16px;border:0;border-radius:12px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);color:#fff;font-family:var(--f-d);font-weight:700;font-size:17px}
+.seg button.on{background:var(--gold);color:var(--navy);box-shadow:none}
+.plist{display:flex;flex-direction:column;gap:10px}
+.prow{display:flex;gap:10px;align-items:center}
+.prow .chip{width:52px;height:52px;flex:none;display:grid;place-items:center;border:0;border-radius:12px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);padding:0}
+.prow input{flex:1;min-width:0;height:52px;border:0;border-radius:12px;padding:0 14px;font:700 19px var(--f-b);color:var(--navy);background:var(--paper)}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:6px 8px 6px 16px;border:0;border-radius:12px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);font-weight:700;font-size:17px;text-align:left;color:#fff}
+.tog .sw{width:54px;height:30px;border-radius:15px;background:rgba(255,255,255,.25);position:relative;flex:none;transition:background .15s}
+.tog .sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}
+.tog[aria-checked="true"] .sw{background:var(--gold)}
+.tog[aria-checked="true"] .sw::after{left:27px;background:var(--navy)}
+.volrow{display:flex;align-items:center;gap:12px;font-weight:700}
+.volrow input{flex:1;accent-color:var(--gold);height:32px}
+.qsec{border-top:1px solid var(--soft);padding-top:14px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#listview{top:76px;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 84px);width:min(380px,calc(100% - 32px));z-index:12}
+.lvbox{height:100%;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--line);border-radius:18px;box-shadow:0 16px 40px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);overflow:hidden}
+.lvhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px 4px 16px}
+.lvhead h2{margin:0;font-family:var(--f-d);font-weight:700;font-size:19px;color:var(--gold)}
+.lvhead .hb{width:40px;height:40px;box-shadow:none}
+.lvsum{margin:0;padding:0 16px 8px;font-size:13px;color:rgba(255,255,255,.75)}
+#lvList{list-style:none;margin:0;padding:0 8px 10px;overflow:auto;flex:1;min-height:0;display:flex;flex-direction:column;gap:4px}
+.lvrow{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;background:rgba(255,255,255,.05)}
+.lvrow.here{box-shadow:inset 0 0 0 1px var(--gold)}
+.lvrow.off{opacity:.45}
+.lvn{flex:none;width:24px;text-align:right;font-size:13px;color:rgba(255,255,255,.6);font-variant-numeric:tabular-nums}
+.lvdot{flex:none;width:12px;height:12px;border-radius:3px}
+.lvt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.lvt b{font-size:15px}
+.lvt span{font-size:13px;color:rgba(255,255,255,.75)}
+.lvpick{min-height:38px;padding:4px 12px;font-size:15px;border-radius:10px}
+.goal{margin:0;font-size:14px;line-height:1.45;color:rgba(255,255,255,.78)}
+.pchip .sc small{font-size:.58em;opacity:.75;margin-left:2px}
+.regnote{margin:0;font-size:13px;color:rgba(255,255,255,.7)}
+.qstat{margin:0;font-weight:700;font-size:17px}
+.qmsg{margin:0;padding:8px 12px;border-radius:10px;background:rgba(30,142,74,.25);box-shadow:inset 0 0 0 1px rgba(120,220,150,.5);font-size:15px}
+.qmsg.bad{background:rgba(200,53,46,.25);box-shadow:inset 0 0 0 1px rgba(255,140,130,.6)}
+.qhelp{margin:0;font-size:14px;line-height:1.45;color:rgba(255,255,255,.72);max-width:65ch}
+.row.start{justify-content:flex-start}
+#tplbox{width:100%;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;border-radius:10px;border:0;padding:8px;background:var(--paper);color:var(--navy);resize:vertical}
+.rules{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;line-height:1.5;max-width:65ch;color:rgba(255,255,255,.9)}
+.rules b{color:var(--gold)}
+.regs{display:flex;flex-wrap:wrap;gap:6px}
+.regs span{color:#fff;border-radius:999px;padding:4px 12px;font-weight:700;font-size:14px}
+.rank{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.rank li{display:flex;align-items:center;gap:10px;border-radius:12px;padding:8px 14px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);font-family:var(--f-d);font-weight:700;font-size:19px}
+.rank li.w{box-shadow:inset 0 0 0 1.5px var(--gold);background:rgba(255,204,0,.12)}
+.rank .sc{margin-left:auto;color:var(--gold);font-size:22px;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.16);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:700;font-size:14px;color:rgba(255,255,255,.8)}
+.th-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.wintitle{text-align:center;color:var(--gold)}
+
+.qcard{width:min(660px,100%);max-height:100%;overflow:auto;background:var(--paper);color:var(--ink);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,39,.6);animation:qin .4s cubic-bezier(.2,1.25,.4,1)}
+@keyframes qin{from{transform:perspective(900px) rotateX(18deg) scale(.9);opacity:0}}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 20px 11px;color:#fff;border-radius:22px 22px 0 0;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.qtheme{font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase}
+.qwhere{display:flex;align-items:center;gap:8px;font-family:var(--f-d);font-weight:700;font-size:19px;background:rgba(255,255,255,.16);border-radius:999px;padding:4px 12px 4px 6px;min-width:0}
+.qwhere img{width:36px;height:24px;border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.7)}
+.qtimer{height:6px;background:#E8E0CE}
+.qtimer i{display:block;height:100%;background:var(--ok);width:100%}
+.qbody{padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.qwho{margin:0;display:flex;align-items:center;gap:8px;font-weight:700;color:var(--ink-2)}
+#qtext{font-family:var(--f-d);font-weight:700;font-size:clamp(21px,3.6vw,26px);line-height:1.28;margin:0;text-wrap:balance;color:var(--navy)}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qopt{display:flex;align-items:center;gap:12px;min-height:60px;text-align:left;padding:8px 14px 8px 10px;border:0;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1.5px #DDD3BF,0 3px 0 #E4DAC6;font-size:18px;font-weight:700;line-height:1.25;color:var(--ink);transition:transform .08s,box-shadow .15s}
+.qopt:hover:not(:disabled){box-shadow:inset 0 0 0 2px var(--eu),0 3px 0 #E4DAC6}
+.qopt:active:not(:disabled){transform:translateY(2px)}
+.qopt .k{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--eu);color:var(--gold);font-family:var(--f-d);font-weight:700;font-size:17px}
+.qopt:disabled{cursor:default}
+.qopt.ok{background:#DFF3E5;box-shadow:inset 0 0 0 2px #1E8E4A;color:#135C30}
+.qopt.ok .k{background:#1E8E4A;color:#fff}
+.qopt.bad{background:#FBE1DE;box-shadow:inset 0 0 0 2px #C8352E;color:#8C211B}
+.qopt.bad .k{background:#C8352E;color:#fff}
+.qopt.dim{opacity:.5}
+.qbuzz{display:flex;flex-wrap:wrap;gap:10px}
+.qbuzz button{display:flex;align-items:center;gap:8px;min-height:52px;padding:6px 18px;border:0;border-radius:14px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 6px 14px rgba(0,0,0,.15);color:#fff;font-family:var(--f-d);font-weight:700;font-size:19px}
+.qfeed{border-radius:14px;padding:12px 16px;background:#fff;box-shadow:inset 0 0 0 1.5px #DDD3BF;display:flex;flex-direction:column;gap:4px}
+.qfeed strong{font-family:var(--f-d);font-weight:700;font-size:22px}
+.qfeed.ok strong{color:#135C30}.qfeed.bad strong{color:#8C211B}
+.qfeed p{margin:0;font-size:17px;line-height:1.5}
+.qfoot{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+.qcard .btn.ghost{color:var(--eu);box-shadow:inset 0 0 0 1.5px var(--eu)}
+#loading{z-index:30;font-family:var(--f-d);font-weight:700;font-size:26px;color:var(--gold);background:var(--navy)}
+
+@media (max-width:700px){
+  .brand span{display:none}.brand{padding:7px}
+  #players{top:72px;right:max(16px,env(safe-area-inset-right,0px));flex-direction:row;flex-wrap:wrap;gap:6px}
+  .pchip{padding:5px 10px 5px 6px;gap:6px;border-radius:12px}
+  .pchip.cur{transform:translateY(2px)}
+  .pchip .pn{font-size:15px;max-width:6em}
+  .pchip .ps{display:none}
+  .pchip .sc{font-size:18px}
+  #toasts{top:auto;bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 86px)}
+  .tb-who{font-size:16px}
+  .btn.big{font-size:19px;min-height:52px;padding:6px 16px}
+  #hint{display:none}
+  .qopts{grid-template-columns:1fr}
+  .panel{padding:18px}
+}
+@media (max-width:380px){.hb{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){.qcard,.toast{animation:none}#pickmsg{animation:none}}
+</style>
+
+<div id="app">
+  <div id="stage"></div>
+
+  <header id="hud" class="ui">
+    <div class="brand" id="brand"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#FFCC00" stroke="#1B2340" stroke-width="1.6" stroke-linejoin="round"/></svg><span id="brandName">Estrelas da Europa</span></div>
+    <div id="clock" hidden></div>
+    <div class="spacer"></div>
+    <div class="hudbtns">
+      <button class="hb" id="bLang" type="button">PT</button>
+      <button class="hb" id="bMusic" type="button"></button>
+      <button class="hb" id="bSfx" type="button"></button>
+      <button class="hb" id="bList" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/></svg></button>
+      <button class="hb" id="bView" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
+      <button class="hb" id="bMenu" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
+
+  <div id="players" class="ui" hidden></div>
+  <div id="toasts" class="ui" aria-live="polite"></div>
+  <div id="pickmsg" class="ui" hidden></div>
+  <div id="hint" class="ui" hidden></div>
+  <aside id="listview" class="ui" hidden aria-labelledby="lvTitle"><div class="lvbox"><div class="lvhead"><h2 id="lvTitle"></h2><button class="hb" id="lvClose" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><p class="lvsum" id="lvSum"></p><ol id="lvList"></ol></div></aside>
+  <div id="sr" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <div id="turnbar" class="ui" hidden>
+    <div class="tb-who"><span id="tbStar"></span><span id="tbText"></span></div>
+    <div id="tbDice" aria-live="polite">–</div>
+    <button class="btn big" id="bRoll" type="button"></button>
+  </div>
+
+  <div id="qmodal" class="layer" hidden>
+    <div class="qcard" role="dialog" aria-modal="true" aria-labelledby="qtext">
+      <div class="qhead" id="qhead"><span class="qtheme" id="qtheme"></span><span class="qwhere"><img id="qflag" alt="" hidden><span id="qplace"></span></span></div>
+      <div class="qtimer" id="qtimerWrap"><i id="qbar"></i></div>
+      <div class="qbody">
+        <p class="qwho" id="qwho"></p>
+        <h2 id="qtext"></h2>
+        <div class="qbuzz" id="qbuzz"></div>
+        <div class="qopts" id="qopts"></div>
+        <div class="qfeed" id="qfeed" hidden><strong id="qres"></strong><p id="qfact"></p></div>
+        <div class="qfoot"><button class="btn ghost" id="qpass" type="button" hidden></button><span></span><button class="btn blue" id="qnext" type="button" hidden></button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay" class="layer" hidden><div class="panel" id="panel"></div></div>
+  <div id="loading" class="layer">A preparar o tabuleiro…</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="questions.js"></script>
+<script>
+(()=>{
+'use strict';
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem('edE_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('edE_'+k,JSON.stringify(v))}catch(e){}}};
+let prm=false;try{prm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+const S={lang:store.get('lang','pt'),music:store.get('music',true),sfx:store.get('sfx',true),vol:store.get('vol',.7),reduced:store.get('reduced',prm),timer:store.get('timer',true),cine:store.get('cine',true)};
+const save=()=>{['lang','music','sfx','vol','reduced','timer','cine'].forEach(k=>store.set(k,S[k]))};
+
+/* ---------------- Textos da interface ---------------- */
+const T={
+pt:{title:'Estrelas da Europa',titleA:'Estrelas',titleB:'da Europa',tagline:'O jogo de tabuleiro dos 27 países da União Europeia',sub:'27 países · até 4 jogadores',
+play:'Jogar',rules:'Regras',settings:'Definições',back:'Voltar',begin:'Começar',newGame:'Nova partida',players:'Jogadores',player:'Jogador',changeColor:'Mudar a cor',
+level:'Nível',beginner:'Iniciado (9–14)',advanced:'Avançado (15+)',mode:'Modo de jogo',modeStars:'12 estrelas',modeTime:'Tempo limite',modeTour:'Volta à Europa',modeClock:'Contra o relógio',goalStars:'Ganha quem juntar primeiro 12 estrelas (tabuleiro + bónus).',goalTime:'Ganha quem tiver mais estrelas quando acabar o tempo.',goalTour:'Uma estrela em cada uma das 8 regiões de jogo, com o mínimo de lançamentos.',goalClock:'O máximo de estrelas em 10 minutos. No Relâmpago, acerta 3 perguntas seguidas para ganhar uma estrela.',tourHud:'Regiões {r}/8 · {k} lançamentos',tourDone:'Volta à Europa completa em {k} lançamentos!',tourStop:'Volta à Europa: {r} de 8 regiões',clockDone:'Fizeste {s} estrelas em 10 minutos!',flashSolo:'Relâmpago! Acerta 3 perguntas seguidas para ganhar uma estrela',flashSoloWin:'3 em 3! Ganhaste uma estrela',flashSoloLose:'Falhaste a pergunta {k}. Fica para a próxima!',flashStep:'Pergunta {k} de 3',noFreeOwn:'Não há países livres nem com estrela tua.',scoreAria:'{b} estrelas no tabuleiro e {x} de bónus',listT:'Tabuleiro em lista',closeList:'Fechar lista',choose:'Escolher',stFree:'livre',stOcc:'1 estrela de {n}',stLock:'conquistado por {n}',stHere:'aqui: {n}',moved:'{n} andou {k} casas até {c}.',rolled:'{n} tirou {k}.',outSch:'fora do espaço Schengen',lvSum:'{n} casas. Tecla L abre e fecha esta lista.',lvPick:'Escolhe uma casa com o botão Escolher.',accuracy:'Acertos',rollsW:'lançamentos',regionsW:'regiões',regionsNote:'Agrupamentos criados para o jogo, não uma divisão oficial da UE.',minutes:'{m} min',answerTimer:'20 segundos para responder',
+turn:'Vez de {n}',roll:'Lançar dado',passes:'passes: {k}',
+passCard:'{n} passou pela Partida e ganhou uma carta passe',erasmus:'Erasmus! {n} joga outra vez',schengen:'Schengen! Viaja para um país do espaço Schengen. A Irlanda e Chipre são da UE, mas não fazem parte.',
+lockedOther:'{c} foi conquistado por {o}. Passas a vez.',lockedSelf:'{c} já é teu. Passas a vez.',
+star:'{n} pôs uma estrela em {c}',steal:'{n} roubou a estrela de {o} em {c}!',conquer:'{n} conquistou {c}!',region:'{n} completou a região {r}: +2 estrelas!',
+pickStar:'Toca num país para pôr a tua estrela',pickTravel:'Toca no país do espaço Schengen para onde queres viajar',noFree:'Não há países livres.',
+flash:'Relâmpago! Todos podem responder',inst:'Desafio: {i}',flashWin:'{n} foi o mais rápido!',nobody:'Ninguém acertou.',gameTimeUp:'O tempo de jogo acabou! Esta é a última jogada.',
+correct:'Certo!',wrong:'Errado',timeout:'Tempo esgotado',cont:'Continuar',usePass:'Usar passe: trocar pergunta ({k})',
+whoBuzz:'Quem souber, toca no seu botão!',answering:'{n} responde',forPlayer:'Pergunta para {n}',buzz:'Eu sei!',flashName:'Relâmpago',
+winner:'{n} completou a bandeira!',winnerTime:'{n} ganhou!',tie:'Empate entre {n}!',ranking:'Classificação',stats:'Respostas certas por tema',again:'Jogar outra vez',menu:'Menu principal',
+music:'Música',effects:'Efeitos sonoros',volume:'Volume',reduced:'Animações reduzidas',questionsH:'Perguntas',qBase:'{n} perguntas de base ({s})',qBuiltin:'incluídas no jogo',qImp:'+ {n} importadas',qOnly:'{n} perguntas importadas (substituem as de base)',qOnly1:'1 pergunta importada (substitui as de base)',qImp1:'+ 1 importada',impOk1:'Importada 1 pergunta.',importBtn:'Importar ficheiro',modeAdd:'Acrescentar',modeRep:'Substituir',resetQ:'Repor perguntas de base',copyTpl:'Copiar modelo CSV',copied:'Modelo copiado. Cola-o numa folha de cálculo.',copyFail:'Não foi possível copiar. Seleciona o texto abaixo.',impOk:'Importadas {n} perguntas.',impSkip:'{n} ignoradas (dados em falta: {w}).',impNone:'O ficheiro não tem perguntas válidas.',impErr:'Não consegui ler o ficheiro. Usa questions.js, JSON ou CSV.',resetDone:'Voltaste às perguntas de base.',qHelp:'Aceita questions.js, JSON ou CSV (separado por ; ou ,). A primeira opção é a certa. As perguntas importadas ficam guardadas neste navegador.',cine:'Câmara cinematográfica (segue o jogador)',exit:'Sair para o menu',exitQ:'Sair desta partida? O progresso perde-se.',yes:'Sim, sair',cancel:'Cancelar',close:'Fechar',
+resetView:'Repor vista',lang:'Mudar para inglês',hint:'Arrasta para rodar o tabuleiro · roda para aproximar',regions:'Regiões de jogo',
+starsWord:'estrelas',loading:'A preparar o tabuleiro…',nowebgl:'Este navegador não consegue mostrar gráficos 3D (WebGL). Experimenta outro navegador ou dispositivo.',
+colorNames:['Vermelha','Verde','Laranja','Roxa'],
+rulesList5:['<b>Lança o dado</b> e anda casa a casa com a tua estrela.','Num país, vira-se uma carta de um dos 4 montes (<b>Geografia, História, Cultura, UE</b>) com uma pergunta sobre esse país.','<b>Cada país passa por três estados:</b> livre → ocupado (1 estrela) → conquistado (2 estrelas do mesmo jogador).','Certo num país <b>livre</b>: pões lá uma estrela tua. Certo num país <b>ocupado por ti</b>: ganhas a segunda e o país fica <b>conquistado</b> para sempre.','Certo num país <b>ocupado por outro jogador</b>: a estrela passa a ser tua (o país continua ocupado, com 1 estrela). Resposta errada: nada muda.','Um país conquistado fica bloqueado: quem lá cair passa a vez.','Conquista todos os países de uma região de jogo e ganha <b>+2 estrelas de bónus</b>. O painel mostra as estrelas no tabuleiro e o bónus em separado.','<b>Partida:</b> ganhas uma carta passe para trocar uma pergunta. <b>Erasmus:</b> jogas outra vez. <b>Schengen:</b> viajas para um país do espaço Schengen (a Irlanda e Chipre não fazem parte). <b>Relâmpago:</b> todos podem responder; o mais rápido ganha uma estrela.','As <b>instituições</b> e o <b>Relâmpago</b> dão uma estrela livre, que só pode ir para um país livre ou para um país onde já tens uma estrela.','<b>Vários jogadores:</b> ganha quem juntar 12 estrelas (tabuleiro + bónus) ou quem tiver mais quando acabar o tempo.','<b>Um jogador:</b> Volta à Europa (uma estrela em cada região de jogo, com o mínimo de lançamentos) ou Contra o relógio (máximo de estrelas em 10 minutos; no Relâmpago acerta 3 seguidas).'],
+rulesList:['<b>Lança o dado</b> e anda casa a casa com a tua estrela.','Num país, vira-se uma carta de um dos 4 montes (<b>Geografia, História, Cultura, UE</b>) com uma pergunta sobre esse país.','Certo numa casa vazia: pões lá <b>uma estrela</b> tua.','Se a casa já tem uma estrela tua, ganhas a segunda e o país fica <b>conquistado</b> e bloqueado.','Se a casa tem uma estrela de outro jogador, <b>roubas-lha</b>.','Se cais num país conquistado por outro jogador, passas a vez.','Conquista todos os países de uma região da mesma cor e ganha <b>+2 estrelas</b>.','<b>Partida:</b> ao passar, ganhas uma carta passe para trocar uma pergunta. <b>Erasmus:</b> jogas outra vez. <b>Schengen:</b> viajas para qualquer casa. <b>Relâmpago:</b> todos podem responder; o mais rápido ganha uma estrela.','<b>Instituições:</b> pergunta de desafio; se acertares, pões uma estrela no país livre que quiseres.','Ganha quem juntar <b>12 estrelas</b> primeiro, ou quem tiver mais quando acabar o tempo.']},
+en:{title:'Stars of Europe',titleA:'Stars',titleB:'of Europe',tagline:'The board game of the 27 European Union countries',sub:'27 countries · up to 4 players',
+play:'Play',rules:'Rules',settings:'Settings',back:'Back',begin:'Start',newGame:'New game',players:'Players',player:'Player',changeColor:'Change colour',
+level:'Level',beginner:'Beginner (9–14)',advanced:'Advanced (15+)',mode:'Game mode',modeStars:'12 stars',modeTime:'Time limit',modeTour:'Tour of Europe',modeClock:'Against the clock',goalStars:'The first to collect 12 stars (board + bonus) wins.',goalTime:'Whoever has most stars when time runs out wins.',goalTour:'One star in each of the 8 game regions, with as few rolls as possible.',goalClock:'As many stars as possible in 10 minutes. On Lightning, get 3 questions right in a row to win a star.',tourHud:'Regions {r}/8 · {k} rolls',tourDone:'Tour of Europe completed in {k} rolls!',tourStop:'Tour of Europe: {r} of 8 regions',clockDone:'You made {s} stars in 10 minutes!',flashSolo:'Lightning! Get 3 questions right in a row to win a star',flashSoloWin:'3 out of 3! You won a star',flashSoloLose:'You missed question {k}. Better luck next time!',flashStep:'Question {k} of 3',noFreeOwn:'There are no free countries or countries with your star.',scoreAria:'{b} stars on the board and {x} bonus',listT:'Board as a list',closeList:'Close list',choose:'Choose',stFree:'free',stOcc:'1 star by {n}',stLock:'conquered by {n}',stHere:'here: {n}',moved:'{n} moved {k} squares to {c}.',rolled:'{n} rolled {k}.',outSch:'outside the Schengen area',lvSum:'{n} squares. Press L to open and close this list.',lvPick:'Choose a square with the Choose button.',accuracy:'Correct',rollsW:'rolls',regionsW:'regions',regionsNote:'Groupings created for the game, not an official EU division.',minutes:'{m} min',answerTimer:'20 seconds to answer',
+turn:"{n}'s turn",roll:'Roll the dice',passes:'passes: {k}',
+passCard:'{n} passed Start and earned a pass card',erasmus:'Erasmus! {n} plays again',schengen:'Schengen! Travel to a country in the Schengen area. Ireland and Cyprus are in the EU but not in Schengen.',
+lockedOther:'{c} was conquered by {o}. You skip this turn.',lockedSelf:'{c} is already yours. You skip this turn.',
+star:'{n} placed a star on {c}',steal:"{n} stole {o}'s star on {c}!",conquer:'{n} conquered {c}!',region:'{n} completed the {r} region: +2 stars!',
+pickStar:'Tap a country to place your star',pickTravel:'Tap the Schengen country you want to travel to',noFree:'There are no free countries.',
+flash:'Lightning! Everyone can answer',inst:'Challenge: {i}',flashWin:'{n} was the fastest!',nobody:'Nobody got it right.',gameTimeUp:"Game time is up! This is the last move.",
+correct:'Correct!',wrong:'Wrong',timeout:"Time's up",cont:'Continue',usePass:'Use a pass: swap question ({k})',
+whoBuzz:'If you know it, tap your button!',answering:'{n} is answering',forPlayer:'Question for {n}',buzz:'I know!',flashName:'Lightning',
+winner:'{n} completed the flag!',winnerTime:'{n} wins!',tie:"It's a tie: {n}!",ranking:'Ranking',stats:'Correct answers by theme',again:'Play again',menu:'Main menu',
+music:'Music',effects:'Sound effects',volume:'Volume',reduced:'Reduced animations',questionsH:'Questions',qBase:'{n} base questions ({s})',qBuiltin:'built into the game',qImp:'+ {n} imported',qOnly:'{n} imported questions (replacing the base set)',qOnly1:'1 imported question (replacing the base set)',qImp1:'+ 1 imported',impOk1:'Imported 1 question.',importBtn:'Import file',modeAdd:'Add',modeRep:'Replace',resetQ:'Restore base questions',copyTpl:'Copy CSV template',copied:'Template copied. Paste it into a spreadsheet.',copyFail:'Could not copy. Select the text below.',impOk:'Imported {n} questions.',impSkip:'{n} skipped (missing data: {w}).',impNone:'The file has no valid questions.',impErr:'Could not read the file. Use questions.js, JSON or CSV.',resetDone:'Back to the base questions.',qHelp:'Accepts questions.js, JSON or CSV (separated by ; or ,). The first option is the right one. Imported questions are saved in this browser.',cine:'Cinematic camera (follows the player)',exit:'Exit to menu',exitQ:'Leave this game? Progress will be lost.',yes:'Yes, leave',cancel:'Cancel',close:'Close',
+resetView:'Reset view',lang:'Mudar para português',hint:'Drag to rotate the board · scroll to zoom',regions:'Game regions',
+starsWord:'stars',loading:'Setting up the board…',nowebgl:'This browser cannot show 3D graphics (WebGL). Try another browser or device.',
+colorNames:['Red','Green','Orange','Purple'],
+rulesList5:['<b>Roll the dice</b> and walk square by square with your star.','On a country, a card is turned from one of the 4 piles (<b>Geography, History, Culture, EU</b>) with a question about that country.','<b>Each country has three states:</b> free → occupied (1 star) → conquered (2 stars from the same player).','Right on a <b>free</b> country: you place one of your stars. Right on a country <b>occupied by you</b>: you get the second star and the country is <b>conquered</b> for good.','Right on a country <b>occupied by another player</b>: the star becomes yours (the country stays occupied, with 1 star). Wrong answer: nothing changes.','A conquered country is locked: whoever lands there skips the turn.','Conquer every country in a game region and get <b>+2 bonus stars</b>. The panel shows board stars and bonus separately.','<b>Start:</b> you get a pass card to swap a question. <b>Erasmus:</b> play again. <b>Schengen:</b> travel to a country in the Schengen area (Ireland and Cyprus are not in it). <b>Lightning:</b> everyone can answer; the fastest wins a star.','<b>Institutions</b> and <b>Lightning</b> give a free star, which can only go on a free country or a country where you already have a star.','<b>Several players:</b> the first to 12 stars (board + bonus) wins, or whoever has most when time runs out.','<b>One player:</b> Tour of Europe (one star in each game region, with as few rolls as possible) or Against the clock (most stars in 10 minutes; on Lightning get 3 in a row).'],
+rulesList:['<b>Roll the dice</b> and walk square by square with your star.','On a country, a card is turned from one of the 4 piles (<b>Geography, History, Culture, EU</b>) with a question about that country.','Right answer on an empty square: you place <b>one star</b> there.','If the square already has one of your stars, you get a second one and the country is <b>conquered</b> and locked.','If it has another player\'s star, you <b>steal it</b>.','If you land on a country conquered by another player, you skip your turn.','Conquer every country in a colour region and get <b>+2 stars</b>.','<b>Start:</b> when you pass it, you get a pass card to swap a question. <b>Erasmus:</b> play again. <b>Schengen:</b> travel to any square. <b>Lightning:</b> everyone can answer; the fastest wins a star.','<b>Institutions:</b> a challenge question; get it right and place a star on any free country.','The first to collect <b>12 stars</b> wins, or whoever has most when time runs out.']}
+};
+const t=(k,v)=>{let s=T[S.lang][k];if(s===undefined)s=T.pt[k];if(typeof s!=='string')return s;return s.replace(/\{(\w+)\}/g,(m,x)=>v&&v[x]!==undefined?v[x]:m)};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------------- Dados do jogo ---------------- */
+const REG={atl:['#2B6CB0','Atlântico','Atlantic'],ben:['#6B46C1','Benelux','Benelux'],nor:['#0F8B8D','Nórdicos','Nordic'],bal:['#C98A0B','Báltico','Baltic'],cen:['#C8553D','Centro','Central'],dan:['#B83280','Danúbio','Danube'],adr:['#3D8B37','Adriático','Adriatic'],med:['#B22222','Mediterrâneo','Mediterranean']};
+const THL=[['geo','#2D8FD5','Geografia','Geography'],['hist','#E0782A','História','History'],['cult','#C9449C','Cultura','Culture'],['eu','#003399','UE','EU']];
+const TH={};THL.forEach(r=>TH[r[0]]={k:r[0],col:r[1],pt:r[2],en:r[3]});
+const PC=[['#E5383B'],['#2BB34A'],['#FF8A1F'],['#8A4FFF']];
+const INST={EP:['🗳️','Parlamento Europeu','European Parliament'],COM:['📜','Comissão Europeia','European Commission'],CON:['🤝','Conselho da UE','Council of the EU'],CJ:['⚖️','Tribunal de Justiça da UE','Court of Justice of the EU'],BCE:['💶','Banco Central Europeu','European Central Bank']};
+const SPECIAL={start:['🏁','Partida','Start'],erasmus:['🎓','Erasmus','Erasmus'],schengen:['🚆','Schengen','Schengen'],flash:['⚡','Relâmpago','Lightning']};
+const BOARD=['S:start','PT','ES','FR','IE','I:EP','BE','NL','LU','S:erasmus','DK','SE','FI','I:CJ','PL','LT','LV','EE','S:schengen','DE','AT','CZ','I:BCE','SK','HU','RO','BG','S:flash','SI','HR','IT','I:COM','MT','GR','CY','I:CON'].map(s=>s.startsWith('S:')?{t:'s',id:s.slice(2)}:s.startsWith('I:')?{t:'i',id:s.slice(2)}:{t:'c',code:s});
+
+const F='code pt en ofPT inPT enT capPT capEN monPT monEN langPT langEN curPT curEN euro join seats perPT perEN rolePT roleEN icon reg'.split(' ');
+const CD=[
+['PT','Portugal','Portugal','de Portugal','em Portugal','Portugal','Lisboa','Lisbon','a Torre de Belém','Belém Tower','Português','Portuguese','','',1999,1986,21,'Fernando Pessoa','Fernando Pessoa','poeta','poet','⛵','atl'],
+['ES','Espanha','Spain','de Espanha','em Espanha','Spain','Madrid','Madrid','a basílica da Sagrada Família','the Sagrada Família basilica','Espanhol','Spanish','','',1999,1986,61,'Miguel de Cervantes','Miguel de Cervantes','escritor','writer','💃','atl'],
+['FR','França','France','de França','em França','France','Paris','Paris','a Torre Eiffel','the Eiffel Tower','Francês','French','','',1999,1958,81,'Victor Hugo','Victor Hugo','escritor','writer','🗼','atl'],
+['IE','Irlanda','Ireland','da Irlanda','na Irlanda','Ireland','Dublin','Dublin','as Falésias de Moher','the Cliffs of Moher','Irlandês e inglês','Irish and English','','',1999,1973,14,'James Joyce','James Joyce','escritor','writer','☘️','atl'],
+['BE','Bélgica','Belgium','da Bélgica','na Bélgica','Belgium','Bruxelas','Brussels','o Atomium','the Atomium','Neerlandês, francês e alemão','Dutch, French and German','','',1999,1958,22,'René Magritte','René Magritte','pintor','painter','🧇','ben'],
+['NL','Países Baixos','Netherlands','dos Países Baixos','nos Países Baixos','the Netherlands','Amesterdão','Amsterdam','os moinhos de Kinderdijk','the Kinderdijk windmills','Neerlandês','Dutch','','',1999,1958,31,'Vincent van Gogh','Vincent van Gogh','pintor','painter','🌷','ben'],
+['LU','Luxemburgo','Luxembourg','do Luxemburgo','no Luxemburgo','Luxembourg','Luxemburgo','Luxembourg','as Casamatas do Bock','the Bock Casemates','Luxemburguês, francês e alemão','Luxembourgish, French and German','','',1999,1958,6,'Robert Schuman','Robert Schuman','um dos pais fundadores da UE','a founding father of the EU','🏰','ben'],
+['DK','Dinamarca','Denmark','da Dinamarca','na Dinamarca','Denmark','Copenhaga','Copenhagen','a estátua da Pequena Sereia','the Little Mermaid statue','Dinamarquês','Danish','Coroa dinamarquesa','Danish krone',0,1973,15,'Hans Christian Andersen','Hans Christian Andersen','autor de contos','fairy-tale author','🧜','nor'],
+['SE','Suécia','Sweden','da Suécia','na Suécia','Sweden','Estocolmo','Stockholm','o Palácio de Drottningholm','Drottningholm Palace','Sueco','Swedish','Coroa sueca','Swedish krona',0,1995,21,'Astrid Lindgren','Astrid Lindgren','escritora','writer','🦌','nor'],
+['FI','Finlândia','Finland','da Finlândia','na Finlândia','Finland','Helsínquia','Helsinki','a fortaleza de Suomenlinna','Suomenlinna fortress','Finlandês e sueco','Finnish and Swedish','','',1999,1995,15,'Jean Sibelius','Jean Sibelius','compositor','composer','🌲','nor'],
+['PL','Polónia','Poland','da Polónia','na Polónia','Poland','Varsóvia','Warsaw','o Castelo de Wawel','Wawel Castle','Polaco','Polish','Zlóti','Złoty',0,2004,53,'Frédéric Chopin','Frédéric Chopin','compositor','composer','🎹','bal'],
+['LT','Lituânia','Lithuania','da Lituânia','na Lituânia','Lithuania','Vílnius','Vilnius','a Colina das Cruzes','the Hill of Crosses','Lituano','Lithuanian','','',2015,2004,11,'Mikalojus Čiurlionis','Mikalojus Čiurlionis','pintor e compositor','painter and composer','🏀','bal'],
+['LV','Letónia','Latvia','da Letónia','na Letónia','Latvia','Riga','Riga','a Casa dos Cabeças Pretas','the House of the Blackheads','Letão','Latvian','','',2014,2004,9,'Krišjānis Barons','Krišjānis Barons','compilador de canções populares','folk-song collector','🎶','bal'],
+['EE','Estónia','Estonia','da Estónia','na Estónia','Estonia','Taline','Tallinn','o Parque Nacional de Lahemaa','Lahemaa National Park','Estónio','Estonian','','',2011,2004,7,'Arvo Pärt','Arvo Pärt','compositor','composer','🎤','bal'],
+['DE','Alemanha','Germany','da Alemanha','na Alemanha','Germany','Berlim','Berlin','a Porta de Brandemburgo','the Brandenburg Gate','Alemão','German','','',1999,1958,96,'Ludwig van Beethoven','Ludwig van Beethoven','compositor','composer','🥨','cen'],
+['AT','Áustria','Austria','da Áustria','na Áustria','Austria','Viena','Vienna','o Palácio de Schönbrunn','Schönbrunn Palace','Alemão','German','','',1999,1995,20,'Wolfgang Amadeus Mozart','Wolfgang Amadeus Mozart','compositor','composer','🎻','cen'],
+['CZ','Chéquia','Czechia','da Chéquia','na Chéquia','Czechia','Praga','Prague','a Ponte Carlos','Charles Bridge','Checo','Czech','Coroa checa','Czech koruna',0,2004,21,'Franz Kafka','Franz Kafka','escritor','writer','🌉','cen'],
+['SK','Eslováquia','Slovakia','da Eslováquia','na Eslováquia','Slovakia','Bratislava','Bratislava','o Castelo de Spiš','Spiš Castle','Eslovaco','Slovak','','',2009,2004,15,'Milan Rastislav Štefánik','Milan Rastislav Štefánik','astrónomo e político','astronomer and statesman','⛰️','dan'],
+['HU','Hungria','Hungary','da Hungria','na Hungria','Hungary','Budapeste','Budapest','o Bastião dos Pescadores',"the Fishermen's Bastion",'Húngaro','Hungarian','Forint','forint',0,2004,21,'Ernő Rubik','Ernő Rubik','inventor do cubo mágico',"inventor of the Rubik's Cube",'🧩','dan'],
+['RO','Roménia','Romania','da Roménia','na Roménia','Romania','Bucareste','Bucharest','o Castelo de Bran','Bran Castle','Romeno','Romanian','Leu romeno','Romanian leu',0,2007,33,'Constantin Brâncuși','Constantin Brâncuși','escultor','sculptor','🦇','dan'],
+['BG','Bulgária','Bulgaria','da Bulgária','na Bulgária','Bulgaria','Sófia','Sofia','o Mosteiro de Rila','Rila Monastery','Búlgaro','Bulgarian','','',2026,2007,17,'Christo','Christo','artista','artist','🌹','dan'],
+['SI','Eslovénia','Slovenia','da Eslovénia','na Eslovénia','Slovenia','Liubliana','Ljubljana','o Lago de Bled','Lake Bled','Esloveno','Slovenian','','',2007,2004,9,'France Prešeren','France Prešeren','poeta','poet','🏞️','adr'],
+['HR','Croácia','Croatia','da Croácia','na Croácia','Croatia','Zagrebe','Zagreb','os Lagos de Plitvice','the Plitvice Lakes','Croata','Croatian','','',2023,2013,12,'Nikola Tesla','Nikola Tesla','inventor','inventor','🌊','adr'],
+['IT','Itália','Italy','de Itália','em Itália','Italy','Roma','Rome','o Coliseu','the Colosseum','Italiano','Italian','','',1999,1958,76,'Leonardo da Vinci','Leonardo da Vinci','artista e inventor','artist and inventor','🍕','adr'],
+['MT','Malta','Malta','de Malta','em Malta','Malta','Valeta','Valletta','os templos de Ħaġar Qim','the Ħaġar Qim temples','Maltês e inglês','Maltese and English','','',2008,2004,6,'Edward de Bono','Edward de Bono','pensador','thinker','⚓','med'],
+['GR','Grécia','Greece','da Grécia','na Grécia','Greece','Atenas','Athens','o Pártenon','the Parthenon','Grego','Greek','','',2001,1981,21,'Aristóteles','Aristotle','filósofo','philosopher','🏛️','med'],
+['CY','Chipre','Cyprus','de Chipre','em Chipre','Cyprus','Nicósia','Nicosia','os Túmulos dos Reis','the Tombs of the Kings','Grego e turco','Greek and Turkish','','',2008,2004,6,'Zenão de Cício','Zeno of Citium','filósofo','philosopher','🐢','med']];
+const CM={};CD.forEach(r=>{const o={};F.forEach((k,i)=>o[k]=r[i]);o.inEN='in '+o.enT;CM[o.code]=o});
+const CODES=CD.map(r=>r[0]);
+
+/* História: uma pergunta própria por país [qPT, opçõesPT (certa primeiro), factoPT, qEN, opçõesEN, factoEN] */
+const HIST={
+PT:['Que revolução de 1974 devolveu a democracia a Portugal?',['Revolução dos Cravos','Revolução de Veludo','Revolução Francesa','Primavera de Praga'],'A 25 de Abril de 1974, a Revolução dos Cravos pôs fim a 48 anos de ditadura.','Which 1974 revolution restored democracy in Portugal?',['Carnation Revolution','Velvet Revolution','French Revolution','Prague Spring'],'On 25 April 1974, the Carnation Revolution ended 48 years of dictatorship.'],
+ES:['Que navegador partiu de Espanha em 1492 e chegou à América?',['Cristóvão Colombo','Vasco da Gama','Fernão de Magalhães','Bartolomeu Dias'],'A viagem de Colombo foi financiada pelos Reis Católicos, Isabel e Fernando.','Which navigator sailed from Spain in 1492 and reached the Americas?',['Christopher Columbus','Vasco da Gama','Ferdinand Magellan','Bartolomeu Dias'],"Columbus's voyage was funded by the Catholic Monarchs, Isabella and Ferdinand."],
+FR:['Em que ano começou a Revolução Francesa?',['1789','1815','1848','1914'],'A tomada da Bastilha, a 14 de julho de 1789, é hoje o dia nacional de França.','In which year did the French Revolution begin?',['1789','1815','1848','1914'],"The storming of the Bastille on 14 July 1789 is now France's national day."],
+IE:['Em que ano nasceu o Estado Livre Irlandês, antecessor da Irlanda independente?',['1922','1801','1949','1973'],'Em 1922 a Irlanda separou-se do Reino Unido; em 1949 tornou-se república.','In which year was the Irish Free State, forerunner of independent Ireland, founded?',['1922','1801','1949','1973'],'In 1922 Ireland left the United Kingdom; it became a republic in 1949.'],
+BE:['Em que ano a Bélgica se tornou independente?',['1830','1789','1871','1918'],'A revolução de 1830 separou a Bélgica do Reino Unido dos Países Baixos.','In which year did Belgium become independent?',['1830','1789','1871','1918'],'The 1830 revolution separated Belgium from the United Kingdom of the Netherlands.'],
+NL:['Que tratado, assinado em 1992 nos Países Baixos, criou a União Europeia?',['Tratado de Maastricht','Tratado de Lisboa','Tratado de Roma','Tratado de Nice'],'O Tratado de Maastricht criou a cidadania europeia e preparou o caminho para o euro.','Which treaty, signed in the Netherlands in 1992, created the European Union?',['Maastricht Treaty','Treaty of Lisbon','Treaty of Rome','Treaty of Nice'],'The Maastricht Treaty created EU citizenship and paved the way for the euro.'],
+LU:['Que acordo, assinado em 1985 numa vila do Luxemburgo, aboliu controlos nas fronteiras?',['Acordo de Schengen','Tratado de Maastricht','Acordo de Dublin','Processo de Bolonha'],'Schengen fica junto ao ponto onde se encontram o Luxemburgo, a França e a Alemanha.','Which agreement, signed in 1985 in a village in Luxembourg, removed border checks?',['Schengen Agreement','Maastricht Treaty','Dublin Agreement','Bologna Process'],'Schengen lies where Luxembourg, France and Germany meet.'],
+DK:['Que povo de navegadores partiu da Dinamarca e da Escandinávia por volta do ano 800?',['Os vikings','Os romanos','Os mouros','Os celtas'],'Os vikings chegaram por mar a Inglaterra, à Irlanda, à Islândia e até à América do Norte.','Which seafaring people set out from Denmark and Scandinavia around the year 800?',['The Vikings','The Romans','The Moors','The Celts'],'The Vikings sailed to England, Ireland, Iceland and even North America.'],
+SE:['Que prémios internacionais foram criados pelo testamento do sueco Alfred Nobel?',['Prémios Nobel','Óscares','Prémios Pulitzer','Palma de Ouro'],'Os primeiros Prémios Nobel foram atribuídos em 1901.','Which international prizes were created by the will of the Swede Alfred Nobel?',['Nobel Prizes','Oscars','Pulitzer Prizes',"Palme d'Or"],'The first Nobel Prizes were awarded in 1901.'],
+FI:['De que país se tornou a Finlândia independente em 1917?',['Rússia','Suécia','Alemanha','Dinamarca'],'A Finlândia declarou a independência a 6 de dezembro de 1917.','From which country did Finland become independent in 1917?',['Russia','Sweden','Germany','Denmark'],'Finland declared independence on 6 December 1917.'],
+PL:['Que sindicato polaco, fundado em 1980, ajudou a pôr fim ao regime comunista?',['Solidariedade','Perestroika','Primavera de Praga','Revolução de Veludo'],'O Solidariedade nasceu nos estaleiros de Gdańsk, liderado por Lech Wałęsa.','Which Polish trade union, founded in 1980, helped end communist rule?',['Solidarity','Perestroika','Prague Spring','Velvet Revolution'],'Solidarity was born in the Gdańsk shipyards, led by Lech Wałęsa.'],
+LT:['Como se chamou a corrente humana de 1989 que uniu os três países bálticos?',['Via Báltica','Muro de Berlim','Cortina de Ferro','Rota da Seda'],'Cerca de dois milhões de pessoas deram as mãos de Vílnius a Taline, passando por Riga.','What was the 1989 human chain linking the three Baltic countries called?',['Baltic Way','Berlin Wall','Iron Curtain','Silk Road'],'About two million people joined hands from Vilnius to Tallinn, through Riga.'],
+LV:['Em que ano a Letónia restaurou a sua independência?',['1991','1945','1968','2004'],'A Letónia tornou-se independente pela primeira vez em 1918 e restaurou a independência em 1991.','In which year did Latvia restore its independence?',['1991','1945','1968','2004'],'Latvia first became independent in 1918 and restored its independence in 1991.'],
+EE:['Como ficou conhecida a luta pacífica da Estónia pela independência, com grandes festivais de canto?',['Revolução Cantada','Revolução dos Cravos','Revolução de Veludo','Revolução Laranja'],'Entre 1987 e 1991, multidões cantaram canções proibidas para reclamar a liberdade.',"What was Estonia's peaceful struggle for independence, with huge song festivals, called?",['Singing Revolution','Carnation Revolution','Velvet Revolution','Orange Revolution'],'Between 1987 and 1991, huge crowds sang banned songs to demand freedom.'],
+DE:['Em que ano caiu o Muro de Berlim?',['1989','1961','1990','1945'],'O Muro caiu a 9 de novembro de 1989; a Alemanha reunificou-se em 1990.','In which year did the Berlin Wall fall?',['1989','1961','1990','1945'],'The Wall fell on 9 November 1989; Germany reunified in 1990.'],
+AT:['Que congresso de 1814–1815 redesenhou o mapa da Europa depois de Napoleão?',['Congresso de Viena','Tratado de Versalhes','Paz de Vestefália','Conferência de Ialta'],'Diplomatas de toda a Europa reuniram-se em Viena para restabelecer o equilíbrio de poderes.','Which 1814–1815 congress redrew the map of Europe after Napoleon?',['Congress of Vienna','Treaty of Versailles','Peace of Westphalia','Yalta Conference'],'Diplomats from across Europe met in Vienna to restore the balance of power.'],
+CZ:['Como se chamou a revolução pacífica de 1989 na Checoslováquia?',['Revolução de Veludo','Revolução Cantada','Revolução dos Cravos','Primavera Árabe'],'O dramaturgo Václav Havel tornou-se presidente logo a seguir.','What was the 1989 peaceful revolution in Czechoslovakia called?',['Velvet Revolution','Singing Revolution','Carnation Revolution','Arab Spring'],'The playwright Václav Havel became president shortly afterwards.'],
+SK:['Em que ano a Eslováquia se tornou um Estado independente?',['1993','1918','1989','2004'],'A Checoslováquia dividiu-se pacificamente em dois países a 1 de janeiro de 1993.','In which year did Slovakia become an independent state?',['1993','1918','1989','2004'],'Czechoslovakia split peacefully into two countries on 1 January 1993.'],
+HU:['Contra que domínio se revoltaram os húngaros em 1956?',['União Soviética','Império Otomano','Império Romano','Reino de França'],'A revolta de 1956 foi esmagada, mas tornou-se um símbolo da luta pela liberdade.','Against whose domination did Hungarians rise up in 1956?',['Soviet Union','Ottoman Empire','Roman Empire','Kingdom of France'],'The 1956 uprising was crushed but became a symbol of the fight for freedom.'],
+RO:['Que império conquistou a Dácia, atual Roménia, no ano 106?',['Império Romano','Império Otomano','Império Bizantino','Império Carolíngio'],'É por isso que o romeno é uma língua latina, como o português.',"Which empire conquered Dacia, today's Romania, in the year 106?",['Roman Empire','Ottoman Empire','Byzantine Empire','Carolingian Empire'],'That is why Romanian is a Latin language, like Portuguese.'],
+BG:['Que alfabeto, usado hoje em búlgaro, se desenvolveu no Primeiro Império Búlgaro?',['Cirílico','Latino','Grego','Árabe'],'Com a entrada da Bulgária, em 2007, o cirílico tornou-se o terceiro alfabeto oficial da UE.','Which alphabet, used in Bulgarian today, was developed in the First Bulgarian Empire?',['Cyrillic','Latin','Greek','Arabic'],"When Bulgaria joined in 2007, Cyrillic became the EU's third official alphabet."],
+SI:['De que Estado se tornou a Eslovénia independente em 1991?',['Jugoslávia','Áustria','Itália','Hungria'],'A Eslovénia foi a primeira das antigas repúblicas jugoslavas a entrar na UE, em 2004.','From which state did Slovenia become independent in 1991?',['Yugoslavia','Austria','Italy','Hungary'],'Slovenia was the first former Yugoslav republic to join the EU, in 2004.'],
+HR:['Que cidade croata, património mundial, foi a antiga República de Ragusa?',['Dubrovnik','Split','Zadar','Pula'],'Durante séculos, Ragusa foi uma república marítima rica e independente.','Which Croatian World Heritage city was once the Republic of Ragusa?',['Dubrovnik','Split','Zadar','Pula'],'For centuries, Ragusa was a rich, independent maritime republic.'],
+IT:['Em que cidade foi assinado, em 1957, o tratado que criou a Comunidade Económica Europeia?',['Roma','Milão','Veneza','Turim'],'Os Tratados de Roma foram assinados a 25 de março de 1957 por seis países.','In which city was the 1957 treaty creating the European Economic Community signed?',['Rome','Milan','Venice','Turin'],'The Treaties of Rome were signed on 25 March 1957 by six countries.'],
+MT:['Que ordem de cavaleiros governou Malta entre 1530 e 1798?',['Ordem de São João','Ordem dos Templários','Ordem Teutónica','Ordem de Avis'],'Os cavaleiros construíram Valeta, a atual capital.','Which order of knights ruled Malta from 1530 to 1798?',['Order of St John','Knights Templar','Teutonic Order','Order of Aviz'],"The knights built Valletta, today's capital."],
+GR:['Em que lugar da Grécia nasceram os Jogos Olímpicos da Antiguidade?',['Olímpia','Atenas','Esparta','Delfos'],'Os primeiros Jogos registados realizaram-se em Olímpia no ano 776 a.C.','Where in Greece were the ancient Olympic Games born?',['Olympia','Athens','Sparta','Delphi'],'The first recorded Games were held at Olympia in 776 BC.'],
+CY:['Segundo a mitologia grega, que deusa nasceu do mar junto à costa de Chipre?',['Afrodite','Atena','Hera','Ártemis'],'O rochedo de Petra tou Romiou, perto de Pafos, é conhecido como o local do seu nascimento.','According to Greek mythology, which goddess was born from the sea off Cyprus?',['Aphrodite','Athena','Hera','Artemis'],'The rock of Petra tou Romiou, near Paphos, is known as her birthplace.']};
+
+const INSTQ={
+EP:[['Onde fica a sede oficial do Parlamento Europeu?',['Estrasburgo','Bruxelas','Luxemburgo','Haia'],'O Parlamento reúne-se em sessão plenária em Estrasburgo, mas também trabalha em Bruxelas e no Luxemburgo.','Where is the official seat of the European Parliament?',['Strasbourg','Brussels','Luxembourg','The Hague'],'Parliament holds its plenary sessions in Strasbourg, but also works in Brussels and Luxembourg.'],
+ ['De quantos em quantos anos são eleitos os eurodeputados?',['5 anos','4 anos','6 anos','2 anos'],'As últimas eleições europeias realizaram-se em junho de 2024.','How often are Members of the European Parliament elected?',['Every 5 years','Every 4 years','Every 6 years','Every 2 years'],'The latest European elections were held in June 2024.'],
+ ['Quantos eurodeputados foram eleitos em 2024?',['720','751','705','600'],'O número de lugares de cada país depende da sua população.','How many MEPs were elected in 2024?',['720','751','705','600'],"Each country's number of seats depends on its population."],
+ ['Em que ano se realizaram as primeiras eleições diretas para o Parlamento Europeu?',['1979','1957','1992','1986'],'Desde 1979, os cidadãos escolhem diretamente os seus representantes europeus.','In which year were the first direct elections to the European Parliament held?',['1979','1957','1992','1986'],'Since 1979, citizens have directly chosen their European representatives.']],
+COM:[['Qual é a principal função da Comissão Europeia?',['Propor novas leis europeias','Julgar crimes','Emitir notas de euro','Eleger o Parlamento'],'A Comissão propõe as leis; o Parlamento e o Conselho decidem.','What is the main role of the European Commission?',['Proposing new EU laws','Judging crimes','Issuing euro banknotes','Electing Parliament'],'The Commission proposes laws; Parliament and the Council decide.'],
+ ['Quantos membros tem o Colégio de Comissários?',['27, um por país','12, um por estrela da bandeira','15','30'],'Cada comissário é responsável por uma área, como o ambiente ou o comércio.','How many members does the College of Commissioners have?',['27, one per country','12, one per flag star','15','30'],'Each Commissioner is responsible for an area, such as the environment or trade.'],
+ ['Em que cidade fica a sede da Comissão Europeia?',['Bruxelas','Estrasburgo','Frankfurt','Luxemburgo'],'A sede é o edifício Berlaymont, em Bruxelas.','Which city is the European Commission based in?',['Brussels','Strasbourg','Frankfurt','Luxembourg'],'Its headquarters is the Berlaymont building in Brussels.'],
+ ['Que alcunha tem a Comissão por vigiar o cumprimento das regras da UE?',['Guardiã dos Tratados','Voz dos Cidadãos','Banco da Europa','Casa da Europa'],'Se um país não cumprir o direito da UE, a Comissão pode levá-lo ao Tribunal de Justiça.','What is the Commission nicknamed because it checks that EU rules are followed?',['Guardian of the Treaties','Voice of the Citizens','Bank of Europe','House of Europe'],'If a country breaks EU law, the Commission can take it to the Court of Justice.']],
+CON:[['Quem se reúne no Conselho da União Europeia?',['Ministros dos governos nacionais','Eurodeputados','Juízes europeus','Presidentes de câmara'],'Os ministros mudam conforme o tema: agricultura, ambiente, finanças…','Who meets in the Council of the European Union?',['Ministers from national governments','Members of the European Parliament','European judges','City mayors'],'The ministers change with the topic: agriculture, environment, finance…'],
+ ['De quanto em quanto tempo muda a presidência rotativa do Conselho?',['6 meses','1 ano','3 meses','2 anos'],'Cada país preside ao Conselho durante um semestre.','How often does the rotating Council presidency change?',['Every 6 months','Every year','Every 3 months','Every 2 years'],'Each country chairs the Council for six months.'],
+ ['Com que instituição partilha o Conselho o poder de aprovar as leis europeias?',['Parlamento Europeu','Banco Central Europeu','Tribunal de Contas','Comité das Regiões'],'Na maioria dos casos, uma lei só é aprovada se o Parlamento e o Conselho concordarem.','With which institution does the Council share the power to adopt EU laws?',['European Parliament','European Central Bank','Court of Auditors','Committee of the Regions'],'In most cases a law is adopted only if Parliament and the Council agree.'],
+ ['Em que cidade fica a sede do Conselho da UE?',['Bruxelas','Estrasburgo','Haia','Frankfurt'],'O Conselho reúne-se no edifício Europa, em Bruxelas, e em abril, junho e outubro no Luxemburgo.','Which city is the Council of the EU based in?',['Brussels','Strasbourg','The Hague','Frankfurt'],'The Council meets in the Europa building in Brussels, and in Luxembourg in April, June and October.']],
+CJ:[['Onde fica o Tribunal de Justiça da União Europeia?',['Luxemburgo','Haia','Bruxelas','Estrasburgo'],'O Tribunal está no Luxemburgo desde 1952.','Where is the Court of Justice of the European Union?',['Luxembourg','The Hague','Brussels','Strasbourg'],'The Court has been in Luxembourg since 1952.'],
+ ['Quantos juízes tem o Tribunal de Justiça?',['27, um por país','12','9','50'],'Os juízes são ajudados por advogados-gerais, que dão pareceres sobre os casos.','How many judges does the Court of Justice have?',['27, one per country','12','9','50'],'The judges are assisted by advocates general, who give opinions on cases.'],
+ ['Qual é a missão do Tribunal de Justiça da UE?',['Garantir que o direito da UE se aplica da mesma forma em todos os países','Propor novas leis','Definir as taxas de juro','Organizar as eleições europeias'],'Os tribunais nacionais podem pedir-lhe que esclareça como se interpreta uma regra europeia.','What is the mission of the EU Court of Justice?',['Making sure EU law is applied the same way in every country','Proposing new laws','Setting interest rates','Organising European elections'],'National courts can ask it to clarify how an EU rule should be interpreted.'],
+ ['O Tribunal Europeu dos Direitos Humanos, em Estrasburgo, pertence a que organização?',['Conselho da Europa','União Europeia','Nações Unidas','NATO'],'O Conselho da Europa tem 46 países e não faz parte da UE.','The European Court of Human Rights in Strasbourg belongs to which organisation?',['Council of Europe','European Union','United Nations','NATO'],'The Council of Europe has 46 member countries and is not part of the EU.']],
+BCE:[['Em que cidade fica o Banco Central Europeu?',['Frankfurt','Bruxelas','Paris','Milão'],'O BCE gere o euro em conjunto com os bancos centrais nacionais.','Which city is the European Central Bank in?',['Frankfurt','Brussels','Paris','Milan'],'The ECB manages the euro together with the national central banks.'],
+ ['Qual é a principal missão do BCE?',['Manter os preços estáveis','Cobrar impostos europeus','Aprovar o orçamento da UE','Cunhar as moedas de cada país'],'O objetivo é uma inflação de 2 % a médio prazo.',"What is the ECB's main task?",['Keeping prices stable','Collecting EU taxes','Adopting the EU budget',"Minting each country's coins"],'Its target is 2% inflation over the medium term.'],
+ ['Em que ano chegaram aos bolsos dos cidadãos as notas e moedas de euro?',['2002','1999','1992','2007'],'O euro existe desde 1999, mas as notas e moedas só circularam a partir de 1 de janeiro de 2002.',"In which year did euro banknotes and coins reach people's pockets?",['2002','1999','1992','2007'],'The euro has existed since 1999, but notes and coins only circulated from 1 January 2002.'],
+ ['Quantos países da UE usam o euro em 2026?',['21','19','20','27'],'A Bulgária foi o membro mais recente a adotar o euro, a 1 de janeiro de 2026.','How many EU countries use the euro in 2026?',['21','19','20','27'],'Bulgaria was the latest member to adopt the euro, on 1 January 2026.']]};
+
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const cap1=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const low1=s=>s.charAt(0).toLowerCase()+s.slice(1);
+let QB=[];
+function mk(id,key,theme,lvl,pt,en){QB.push({id,key,theme,lvl,pt,en})}
+const arr6=(a)=>({q:a[0],o:a[1],f:a[2]});
+function buildQuestions(){
+  QB=[];
+  const years=[1958,1973,1981,1986,1995,2004,2007,2013];
+  const nonEuro=CODES.filter(c=>!CM[c].euro);
+  const singles=[],seen=new Set();
+  CODES.forEach(c=>{const L=CM[c].langPT;if(!/ e /.test(L)&&!seen.has(L)){seen.add(L);singles.push(c)}});
+  const seatVals=[...new Set(CODES.map(c=>CM[c].seats))];
+  CODES.forEach(code=>{
+    const c=CM[code],oth=CODES.filter(x=>x!==code);
+    let d=sh(oth).slice(0,3);
+    mk(code+'-cap',code,'geo','b',{q:`Qual é a capital ${c.ofPT}?`,o:[c.capPT,...d.map(x=>CM[x].capPT)],f:`${c.capPT} é a capital ${c.ofPT}.`},{q:`What is the capital of ${c.enT}?`,o:[c.capEN,...d.map(x=>CM[x].capEN)],f:`${c.capEN} is the capital of ${c.enT}.`});
+    d=sh(oth).slice(0,3);
+    mk(code+'-mon',code,'geo','a',{q:`Em que país podes visitar ${c.monPT}?`,o:[c.pt,...d.map(x=>CM[x].pt)],f:cap1(`podes visitar ${c.monPT} ${c.inPT}.`)},{q:`In which country can you visit ${c.monEN}?`,o:[c.en,...d.map(x=>CM[x].en)],f:`You can visit ${c.monEN} ${c.inEN}.`});
+    const H=HIST[code];
+    mk(code+'-his',code,'hist','b',{q:H[0],o:H[1],f:H[2]},{q:H[3],o:H[4],f:H[5]});
+    const yd=sh(years.filter(y=>y!==c.join)).slice(0,3).map(String);
+    const fnd=c.join===1958,newest=c.join===2013;
+    mk(code+'-join',code,'hist','a',
+      {q:`Em que ano se deu a entrada ${c.ofPT} nas Comunidades Europeias, hoje União Europeia?`,o:[String(c.join),...yd],f:fnd?`A entrada ${c.ofPT} deu-se em 1958: é um dos seis países fundadores (Tratado de Roma, assinado em 1957).`:`A entrada ${c.ofPT} deu-se em ${c.join}.${newest?' É o membro mais recente da UE.':''}`},
+      {q:`In which year did ${c.enT} join the European Communities, today's European Union?`,o:[String(c.join),...yd],f:fnd?`${cap1(c.enT)} joined in 1958 as one of the six founding countries (Treaty of Rome, signed in 1957).`:`${cap1(c.enT)} joined in ${c.join}.${newest?' It is the newest EU member.':''}`});
+    const multi=/ e /.test(c.langPT),lp=c.langPT.toLowerCase();
+    const ld=sh(singles.filter(x=>{const o=CM[x].langPT.toLowerCase();return x!==code&&!lp.includes(o)&&!o.includes(lp)})).slice(0,3);
+    mk(code+'-lang',code,'cult','b',
+      {q:multi?`Quais são as línguas oficiais ${c.ofPT}?`:`Qual é a língua oficial ${c.ofPT}?`,o:[c.langPT,...ld.map(x=>CM[x].langPT)],f:multi?`${cap1(c.inPT)}, as línguas oficiais são: ${low1(c.langPT)}.`:`${cap1(c.inPT)}, a língua oficial é o ${low1(c.langPT)}.`},
+      {q:multi?`What are the official languages of ${c.enT}?`:`What is the official language of ${c.enT}?`,o:[c.langEN,...ld.map(x=>CM[x].langEN)],f:multi?`The official languages of ${c.enT} are ${c.langEN}.`:`The official language of ${c.enT} is ${c.langEN}.`});
+    d=sh(oth).slice(0,3);
+    mk(code+'-per',code,'cult','a',{q:`Em que país da UE nasceu ${c.perPT}, ${c.rolePT}?`,o:[c.pt,...d.map(x=>CM[x].pt)],f:`${c.perPT} nasceu ${c.inPT} (fronteiras atuais).`},{q:`In which EU country was ${c.perEN}, ${c.roleEN}, born?`,o:[c.en,...d.map(x=>CM[x].en)],f:`${c.perEN} was born ${c.inEN} (present-day borders).`});
+    let cp,ce,fp,fe;
+    if(c.euro){const cd=sh(nonEuro).slice(0,3);cp=['Euro',...cd.map(x=>CM[x].curPT)];ce=['Euro',...cd.map(x=>cap1(CM[x].curEN))];
+      fp=`${cap1(c.inPT)}, o euro é a moeda desde ${c.euro}${c.euro===1999?'; as notas e moedas chegaram em 2002':''}.`;fe=`${cap1(c.inEN)}, the euro has been the currency since ${c.euro}${c.euro===1999?' (notes and coins since 2002)':''}.`}
+    else{const cd=sh(nonEuro.filter(x=>x!==code)).slice(0,2);cp=[c.curPT,'Euro',...cd.map(x=>CM[x].curPT)];ce=[cap1(c.curEN),'Euro',...cd.map(x=>cap1(CM[x].curEN))];
+      fp=`${cap1(c.inPT)}, usa-se ${c.curPT.toLowerCase()}; o país ainda não adotou o euro.`;fe=`${cap1(c.inEN)}, people pay in ${c.curEN}; the country has not yet adopted the euro.`}
+    mk(code+'-cur',code,'eu','b',{q:`Que moeda se usa ${c.inPT}?`,o:cp,f:fp},{q:`Which currency is used ${c.inEN}?`,o:ce,f:fe});
+    const sd=sh(seatVals.filter(v=>v!==c.seats).sort((a,b)=>Math.abs(a-c.seats)-Math.abs(b-c.seats)).slice(0,6)).slice(0,3).map(String);
+    mk(code+'-seat',code,'eu','a',{q:`Quantos eurodeputados são eleitos ${c.inPT} (legislatura 2024–2029)?`,o:[String(c.seats),...sd],f:`${cap1(c.inPT)}, elegem-se ${c.seats} dos 720 eurodeputados.`},{q:`How many MEPs are elected ${c.inEN} (2024–2029 term)?`,o:[String(c.seats),...sd],f:`${cap1(c.inEN)}, voters elect ${c.seats} of the 720 MEPs.`});
+  });
+  buildExtra();
+  Object.keys(INSTQ).forEach(k=>INSTQ[k].forEach((r,j)=>mk(`INST-${k}-${j}`,'INST-'+k,'eu','a',{q:r[0],o:r[1],f:r[2]},{q:r[3],o:r[4],f:r[5]})));
+}
+
+
+
+/* ---------------- Dados adicionais (v5) ---------------- */
+/* Espaço Schengen: ano de aplicação plena (0 = não faz parte) */
+const SCH_Y={PT:1995,ES:1995,FR:1995,IE:0,BE:1995,NL:1995,LU:1995,DK:2001,SE:2001,FI:2001,PL:2007,LT:2007,LV:2007,EE:2007,DE:1995,AT:1997,CZ:2007,SK:2007,HU:2007,RO:2025,BG:2025,SI:2007,HR:2023,IT:1997,MT:2007,GR:2000,CY:0};
+/* Prato típico [PT, EN] */
+const DISH={PT:['o pastel de nata','the pastel de nata (custard tart)'],ES:['a paella','paella'],FR:['os crepes','crêpes'],IE:['o Irish stew (guisado de borrego)','Irish stew'],
+BE:['os moules-frites (mexilhões com batatas fritas)','moules-frites (mussels and fries)'],NL:['o stroopwafel','the stroopwafel'],LU:['o Judd mat Gaardebounen (lombo fumado com favas)','Judd mat Gaardebounen (smoked pork with broad beans)'],
+DK:['o smørrebrød (sandes abertas)','smørrebrød (open sandwiches)'],SE:['as köttbullar (almôndegas)','köttbullar (meatballs)'],FI:['o karjalanpiirakka (pastel da Carélia)','karjalanpiirakka (Karelian pie)'],
+PL:['os pierogi','pierogi'],LT:['os cepelinai','cepelinai'],LV:['as ervilhas cinzentas com toucinho (pelēkie zirņi)','grey peas with bacon (pelēkie zirņi)'],EE:['a kama','kama'],
+DE:['a currywurst','currywurst'],AT:['o Wiener Schnitzel','Wiener Schnitzel'],CZ:['a svíčková','svíčková'],SK:['os bryndzové halušky','bryndzové halušky'],HU:['o gulyás (goulash)','goulash (gulyás)'],
+RO:['as sarmale','sarmale'],BG:['a salada shopska','shopska salad'],SI:['a potica','potica'],HR:['os štrukli','štrukli'],IT:['a pizza margherita','pizza margherita'],
+MT:['os pastizzi','pastizzi'],GR:['a moussaká','moussaka'],CY:['o halloumi','halloumi']};
+const INSTQ2={
+EP:[['Como se sentam os eurodeputados no hemiciclo?',['Por grupos políticos','Por país de origem','Por ordem alfabética','Por idade'],'Os eurodeputados juntam-se por afinidade política, não por nacionalidade.','How are MEPs seated in the chamber?',['By political group','By country of origin','In alphabetical order','By age'],'MEPs group together by political affinity, not by nationality.'],
+ ['Quem elege o Presidente do Parlamento Europeu?',['Os eurodeputados','Os cidadãos, diretamente','A Comissão Europeia','Os chefes de Governo'],'O Presidente é eleito pelos eurodeputados para um mandato de dois anos e meio.','Who elects the President of the European Parliament?',['The MEPs','Citizens, directly','The European Commission','The heads of government'],'The President is elected by the MEPs for a two-and-a-half-year term.']],
+COM:[['O que permite a Iniciativa de Cidadania Europeia?',['Um milhão de cidadãos pedirem à Comissão uma nova lei','Os cidadãos elegerem a Comissão','Fazer um referendo em toda a UE','Estudar noutro país'],'São precisas pelo menos um milhão de assinaturas de, no mínimo, sete países da UE.','What does the European Citizens\' Initiative allow?',['One million citizens to ask the Commission for a new law','Citizens to elect the Commission','An EU-wide referendum','Studying in another country'],'It needs at least one million signatures from at least seven EU countries.'],
+ ['Quanto tempo dura o mandato da Comissão Europeia?',['5 anos','4 anos','6 anos','2 anos e meio'],'O mandato acompanha a legislatura do Parlamento Europeu.','How long is the European Commission\'s term?',['5 years','4 years','6 years','2.5 years'],"Its term follows the European Parliament's term."]],
+CON:[['Qual é a diferença entre o Conselho da UE e o Conselho Europeu?',['O Conselho Europeu reúne chefes de Estado ou de Governo; o Conselho da UE reúne ministros','São o mesmo órgão com dois nomes','O Conselho Europeu é um tribunal','O Conselho da UE reúne os eurodeputados'],'Não confundir também com o Conselho da Europa, que não pertence à UE.','What is the difference between the Council of the EU and the European Council?',['The European Council brings together heads of state or government; the Council of the EU brings together ministers','They are the same body with two names','The European Council is a court','The Council of the EU brings together MEPs'],'Also not to be confused with the Council of Europe, which is not part of the EU.'],
+ ['Quantas presidências seguidas do Conselho da UE trabalham juntas num "trio"?',['3','2','4','6'],'Três países que presidem seguidos partilham um programa comum de 18 meses.','How many consecutive Council of the EU presidencies work together as a "trio"?',['3','2','4','6'],'Three countries holding the presidency in a row share a common 18-month programme.']],
+CJ:[['Quando um tribunal nacional tem dúvidas sobre o direito da UE, o que pode fazer?',['Perguntar ao Tribunal de Justiça da UE','Pedir ao Parlamento uma nova lei','Ignorar a regra europeia','Pedir um parecer ao BCE'],'Chama-se "reenvio prejudicial" e garante que a lei se interpreta da mesma forma em todos os países.','When a national court has doubts about EU law, what can it do?',['Ask the EU Court of Justice','Ask Parliament for a new law','Ignore the EU rule','Ask the ECB for an opinion'],'This is called a "preliminary reference" and ensures the law is read the same way in every country.'],
+ ['Em que ano foi criado o Tribunal de Justiça?',['1952','1979','1993','2002'],'Nasceu com a Comunidade Europeia do Carvão e do Aço.','In which year was the Court of Justice created?',['1952','1979','1993','2002'],'It was born with the European Coal and Steel Community.']],
+BCE:[['Qual é a nota de euro de maior valor que ainda é válida?',['500 €','1000 €','200 €','100 €'],'A nota de 500 € deixou de ser emitida em 2019, mas continua a ter curso legal.','What is the highest-value euro banknote that is still valid?',['€500','€1000','€200','€100'],'The €500 note stopped being issued in 2019 but is still legal tender.'],
+ ['O que mostram as notas de euro?',['Janelas, portais e pontes imaginários de vários estilos','Monumentos reais de cada país','Retratos de reis e rainhas','Mapas das capitais'],'São imaginários para não favorecer nenhum país.','What do euro banknotes show?',['Imaginary windows, gateways and bridges in different styles','Real monuments from each country','Portraits of kings and queens','Maps of the capitals'],'They are imaginary so that no country is favoured.']]};
+/* Perguntas gerais (casa Relâmpago): [tema, nível, qPT, opçõesPT, factoPT, qEN, opçõesEN, factoEN] */
+const GEN=[
+['geo','b','Quantos países fazem parte da União Europeia em 2026?',['27','25','28','30'],'Desde a saída do Reino Unido, em 2020, a UE tem 27 países.','How many countries are in the European Union in 2026?',['27','25','28','30'],'Since the United Kingdom left in 2020, the EU has 27 countries.'],
+['eu','b','Quantas estrelas tem a bandeira europeia?',['12','27','15','10'],'As 12 estrelas simbolizam unidade, solidariedade e harmonia, não o número de países.','How many stars are on the European flag?',['12','27','15','10'],'The 12 stars stand for unity, solidarity and harmony, not the number of countries.'],
+['eu','b','Em que dia se celebra o Dia da Europa?',['9 de maio','25 de abril','1 de janeiro','14 de julho'],'Recorda a Declaração Schuman, de 9 de maio de 1950.','On which day is Europe Day celebrated?',['9 May','25 April','1 January','14 July'],'It marks the Schuman Declaration of 9 May 1950.'],
+['cult','b','Qual é o hino da União Europeia?',['Ode à Alegria, de Beethoven','A Marselhesa','O Bolero de Ravel','As Quatro Estações, de Vivaldi'],'É a parte final da 9.ª Sinfonia de Beethoven, tocada sem letra.','What is the anthem of the European Union?',['Ode to Joy, by Beethoven','La Marseillaise',"Ravel's Boléro",'The Four Seasons, by Vivaldi'],"It is the finale of Beethoven's 9th Symphony, played without words."],
+['eu','b','Qual é o lema da União Europeia?',['Unida na diversidade','Liberdade, igualdade, fraternidade','Um por todos, todos por um','Paz e progresso'],'O lema foi adotado em 2000.','What is the motto of the European Union?',['United in diversity','Liberty, equality, fraternity','One for all, all for one','Peace and progress'],'The motto was adopted in 2000.'],
+['eu','a','Quantas línguas oficiais tem a União Europeia?',['24','27','12','20'],'Todos os cidadãos podem escrever às instituições da UE numa destas línguas e receber resposta na mesma.','How many official languages does the European Union have?',['24','27','12','20'],'Every citizen can write to the EU institutions in one of these languages and get a reply in it.'],
+['geo','a','Qual é o maior país da UE em área?',['França','Alemanha','Espanha','Suécia'],'Segue-se a Espanha e depois a Suécia.','Which is the largest EU country by area?',['France','Germany','Spain','Sweden'],'Spain comes next, then Sweden.'],
+['geo','b','Qual é o país mais pequeno da UE?',['Malta','Luxemburgo','Chipre','Eslovénia'],'Malta tem cerca de 316 km², menos do que muitos concelhos portugueses.','Which is the smallest EU country?',['Malta','Luxembourg','Cyprus','Slovenia'],'Malta covers about 316 km².'],
+['geo','a','Qual é o país mais populoso da UE?',['Alemanha','França','Itália','Espanha'],'A Alemanha tem mais de 80 milhões de habitantes.','Which is the most populous EU country?',['Germany','France','Italy','Spain'],'Germany has more than 80 million inhabitants.'],
+['geo','a','Que rio europeu atravessa ou faz fronteira com 10 países?',['Danúbio','Reno','Tejo','Sena'],'O Danúbio passa por quatro capitais: Viena, Bratislava, Budapeste e Belgrado.','Which European river flows through or along 10 countries?',['Danube','Rhine','Tagus','Seine'],'The Danube passes four capitals: Vienna, Bratislava, Budapest and Belgrade.'],
+['eu','a','Qual destes países faz parte do espaço Schengen sem ser membro da UE?',['Noruega','Irlanda','Chipre','Reino Unido'],'Islândia, Noruega, Suíça e Liechtenstein estão em Schengen, mas não na UE.','Which of these countries is in the Schengen area without being an EU member?',['Norway','Ireland','Cyprus','United Kingdom'],'Iceland, Norway, Switzerland and Liechtenstein are in Schengen but not in the EU.'],
+['eu','a','Qual destes países da UE não faz parte do espaço Schengen?',['Irlanda','Áustria','Croácia','Bulgária'],'A Irlanda optou por ficar de fora; Chipre também ainda não aderiu.','Which of these EU countries is not in the Schengen area?',['Ireland','Austria','Croatia','Bulgaria'],'Ireland chose to stay out; Cyprus has not joined yet either.'],
+['eu','b','O espaço Schengen e a União Europeia são a mesma coisa?',['Não: há países da UE fora de Schengen e países de fora da UE dentro','Sim, têm exatamente os mesmos países','Sim, desde 2020','Não: Schengen é só um acordo de comércio'],'Schengen garante a circulação de pessoas sem controlos nas fronteiras internas.','Are the Schengen area and the European Union the same thing?',['No: some EU countries are outside Schengen and some non-EU countries are inside','Yes, they have exactly the same countries','Yes, since 2020','No: Schengen is only a trade agreement'],'Schengen allows people to move without checks at internal borders.'],
+['eu','a','Que países entraram em pleno no espaço Schengen a 1 de janeiro de 2025?',['Bulgária e Roménia','Croácia e Eslovénia','Irlanda e Chipre','Polónia e Hungria'],'Os controlos nas fronteiras aéreas e marítimas já tinham terminado em março de 2024.','Which countries fully joined the Schengen area on 1 January 2025?',['Bulgaria and Romania','Croatia and Slovenia','Ireland and Cyprus','Poland and Hungary'],'Checks at air and sea borders had already ended in March 2024.'],
+['hist','b','Quantos países fundaram as Comunidades Europeias?',['6','12','9','15'],'Bélgica, França, Alemanha, Itália, Luxemburgo e Países Baixos.','How many countries founded the European Communities?',['6','12','9','15'],'Belgium, France, Germany, Italy, Luxembourg and the Netherlands.'],
+['hist','a','Qual foi a primeira comunidade europeia, criada em 1951?',['Comunidade Europeia do Carvão e do Aço','Euratom','Comunidade Económica Europeia','EFTA'],'Pôr o carvão e o aço em comum tornava a guerra entre França e Alemanha quase impossível.','What was the first European community, created in 1951?',['European Coal and Steel Community','Euratom','European Economic Community','EFTA'],'Pooling coal and steel made war between France and Germany almost impossible.'],
+['hist','a','Que país saiu da União Europeia em 2020?',['Reino Unido','Noruega','Suíça','Islândia'],'O Reino Unido saiu a 31 de janeiro de 2020. A Noruega, a Suíça e a Islândia nunca entraram.','Which country left the European Union in 2020?',['United Kingdom','Norway','Switzerland','Iceland'],'The UK left on 31 January 2020. Norway, Switzerland and Iceland never joined.'],
+['hist','a','Que tratado, assinado em 2007, é a base atual do funcionamento da UE?',['Tratado de Lisboa','Tratado de Nice','Tratado de Amesterdão','Tratado de Maastricht'],'Foi assinado nos Jerónimos, em Lisboa, e entrou em vigor em 2009.','Which treaty, signed in 2007, is the current basis of how the EU works?',['Treaty of Lisbon','Treaty of Nice','Treaty of Amsterdam','Maastricht Treaty'],'It was signed at the Jerónimos Monastery in Lisbon and entered into force in 2009.'],
+['eu','b','Que programa da UE permite estudar ou estagiar noutro país europeu?',['Erasmus+','Horizonte Europa','Copernicus','Galileo'],'Desde 1987, mais de 15 milhões de pessoas participaram no Erasmus.','Which EU programme lets you study or train in another European country?',['Erasmus+','Horizon Europe','Copernicus','Galileo'],'Since 1987, more than 15 million people have taken part in Erasmus.'],
+['eu','a','Como se chama o sistema europeu de navegação por satélite?',['Galileo','GPS','Copernicus','Glonass'],'O GPS é americano e o Glonass é russo.','What is the European satellite navigation system called?',['Galileo','GPS','Copernicus','Glonass'],'GPS is American and Glonass is Russian.'],
+['eu','a','Que programa da UE observa a Terra a partir do espaço?',['Copernicus','Galileo','Erasmus','Artemis'],'Os satélites Sentinel do Copernicus vigiam o clima, os oceanos e os incêndios.','Which EU programme observes the Earth from space?',['Copernicus','Galileo','Erasmus','Artemis'],"Copernicus's Sentinel satellites monitor climate, oceans and wildfires."],
+['eu','b','Qual é o número de emergência que funciona em toda a UE?',['112','911','999','115'],'O 112 é gratuito e atende em qualquer país da UE.','Which emergency number works across the whole EU?',['112','911','999','115'],'112 is free and works in every EU country.'],
+['eu','a','Desde 2017, o que deixou de se pagar ao usar o telemóvel noutro país da UE?',['As taxas de roaming','O IVA','As portagens','As taxas de bagagem'],'Chama-se "roaming como em casa".','Since 2017, what no longer has to be paid when using your phone in another EU country?',['Roaming charges','VAT','Road tolls','Baggage fees'],'It is called "roam like at home".'],
+['cult','b','Que título a UE atribui todos os anos a cidades para dar a conhecer a sua cultura?',['Capital Europeia da Cultura','Cidade Património Mundial','Capital Europeia do Desporto','Cidade Erasmus'],'Lisboa (1994), Porto (2001) e Guimarães (2012) já tiveram o título.','Which title does the EU give cities every year to showcase their culture?',['European Capital of Culture','World Heritage City','European Capital of Sport','Erasmus City'],'Lisbon (1994), Porto (2001) and Guimarães (2012) have held the title.'],
+['cult','a','Que prémio do Parlamento Europeu distingue quem defende os direitos humanos?',['Prémio Sakharov','Prémio Nobel da Paz','Prémio Carlos Magno','Prémio Pessoa'],'É atribuído todos os anos desde 1988.','Which European Parliament prize honours defenders of human rights?',['Sakharov Prize','Nobel Peace Prize','Charlemagne Prize','Pessoa Prize'],'It has been awarded every year since 1988.'],
+['geo','a','Qual é a montanha mais alta da UE?',['Monte Branco','Monte Olimpo','Pico de Aneto','Zugspitze'],'Com cerca de 4800 m, fica na fronteira entre a França e a Itália.','What is the highest mountain in the EU?',['Mont Blanc','Mount Olympus','Aneto','Zugspitze'],'At about 4,800 m, it stands on the border between France and Italy.'],
+['geo','b','Que oceano banha Portugal, Espanha, França e Irlanda?',['Atlântico','Índico','Pacífico','Ártico'],'O Atlântico separa a Europa da América.','Which ocean washes the coasts of Portugal, Spain, France and Ireland?',['Atlantic','Indian','Pacific','Arctic'],'The Atlantic separates Europe from the Americas.'],
+['geo','a','Qual destes mares não banha nenhum país da UE?',['Mar Cáspio','Mar Báltico','Mar Adriático','Mar do Norte'],'O Cáspio fica entre a Europa de Leste e a Ásia Central.','Which of these seas does not touch any EU country?',['Caspian Sea','Baltic Sea','Adriatic Sea','North Sea'],'The Caspian lies between Eastern Europe and Central Asia.'],
+['hist','b','Quem fez a declaração de 9 de maio de 1950, que deu origem à UE?',['Robert Schuman','Napoleão Bonaparte','Carlos Magno','Júlio César'],'Era ministro dos Negócios Estrangeiros de França.','Who made the declaration of 9 May 1950 that led to the EU?',['Robert Schuman','Napoleon Bonaparte','Charlemagne','Julius Caesar'],'He was the French foreign minister.'],
+['eu','b','Em que cidade estão as sedes da maior parte das instituições da UE?',['Bruxelas','Paris','Berlim','Roma'],'A Comissão e o Conselho estão em Bruxelas; o Parlamento também lá trabalha.','Which city hosts the headquarters of most EU institutions?',['Brussels','Paris','Berlin','Rome'],'The Commission and the Council are in Brussels, and Parliament also works there.']];
+function buildExtra(){
+  CODES.forEach(code=>{const c=CM[code],oth=CODES.filter(x=>x!==code),art=c.ofPT.replace(/^dos /,'os ').replace(/^da /,'a ').replace(/^do /,'o ').replace(/^de /,''),vb=code==='NL'?'fazem':'faz';
+    let d=sh(oth.filter(x=>CM[x].capPT!==c.capPT)).slice(0,3);
+    if(code!=='LU')mk(code+'-capR',code,'geo','b',{q:`${c.capPT} é a capital de que país?`,o:[c.pt,...d.map(x=>CM[x].pt)],f:`${c.capPT} é a capital ${c.ofPT}.`},{q:`${c.capEN} is the capital of which country?`,o:[c.en,...d.map(x=>CM[x].en)],f:`${c.capEN} is the capital of ${c.enT}.`});
+    d=sh(oth).slice(0,3);const D=DISH[code],dp=D[0].replace(/^(o|a|os|as) /,''),de=D[1].replace(/^the /,'');
+    mk(code+'-dish',code,'cult','b',{q:`Em que país é tradicional comer ${dp}?`,o:[c.pt,...d.map(x=>CM[x].pt)],f:`${cap1(dp)}: prato típico ${c.ofPT}.`},{q:`In which country is it traditional to eat ${de}?`,o:[c.en,...d.map(x=>CM[x].en)],f:`${cap1(de)}: a traditional dish of ${c.enT}.`});
+    const y=SCH_Y[code],yrs=[1995,1997,2000,2001,2007,2023,2025];
+    if(y){const yd=sh(yrs.filter(v=>v!==y)).slice(0,2).map(String);
+      const ex=y===2025?' Entrou em pleno a 1 de janeiro de 2025; as fronteiras aéreas e marítimas já estavam abertas desde março de 2024.':y===2023?' Entrou no mesmo dia em que adotou o euro.':'';
+      const exE=y===2025?' It fully joined on 1 January 2025; air and sea borders had opened in March 2024.':y===2023?' It joined on the same day it adopted the euro.':'';
+      mk(code+'-sch',code,'eu','a',{q:`Desde que ano ${art} ${vb} parte do espaço Schengen, sem controlos nas fronteiras internas?`,o:[String(y),...yd,'Não faz parte'],f:`${cap1(c.inPT)}, as regras de Schengen aplicam-se desde ${y}.${ex}`},
+        {q:`Since which year has ${c.enT} been in the Schengen area, with no internal border checks?`,o:[String(y),...yd,'It is not a member'],f:`${cap1(c.inEN)}, the Schengen rules have applied since ${y}.${exE}`});
+    }else{const ie=code==='IE';
+      mk(code+'-sch',code,'eu','a',{q:`${cap1(art)} faz parte do espaço Schengen?`,o:[ie?'Não: optou por ficar de fora':'Não: ainda não aderiu','Sim, desde 1995','Sim, desde 2007','Sim, desde 2023'],f:ie?'A Irlanda é da UE, mas mantém uma zona de viagem comum com o Reino Unido e não aplica Schengen.':'Chipre é da UE, mas ainda não entrou no espaço Schengen; aponta a adesão para 2027.'},
+        {q:`Is ${c.enT} part of the Schengen area?`,o:[ie?'No: it chose to stay out':'No: it has not joined yet','Yes, since 1995','Yes, since 2007','Yes, since 2023'],f:ie?'Ireland is in the EU but keeps a Common Travel Area with the UK and does not apply Schengen.':'Cyprus is in the EU but has not yet joined the Schengen area; it is aiming for 2027.'})}
+  });
+  Object.keys(INSTQ2).forEach(k=>INSTQ2[k].forEach((r,j)=>mk(`INST-${k}-${j+4}`,'INST-'+k,'eu','a',{q:r[0],o:r[1],f:r[2]},{q:r[3],o:r[4],f:r[5]})));
+  GEN.forEach((r,j)=>mk('ALL-'+String(j+1).padStart(2,'0'),'ALL',r[0],r[1],{q:r[2],o:r[3],f:r[4]},{q:r[5],o:r[6],f:r[7]}));
+}
+
+/* ---------------- Banco de perguntas: questions.js + importação ---------------- */
+const THEME_ALIAS={geo:'geo',geografia:'geo',geography:'geo',hist:'hist',historia:'hist',history:'hist',cult:'cult',cultura:'cult',culture:'cult',eu:'eu',ue:'eu'};
+const LVL_ALIAS={b:'b',a:'a',iniciado:'b',beginner:'b',avancado:'a',advanced:'a'};
+const INSTK=['EP','COM','CON','CJ','BCE'];
+const deacc=s=>String(s==null?'':s).normalize('NFD').replace(/[̀-ͯ]/g,'').trim().toLowerCase();
+function normKey(k){const nk=deacc(k);const byName=CODES.find(c=>deacc(CM[c].pt)===nk||deacc(CM[c].en)===nk||deacc(CM[c].enT)===nk);if(byName)return byName;k=String(k||'').trim().toUpperCase();if(CM[k])return k;if(k==='ALL'||k==='TODOS'||k==='GERAL')return 'ALL';const m=k.replace(/^INST-?/,'');return INSTK.includes(m)?'INST-'+m:null}
+function normLang(o,ans){if(!o||!String(o.q||'').trim()||!Array.isArray(o.o))return null;const raw=o.o.map(x=>String(x==null?'':x).trim());const a=Math.min(Math.max(0,ans|0),raw.length-1);if(!raw[a])return null;
+  const opts=[raw[a],...raw.filter((x,i)=>i!==a&&x)];if(opts.length<2)return null;return {q:String(o.q).trim(),o:opts.slice(0,4),f:String(o.f||'').trim()}}
+function normQ(r,i){if(!r||typeof r!=='object')return {err:'formato'};
+  const key=normKey(r.pais!==undefined?r.pais:(r.key!==undefined?r.key:r.chave));if(!key)return {err:'pais'};
+  const theme=THEME_ALIAS[deacc(r.tema!==undefined?r.tema:r.theme)];if(!theme)return {err:'tema'};
+  const lvl=LVL_ALIAS[deacc(r.nivel!==undefined?r.nivel:(r.level!==undefined?r.level:r.lvl))]||'b';
+  const ans=r.certa!==undefined?r.certa:(r.answer||0);const pt=normLang(r.pt,ans);if(!pt)return {err:'pt'};
+  let en=normLang(r.en,ans)||{q:pt.q,o:pt.o.slice(),f:pt.f};const n=Math.min(pt.o.length,en.o.length);pt.o=pt.o.slice(0,n);en.o=en.o.slice(0,n);if(!en.f)en.f=pt.f;
+  return {q:{id:String(r.id||('IMP-'+(i+1))),key,theme,lvl,pt,en}}}
+const permFor=q=>sh([...Array(Math.min(q.pt.o.length,q.en.o.length)).keys()]);
+let BASE=null,BASE_SRC='builtin';
+function baseBank(){if(BASE)return BASE;const raw=Array.isArray(window.PERGUNTAS)?window.PERGUNTAS:null;
+  if(raw){const out=[];raw.forEach((r,i)=>{const n=normQ(r,i);if(n.q)out.push(n.q)});if(out.length){BASE=out;BASE_SRC='file';return BASE}}
+  buildQuestions();BASE=QB.slice();BASE_SRC='builtin';return BASE}
+function impData(){const d=store.get('imp',null);return d&&Array.isArray(d.list)&&d.list.length?d:null}
+function loadBank(){const b=baseBank(),imp=impData();QB=(imp?(imp.mode==='replace'?imp.list:b.concat(imp.list)):b).slice()}
+function csvRows(text){const first=text.split(/\r?\n/)[0]||'',del=(first.match(/;/g)||[]).length>=(first.match(/,/g)||[]).length?';':',';
+  const rows=[];let row=[],f='',q=false;for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"')q=true;else if(c===del){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(f);f='';if(row.some(x=>x.trim()))rows.push(row);row=[]}else f+=c}
+  row.push(f);if(row.some(x=>x.trim()))rows.push(row);if(rows.length<2)return [];
+  const H=rows[0].map(deacc),ix=n=>H.indexOf(n),g=(r,n)=>{const k=ix(n);return k<0?'':(r[k]||'').trim()};
+  const lang=(r,l)=>({q:g(r,'pergunta_'+l),o:[g(r,'certa_'+l),g(r,'errada1_'+l),g(r,'errada2_'+l),g(r,'errada3_'+l)],f:g(r,'curiosidade_'+l)});
+  return rows.slice(1).map(r=>({id:g(r,'id'),pais:g(r,'pais'),tema:g(r,'tema'),nivel:g(r,'nivel'),pt:lang(r,'pt'),en:g(r,'pergunta_en')?lang(r,'en'):null}))}
+function parseQFile(name,text){text=String(text).replace(/^﻿/,'');const t=text.trim();
+  if(/\.(csv|txt)$/i.test(name)||!/[\[{]/.test(t.slice(0,4000)))return csvRows(t);
+  if(t[0]==='{'){const o=JSON.parse(t);return o.perguntas||o.questions||o.PERGUNTAS||[]}
+  const a=t.indexOf('['),b=t.lastIndexOf(']');if(a<0||b<a)throw new Error('sem lista');return JSON.parse(t.slice(a,b+1))}
+const TPL_CSV='id;pais;tema;nivel;pergunta_pt;certa_pt;errada1_pt;errada2_pt;errada3_pt;curiosidade_pt;pergunta_en;certa_en;errada1_en;errada2_en;errada3_en;curiosidade_en\n'+
+  'PT-extra-1;PT;cult;iniciado;Que género musical português é Património da Humanidade?;Fado;Flamenco;Tango;Morna;O fado foi reconhecido pela UNESCO em 2011.;Which Portuguese music genre is World Heritage?;Fado;Flamenco;Tango;Morna;UNESCO recognised fado in 2011.\n';
+let impMode='add',impMsg='',impBad=false;
+function applyImport(list,mode){const old=impData();const d=mode==='replace'?{mode:'replace',list}:(old?{mode:old.mode,list:old.list.concat(list)}:{mode:'add',list});store.set('imp',d);loadBank();return d}
+function bankStatus(){const b=baseBank().length,imp=impData(),src=BASE_SRC==='file'?'questions.js':t('qBuiltin');
+  if(!imp)return t('qBase',{n:b,s:src});const k=imp.list.length;return imp.mode==='replace'?(k===1?t('qOnly1'):t('qOnly',{n:k})):t('qBase',{n:b,s:src})+' '+(k===1?t('qImp1'):t('qImp',{n:k}))}
+function handleQFile(file){if(!file)return;const rd=new FileReader();rd.onload=()=>{let rows;try{rows=parseQFile(file.name,rd.result)}catch(e){impMsg=t('impErr');impBad=true;showScreen('settings');return}
+  const ok=[],why={};(Array.isArray(rows)?rows:[]).forEach((r,i)=>{const n=normQ(r,i);if(n.q)ok.push(n.q);else why[n.err]=(why[n.err]||0)+1});
+  const skipped=Object.values(why).reduce((a,b)=>a+b,0);
+  if(!ok.length){impMsg=t('impNone')+(skipped?' '+t('impSkip',{n:skipped,w:Object.keys(why).join(', ')}):'');impBad=true;showScreen('settings');return}
+  const ids=new Set();ok.forEach((q,i)=>{if(ids.has(q.id))q.id+='-'+(i+1);ids.add(q.id)});
+  applyImport(ok,impMode);impMsg=(ok.length===1?t('impOk1'):t('impOk',{n:ok.length}))+(skipped?' '+t('impSkip',{n:skipped,w:Object.keys(why).join(', ')}):'');impBad=false;sfx.ok();showScreen('settings')};
+  rd.onerror=()=>{impMsg=t('impErr');impBad=true;showScreen('settings')};rd.readAsText(file,'utf-8')}
+
+/* ---------------- Áudio (gerado no momento, sem ficheiros externos) ---------------- */
+const mf=n=>440*Math.pow(2,(n-69)/12);
+const AU={ctx:null,mode:'calm',step:0,next:0,
+  init(){if(this.ctx)return;const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+    try{this.ctx=new C()}catch(e){return}const c=this.ctx;
+    this.master=c.createGain();this.master.gain.value=S.vol;this.master.connect(c.destination);
+    this.mg=c.createGain();this.mg.gain.value=S.music?.5:0;this.mg.connect(this.master);
+    this.sg=c.createGain();this.sg.gain.value=S.sfx?1:0;this.sg.connect(this.master);
+    const b=c.createBuffer(1,c.sampleRate,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;this.noise=b;
+    this.next=c.currentTime+.1;setInterval(()=>this.tick(),25)},
+  resume(){this.init();if(this.ctx&&this.ctx.state==='suspended')this.ctx.resume()},
+  tone(f,t,dur,vol,type,dest){const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(dest||this.sg);o.start(t);o.stop(t+dur+.05)},
+  nz(t,dur,vol,hp,dest){const c=this.ctx,s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=this.noise;f.type='highpass';f.frequency.value=hp||6000;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(f);f.connect(g);g.connect(dest||this.sg);s.start(t,Math.random()*.5);s.stop(t+dur+.02)},
+  tick(){const c=this.ctx;if(!c)return;if(!S.music||c.state!=='running'){this.next=c.currentTime+.05;return}
+    while(this.next<c.currentTime+.15){this.play(this.step,this.next);this.next+=60/(this.mode==='tense'?138:104)/2;this.step++}},
+  play(s,t){const bar=Math.floor(s/8)%4,k=s%8,mg=this.mg;
+    if(this.mode==='calm'){const bass=[48,43,45,41][bar],arp=[[72,76,79,76],[71,74,79,74],[72,76,81,76],[72,77,81,77]][bar];
+      if(k===0||k===4)this.tone(mf(bass),t,.5,.22,'triangle',mg);
+      this.tone(mf(arp[k%4]),t,.24,.07,'triangle',mg);
+      if(k%2===1)this.nz(t,.04,.04,8000,mg);
+      if(k===6&&bar%2===1)this.tone(mf(arp[2]+12),t,.35,.035,'sine',mg);
+    }else{const bass=[45,41,43,40][bar],arp=[[69,72,76,72],[69,72,77,72],[71,74,79,74],[68,71,76,71]][bar];
+      if(k%2===0)this.tone(mf(bass),t,.22,.22,'triangle',mg);
+      this.tone(mf(arp[k%4]),t,.12,.03,'square',mg);
+      this.nz(t,.03,k%2?.025:.05,9000,mg)}},
+  setMode(m){if(m===this.mode)return;this.mode=m;if(!this.ctx)return;const g=this.mg.gain,t=this.ctx.currentTime;g.cancelScheduledValues(t);g.setValueAtTime(g.value,t);g.linearRampToValueAtTime(.0001,t+.12);g.linearRampToValueAtTime(S.music?.5:.0001,t+.5)},
+  apply(){if(!this.ctx)return;const t=this.ctx.currentTime;this.master.gain.setTargetAtTime(S.vol,t,.05);this.mg.gain.cancelScheduledValues(t);this.mg.gain.setTargetAtTime(S.music?.5:0,t,.05);this.sg.gain.setTargetAtTime(S.sfx?1:0,t,.05)}};
+const fxOn=()=>AU.ctx&&S.sfx;
+const now=()=>AU.ctx.currentTime;
+const notes=(arr,gap,dur,vol,type)=>{const t0=now();arr.forEach((n,i)=>AU.tone(mf(n),t0+i*gap,dur,vol,type))};
+const sfx={
+  dice(){if(!fxOn())return;const t0=now();for(let i=0;i<8;i++)AU.nz(t0+i*.08+Math.random()*.03,.05,.25-i*.02,1800)},
+  step(){if(!fxOn())return;const t0=now();AU.tone(mf(79),t0,.08,.08,'sine');AU.tone(mf(84),t0+.05,.08,.05,'sine')},
+  flip(){if(!fxOn())return;AU.nz(now(),.25,.18,2500)},
+  ok(){if(fxOn())notes([72,76,79,84],.08,.25,.14,'triangle')},
+  bad(){if(!fxOn())return;const t0=now();AU.tone(mf(52),t0,.2,.1,'square');AU.tone(mf(47),t0+.17,.35,.1,'square')},
+  star(){if(fxOn())notes([88,91,96],.07,.25,.08,'sine')},
+  steal(){if(fxOn())notes([84,79,72,67],.06,.15,.07,'square')},
+  lock(){if(fxOn())notes([67,72,76,79,84,88],.07,.3,.12,'triangle')},
+  win(){if(!fxOn())return;notes([72,72,72,76,79,76,79,84],.14,.35,.14,'triangle')},
+  buzz(){if(fxOn())AU.tone(mf(76),now(),.15,.12,'square')},
+  click(){if(fxOn())AU.tone(mf(86),now(),.04,.05,'sine')}};
+document.addEventListener('visibilitychange',()=>{if(!AU.ctx)return;if(document.hidden)AU.ctx.suspend();else AU.ctx.resume()});
+
+/* ---------------- Desenho 2D (texturas) ---------------- */
+const EMO='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif';
+const FD='"Fraunces",Georgia,serif',FB='"Atkinson Hyperlegible",system-ui,sans-serif';
+function canvas(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
+function rr(x,X,Y,W,H,R){x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath()}
+function star2D(x,cx,cy,R,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r:R;x.lineTo(cx+Math.cos(a)*q,cy+Math.sin(a)*q)}x.closePath();x.fillStyle=fill;x.fill()}
+function fit(x,text,maxW,size,w){let s=size;do{x.font=`${w} ${s}px ${FD}`;s-=2}while(x.measureText(text).width>maxW&&s>14)}
+function wrap(x,text,cx,cy,maxW,size,w){let s=size,lines;for(;;){x.font=`${w} ${s}px ${FD}`;lines=[];let cur='';text.split(' ').forEach(word=>{const tr=cur?cur+' '+word:word;if(x.measureText(tr).width>maxW&&cur){lines.push(cur);cur=word}else cur=tr});lines.push(cur);if(lines.length<=2&&lines.every(l=>x.measureText(l).width<=maxW)||s<=18)break;s-=2}
+  const lh=s*1.02;lines.forEach((l,i)=>x.fillText(l,cx,cy+(i-(lines.length-1)/2)*lh))}
+const FL={FR:['v','#0055A4','#FFFFFF','#EF4135'],IE:['v','#169B62','#FFFFFF','#FF883E'],BE:['v','#111111','#FDDA24','#EF3340'],IT:['v','#009246','#FFFFFF','#CE2B37'],RO:['v','#002B7F','#FCD116','#CE1126'],
+NL:['h','#AE1C28','#FFFFFF','#21468B'],LU:['h','#EA141D','#FFFFFF','#51ADDA'],PL:['h','#FFFFFF','#DC143C'],LT:['h','#FDB913','#006A44','#C1272D'],EE:['h','#0072CE','#111111','#FFFFFF'],DE:['h','#111111','#DD0000','#FFCE00'],AT:['h','#C8102E','#FFFFFF','#C8102E'],HU:['h','#CE2939','#FFFFFF','#477050'],BG:['h','#FFFFFF','#00966E','#D62612'],
+SK:['h','#FFFFFF','#0B4EA2','#EE1C25','sk'],SI:['h','#FFFFFF','#005DA4','#ED1C24','si'],HR:['h','#FF0000','#FFFFFF','#171796','hr'],DK:['n','#C8102E','#FFFFFF'],SE:['n','#006AA7','#FECC00'],FI:['n','#FFFFFF','#002F6C'],LV:['lv'],PT:['pt'],ES:['es'],CZ:['cz'],MT:['mt'],GR:['gr'],CY:['cy']};
+function drawFlag(x,code,X,Y,W,H){
+  const f=FL[code];x.save();x.translate(X,Y);x.beginPath();x.rect(0,0,W,H);x.clip();
+  const hs=(cols,ws)=>{const tot=ws?ws.reduce((a,b)=>a+b,0):cols.length;let acc=0;cols.forEach((c,i)=>{const w=ws?ws[i]:1;x.fillStyle=c;x.fillRect(0,acc/tot*H,W,w/tot*H+1);acc+=w})};
+  const vs=cols=>cols.forEach((c,i)=>{x.fillStyle=c;x.fillRect(i*W/cols.length,0,W/cols.length+1,H)});
+  const shield=(cx,cy,w,h,fill)=>{x.beginPath();x.moveTo(cx-w/2,cy-h/2);x.lineTo(cx+w/2,cy-h/2);x.lineTo(cx+w/2,cy+h*.1);x.quadraticCurveTo(cx+w/2,cy+h/2,cx,cy+h/2);x.quadraticCurveTo(cx-w/2,cy+h/2,cx-w/2,cy+h*.1);x.closePath();x.fillStyle=fill;x.fill();x.strokeStyle='#fff';x.lineWidth=Math.max(1,W*.02);x.stroke()};
+  switch(f[0]){
+    case 'h':hs(f.slice(1).filter(s=>s[0]==='#'));break;
+    case 'v':vs(f.slice(1));break;
+    case 'n':x.fillStyle=f[1];x.fillRect(0,0,W,H);x.fillStyle=f[2];x.fillRect(W*.3,0,W*.13,H);x.fillRect(0,H*.41,W,H*.18);break;
+    case 'lv':hs(['#9E3039','#FFFFFF','#9E3039'],[2,1,2]);break;
+    case 'pt':x.fillStyle='#046A38';x.fillRect(0,0,W*.4,H);x.fillStyle='#DA291C';x.fillRect(W*.4,0,W*.6,H);x.beginPath();x.arc(W*.4,H*.5,H*.24,0,7);x.fillStyle='#FFE900';x.fill();shield(W*.4,H*.5,H*.24,H*.28,'#DA291C');x.fillStyle='#fff';x.fillRect(W*.4-H*.06,H*.43,H*.12,H*.12);break;
+    case 'es':hs(['#AA151B','#F1BF00','#AA151B'],[1,2,1]);shield(W*.3,H*.5,H*.24,H*.3,'#AA151B');break;
+    case 'cz':hs(['#FFFFFF','#D7141A']);x.beginPath();x.moveTo(0,0);x.lineTo(W*.5,H*.5);x.lineTo(0,H);x.closePath();x.fillStyle='#11457E';x.fill();break;
+    case 'mt':vs(['#FFFFFF','#CF142B']);x.fillStyle='#9AA0A6';x.fillRect(W*.1,H*.1,W*.1,H*.06);x.fillRect(W*.125,H*.075,W*.05,H*.11);break;
+    case 'gr':for(let i=0;i<9;i++){x.fillStyle=i%2?'#FFFFFF':'#0D5EAF';x.fillRect(0,i*H/9,W,H/9+1)}x.fillStyle='#0D5EAF';x.fillRect(0,0,H*5/9,H*5/9);x.fillStyle='#fff';x.fillRect(H*2/9,0,H/9,H*5/9);x.fillRect(0,H*2/9,H*5/9,H/9);break;
+    case 'cy':x.fillStyle='#FFFFFF';x.fillRect(0,0,W,H);x.beginPath();x.ellipse(W*.5,H*.42,W*.22,H*.13,-.15,0,7);x.fillStyle='#D57800';x.fill();x.strokeStyle='#4E5B31';x.lineWidth=Math.max(1.5,H*.05);x.beginPath();x.arc(W*.42,H*.62,W*.1,.2,2.2);x.stroke();x.beginPath();x.arc(W*.58,H*.62,W*.1,.9,2.9);x.stroke();break}
+  const em=f[f.length-1];
+  if(em==='sk'){shield(W*.34,H*.5,H*.5,H*.62,'#EE1C25');x.fillStyle='#fff';x.fillRect(W*.34-H*.03,H*.26,H*.06,H*.4);x.fillRect(W*.34-H*.12,H*.34,H*.24,H*.05);x.fillRect(W*.34-H*.09,H*.45,H*.18,H*.05);x.fillStyle='#0B4EA2';x.beginPath();x.arc(W*.34,H*.78,H*.12,Math.PI,0);x.fill()}
+  if(em==='si'){shield(W*.3,H*.38,H*.34,H*.4,'#005DA4');x.fillStyle='#fff';x.beginPath();x.moveTo(W*.3-H*.14,H*.5);x.lineTo(W*.3,H*.3);x.lineTo(W*.3+H*.14,H*.5);x.closePath();x.fill()}
+  if(em==='hr'){const s=H*.36/5,ox=W*.5-s*2.5,oy=H*.32;for(let i=0;i<5;i++)for(let j=0;j<5;j++){x.fillStyle=(i+j)%2?'#fff':'#FF0000';x.fillRect(ox+j*s,oy+i*s,s+.5,s+.5)}x.strokeStyle='#171796';x.lineWidth=Math.max(1,H*.02);x.strokeRect(ox,oy,s*5,s*5)}
+  x.restore();x.strokeStyle='rgba(27,35,64,.55)';x.lineWidth=Math.max(1.5,W*.03);x.strokeRect(X,Y,W,H);
+}
+const flagCache={};
+function flagURL(code){if(!flagCache[code]){const c=canvas(120,80);drawFlag(c.getContext('2d'),code,0,0,120,80);flagCache[code]=c.toDataURL()}return flagCache[code]}
+const starSVG=(col,s)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="${col}" stroke="#1B2340" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+function euLogoSVG(size){let s='';for(let i=0;i<12;i++){const a=i*Math.PI/6,cx=50+Math.sin(a)*30,cy=50-Math.cos(a)*30;let p='';for(let k=0;k<10;k++){const b=-Math.PI/2+k*Math.PI/5,r=k%2?2.6:6.2;p+=`${(cx+Math.cos(b)*r).toFixed(2)},${(cy+Math.sin(b)*r).toFixed(2)} `}s+=`<polygon points="${p}" fill="#FFCC00"/>`}
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#003399" stroke="#1B2340" stroke-width="3"/>${s}</svg>`}
+
+/* ---------------- Motor de animação ---------------- */
+const tweens=[];
+const E={io:p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2,out:p=>1-Math.pow(1-p,3),lin:p=>p,back:p=>{const c=1.70158;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2)}};
+function tween(dur,fn,e){return new Promise(res=>{const d=dur*(S.reduced?.35:1);if(d<=0){fn(1);res();return}tweens.push({t:0,d,fn,e:e||E.io,res})})}
+const wait=s=>tween(s,()=>{},E.lin);
+function updTweens(dt){for(let i=tweens.length-1;i>=0;i--){const w=tweens[i];w.t+=dt;const p=Math.min(1,w.t/w.d);w.fn(w.e(p));if(p>=1){tweens.splice(i,1);w.res()}}}
+
+/* ---------------- Cena 3D ---------------- */
+let renderer,scene,camera,controls,clock,dice,cardGeo,sideMat,curCard=null,winGroup=null,title;
+const tileObjs=[],tops=[],piles={},backMats={},frontMats={},clouds=[],fxs=[],flags=[],movers=[];
+const col=h=>new THREE.Color(h).convertSRGBToLinear();
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+const PITCH=2.4,TS=2.32;
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function starShape(R,r){const s=new THREE.Shape();for(let i=0;i<10;i++){const a=Math.PI/2+i*Math.PI/5,q=i%2?r:R;i?s.lineTo(Math.cos(a)*q,Math.sin(a)*q):s.moveTo(Math.cos(a)*q,Math.sin(a)*q)}s.closePath();return s}
+let bigStarGeo,smallStarGeo,flatStarGeo;
+function texFrom(c,rx,ry){const tx=new THREE.CanvasTexture(c);tx.encoding=THREE.sRGBEncoding;tx.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());if(rx){tx.wrapS=tx.wrapT=THREE.RepeatWrapping;tx.repeat.set(rx,ry||rx)}return tx}
+function gridRC(i){if(i<10)return[9,9-i];if(i<19)return[18-i,0];if(i<28)return[0,i-18];return[i-27,9]}
+function theta(i){if(i<=9)return 0;if(i<=18)return -Math.PI/2;if(i<=27)return Math.PI;return Math.PI/2}
+function local(ti,lx,lz,y){const o=tileObjs[ti],c=Math.cos(o.th),s=Math.sin(o.th);return V(o.x+lx*c+lz*s,y,o.z-lx*s+lz*c)}
+function grain(x,w,h,amt){const d=x.getImageData(0,0,w,h),p=d.data;for(let i=0;i<p.length;i+=4){const n=(Math.random()-.5)*amt;p[i]+=n;p[i+1]+=n;p[i+2]+=n}x.putImageData(d,0,0)}
+
+/* texturas procedimentais */
+function woodCanvas(){const c=canvas(1024,1024),x=c.getContext('2d');x.fillStyle='#6E4224';x.fillRect(0,0,1024,1024);
+  for(let p=0;p<8;p++){const X=p*128;x.fillStyle=`hsl(${24+rnd(-3,3)},${46+rnd(-6,6)}%,${27+rnd(-4,4)}%)`;x.fillRect(X,0,128,1024);
+    for(let k=0;k<80;k++){x.strokeStyle=`rgba(${Math.random()<.55?'35,18,6':'170,115,60'},${rnd(.05,.22)})`;x.lineWidth=rnd(.5,2.6);x.beginPath();const ox=X+rnd(0,128),amp=rnd(1,6),fr=rnd(.004,.02),ph=rnd(0,6);for(let y=0;y<=1024;y+=16){const xx=ox+Math.sin(y*fr+ph)*amp;y?x.lineTo(xx,y):x.moveTo(xx,y)}x.stroke()}
+    x.fillStyle='rgba(15,8,3,.6)';x.fillRect(X,0,3,1024)}
+  grain(x,1024,1024,14);return c}
+function cobbleCanvas(){const c=canvas(512,512),x=c.getContext('2d');x.fillStyle='#5E5A54';x.fillRect(0,0,512,512);const s=32;
+  for(let r=0;r<16;r++)for(let k=0;k<17;k++){const ox=(r%2)*s/2;x.fillStyle=`hsl(${rnd(25,40)},${rnd(5,12)}%,${rnd(46,66)}%)`;rr(x,k*s-ox+2,r*s+2,s-4,s-4,9);x.fill()}
+  grain(x,512,512,18);return c}
+function facadeCanvas(wall,shutter){const c=canvas(256,512),x=c.getContext('2d');x.fillStyle=wall;x.fillRect(0,0,256,512);
+  x.fillStyle='rgba(255,255,255,.35)';x.fillRect(0,0,256,12);for(let f=1;f<5;f++){x.fillStyle='rgba(0,0,0,.08)';x.fillRect(0,f*100,256,5)}
+  for(let f=0;f<4;f++)for(let k=0;k<3;k++){const X=28+k*76,Y=30+f*100;x.fillStyle=shutter;x.fillRect(X-13,Y,11,58);x.fillRect(X+42,Y,11,58);x.fillStyle='#F4EFE4';x.fillRect(X-3,Y-3,46,64);x.fillStyle='#2D3E55';x.fillRect(X,Y,40,58);x.fillStyle='rgba(255,255,255,.2)';x.fillRect(X,Y,40,20);x.fillStyle='#F4EFE4';x.fillRect(X+19,Y,2,58);x.fillRect(X,Y+26,40,2);if(f>0&&k===1){x.fillStyle='rgba(30,30,30,.7)';x.fillRect(X-6,Y+56,52,4)}}
+  x.fillStyle='#3A2A1E';rr(x,98,430,60,82,24);x.fill();x.fillStyle='rgba(0,0,0,.14)';x.fillRect(0,418,256,6);grain(x,256,512,10);return c}
+function skyCanvas(){const c=canvas(16,512),x=c.getContext('2d'),g=x.createLinearGradient(0,0,0,512);
+  g.addColorStop(0,'#2A64AE');g.addColorStop(.36,'#7FB2E2');g.addColorStop(.49,'#F2E4C8');g.addColorStop(.52,'#E2D3B4');g.addColorStop(1,'#C4AE86');x.fillStyle=g;x.fillRect(0,0,16,512);return c}
+function latticeCanvas(){const c=canvas(128,128),x=c.getContext('2d');x.strokeStyle='#fff';x.lineWidth=7;x.strokeRect(0,0,128,128);x.lineWidth=3.5;x.beginPath();x.moveTo(0,0);x.lineTo(128,128);x.moveTo(128,0);x.lineTo(0,128);x.moveTo(0,64);x.lineTo(128,64);x.stroke();return c}
+function archCanvas(base){const c=canvas(256,128),x=c.getContext('2d');x.fillStyle=base;x.fillRect(0,0,256,128);grain(x,256,128,16);x.globalCompositeOperation='destination-out';
+  for(let k=0;k<4;k++){const X=8+k*64;x.beginPath();x.moveTo(X+9,116);x.lineTo(X+9,54);x.arc(X+32,54,23,Math.PI,0);x.lineTo(X+55,116);x.closePath();x.fill()}
+  x.globalCompositeOperation='source-over';x.fillStyle='rgba(0,0,0,.18)';x.fillRect(0,0,256,9);x.fillRect(0,117,256,11);for(let k=0;k<4;k++){x.fillStyle='rgba(255,255,255,.12)';x.fillRect(k*64,9,6,108)}return c}
+function stripeCanvas(){const c=canvas(128,64),x=c.getContext('2d');for(let i=0;i<8;i++){x.fillStyle=['#F2EDE2','#A8322A','#F2EDE2','#2A2622'][i%4];x.fillRect(0,i*8,128,8)}x.fillStyle='rgba(30,20,15,.75)';for(let k=0;k<4;k++){x.beginPath();x.moveTo(k*32+6,64);x.lineTo(k*32+6,34);x.arc(k*32+16,34,10,Math.PI,0);x.lineTo(k*32+26,64);x.fill()}return c}
+function gridCanvas(base,line,glass){const c=canvas(64,64),x=c.getContext('2d');x.fillStyle=base;x.fillRect(0,0,64,64);if(glass){const g=x.createLinearGradient(0,0,0,64);g.addColorStop(0,'rgba(255,255,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,64,64)}x.fillStyle=line;x.fillRect(0,0,64,4);x.fillRect(0,0,4,64);x.fillRect(30,0,2,64);return c}
+function patchCanvas(){const c=canvas(256,256),x=c.getContext('2d');x.clearRect(0,0,256,256);const cs=['#8B5A2B','#A0522D','#6B4423','#C08A4A','#3E6B8A','#7A2E2E','#E3C16F'];
+  for(let i=0;i<70;i++){const w=rnd(18,46),h=rnd(18,46),X=rnd(0,256-w),Y=rnd(0,256-h);x.strokeStyle=cs[i%cs.length];x.lineWidth=rnd(3,6);x.strokeRect(X,Y,w,h)}return c}
+const facCache={};
+function facTex(c){if(!facCache[c]){const cv=canvas(64,64),x=cv.getContext('2d');x.fillStyle=c;x.fillRect(0,0,64,64);x.fillStyle='rgba(255,255,255,.8)';x.fillRect(19,12,26,38);x.fillStyle='#2E3F55';x.fillRect(22,15,20,32);x.fillStyle='rgba(255,255,255,.28)';x.fillRect(22,15,20,10);x.fillStyle='rgba(0,0,0,.12)';x.fillRect(0,58,64,6);facCache[c]=cv}return facCache[c]}
+function euFlagCanvas(W,H){const c=canvas(W,H),x=c.getContext('2d');x.fillStyle='#003399';x.fillRect(0,0,W,H);for(let i=0;i<12;i++){const a=i*Math.PI/6;star2D(x,W/2+Math.sin(a)*H/3,H/2-Math.cos(a)*H/3,H/18,H/45,'#FFCC00')}return c}
+
+/* materiais */
+const MT={};
+function std(h,r,m,extra){return new THREE.MeshStandardMaterial(Object.assign({color:col(h),roughness:r===undefined?.8:r,metalness:m||0},extra||{}))}
+function initMats(){Object.assign(MT,{
+  stone:std('#D8C8A4',.85),stoneD:std('#AE9C78',.9),marble:std('#F1EDE4',.42),white:std('#F4F1EA',.6),brick:std('#9E4A33',.85),brickD:std('#6F3424',.9),
+  roof:std('#B04A2E',.7),slate:std('#4C5763',.6),copper:std('#6FAE97',.5,.2),gold:std('#F2C450',.22,1,{emissive:col('#5A3D00'),emissiveIntensity:.25}),goldTrim:std('#E6BE55',.3,.85,{emissive:col('#4A3300'),emissiveIntensity:.2}),chrome:std('#DCE1E6',.12,1),
+  bronze:std('#6E6A4E',.45,.6),patina:std('#5E8C79',.5,.35),iron:std('#4A3F35',.55,.5),wood:std('#7A5231',.75),woodD:std('#4E331E',.8),
+  glass:std('#9CC3DE',.06,.85),grass:std('#6C9A4B',.95),tree:std('#2F5E33',.9),tree2:std('#3F7A3A',.9),water:std('#2C7FA0',.06,.3),lake:std('#38AAB2',.08,.25),
+  rock:std('#8C8577',.95),rock2:std('#A39A88',.95),earth:std('#7B6A4E',.95),cream:std('#EADDBF',.75),sand:std('#D6BE8A',.9),black:std('#1B1B1E',.5),eu:std('#003399',.35,.1),navy:std('#0B1B3F',.45,.2),pave:std('#9A958C',.9)});
+  const lat=texFrom(latticeCanvas(),4,3);MT.lattice=new THREE.MeshStandardMaterial({color:col('#5B4636'),map:lat,alphaTest:.5,side:THREE.DoubleSide,roughness:.6,metalness:.5});
+  MT.arches=new THREE.MeshStandardMaterial({map:texFrom(archCanvas('#D4C096'),10,1),alphaTest:.5,side:THREE.DoubleSide,roughness:.9});
+  MT.stripe=new THREE.MeshStandardMaterial({map:texFrom(stripeCanvas(),4,2),roughness:.8});
+  MT.glassF=new THREE.MeshStandardMaterial({map:texFrom(gridCanvas('#5E89B0','#2B3F55',1),3,6),roughness:.1,metalness:.7});
+  MT.goldF=new THREE.MeshStandardMaterial({map:texFrom(gridCanvas('#C9A44E','#6E5520'),2,8),roughness:.32,metalness:.9});
+  MT.patch=new THREE.MeshStandardMaterial({map:texFrom(patchCanvas()),color:col('#BFD6E6'),transparent:true,opacity:.62,depthWrite:false,roughness:.1,metalness:.4,side:THREE.DoubleSide});
+  MT.paperSide=std('#E7DEC8',.85);
+}
+
+/* ferramentas de modelação */
+function mesh(geo,m,g,x,y,z){const o=new THREE.Mesh(geo,m);o.position.set(x||0,y||0,z||0);o.castShadow=true;o.receiveShadow=true;g.add(o);return o}
+const bx=(g,w,h,d,m,x,y,z,ry)=>{const o=mesh(new THREE.BoxGeometry(w,h,d),m,g,x,y+h/2,z);if(ry)o.rotation.y=ry;return o};
+const cy=(g,rt,rb,h,m,x,y,z,s)=>mesh(new THREE.CylinderGeometry(rt,rb,h,s||16),m,g,x,y+h/2,z);
+const cn=(g,r,h,m,x,y,z,s)=>mesh(new THREE.ConeGeometry(r,h,s||16),m,g,x,y+h/2,z);
+const sp=(g,r,m,x,y,z,sx,sy,sz)=>{const o=mesh(new THREE.SphereGeometry(r,22,14),m,g,x,y,z);o.scale.set(sx||1,sy||1,sz||1);return o};
+const dome=(g,r,m,x,y,z)=>mesh(new THREE.SphereGeometry(r,22,10,0,Math.PI*2,0,Math.PI/2),m,g,x,y,z);
+function roof(g,span,h,len,m,x,y,z,ry){const s=new THREE.Shape();s.moveTo(-span/2,0);s.lineTo(span/2,0);s.lineTo(0,h);s.closePath();const geo=new THREE.ExtrudeGeometry(s,{depth:len,bevelEnabled:false});geo.translate(0,0,-len/2);const o=mesh(geo,m,g,x,y,z);o.rotation.y=ry||0;return o}
+function tube(g,a,b,r,m){const d=b.clone().sub(a),L=d.length();const o=mesh(new THREE.CylinderGeometry(r,r,L,8),m,g);o.position.copy(a).addScaledVector(d,.5);o.quaternion.setFromUnitVectors(V(0,1,0),d.normalize());return o}
+const tree=(g,x,z,h,m)=>{cy(g,.015,.02,h*.3,MT.woodD,x,0,z,6);cn(g,h*.2,h*.78,m||MT.tree,x,h*.22,z,8)};
+const round=(g,x,z,r)=>{cy(g,.012,.015,r*1.2,MT.woodD,x,0,z,6);sp(g,r,MT.tree2,x,r*1.7,z)};
+function fbox(g,w,h,d,c,x,y,z,ry){const m=new THREE.MeshStandardMaterial({map:texFrom(facTex(c),Math.max(1,Math.round(w/.11)),Math.max(1,Math.round(h/.13))),roughness:.8});return bx(g,w,h,d,m,x,y,z,ry)}
+function makeFlag(g,code,x,y,z,poleH,w,h){cy(g,.018*w,.022*w,poleH,MT.chrome,x,y,z,10);sp(g,.03*w,MT.gold,x,y+poleH+.015,z);
+  const geo=new THREE.PlaneGeometry(w,h,14,8);geo.translate(w/2,0,0);const cv=code==='EU'?euFlagCanvas(240,160):(()=>{const c=canvas(240,160);drawFlag(c.getContext('2d'),code,0,0,240,160);return c})();
+  const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({map:texFrom(cv),side:THREE.DoubleSide,roughness:.8}));m.position.set(x+.02*w,y+poleH-h/2-.02,z);m.castShadow=true;g.add(m);
+  flags.push({m,base:Float32Array.from(geo.attributes.position.array),w,f:6/w,a:.07*w,ph:Math.random()*6});return m}
+function fitGroup(g,maxW,maxH){const b=new THREE.Box3().setFromObject(g),s=b.getSize(V()),c=b.getCenter(V());const k=Math.min(maxW/Math.max(s.x,s.z),maxH/s.y);g.children.forEach(o=>{o.position.x-=c.x;o.position.z-=c.z});g.scale.setScalar(k)}
+
+/* miniaturas: um modelo por país, instituição e casa especial (chão local y=0, base ~1x1) */
+const MON={
+PT:g=>{bx(g,1.05,.05,.95,MT.water,0,0,0);bx(g,.78,.24,.6,MT.stone,0,.05,.14);for(let i=0;i<7;i++)bx(g,.06,.06,.05,MT.stone,-.33+i*.11,.29,.42);
+  [[-.37,.42],[.37,.42],[-.37,-.14],[.37,-.14]].forEach(([x,z])=>{cy(g,.05,.05,.16,MT.stone,x,.29,z,10);dome(g,.055,MT.stone,x,.45,z)});
+  bx(g,.38,.92,.38,MT.stone,0,.29,-.1);bx(g,.44,.05,.44,MT.stoneD,0,1.0,-.1);bx(g,.3,.14,.3,MT.stone,0,1.05,-.1);
+  [-1,1].forEach(a=>[-1,1].forEach(b=>{cy(g,.04,.04,.13,MT.stone,a*.2,1.05,-.1+b*.2,10);dome(g,.045,MT.stone,a*.2,1.18,-.1+b*.2)}));
+  bx(g,.22,.14,.06,MT.stoneD,0,.6,.1);for(let i=0;i<3;i++)bx(g,.05,.12,.01,MT.black,-.08+i*.08,.38+i*0,.095)},
+ES:g=>{bx(g,1.0,.03,1.0,MT.pave,0,0,0);bx(g,.85,.48,.5,MT.sand,0,.03,0);roof(g,.5,.25,.85,MT.sand,0,.51,0,Math.PI/2);
+  [[-.33,.3],[-.11,.32],[.11,.32],[.33,.3]].forEach(([x,z],i)=>{const h=i%3?1.15:1.0;cy(g,.035,.085,h,MT.sand,x,.03,z,12);cn(g,.045,.22,MT.sand,x,.03+h,z,12);sp(g,.035,MT.gold,x,h+.28,z)});
+  [[-.22,-.3],[.22,-.3]].forEach(([x,z])=>{cy(g,.03,.08,.95,MT.stoneD,x,.03,z,12);cn(g,.04,.2,MT.stoneD,x,.98,z)});
+  cy(g,.03,.12,1.3,MT.sand,0,.03,-.05,14);cn(g,.05,.22,MT.sand,0,1.33,-.05);bx(g,.02,.14,.02,MT.white,0,1.53,-.05);bx(g,.09,.02,.02,MT.white,0,1.6,-.05)},
+FR:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);for(const x of[-.4,.4])for(const z of[-.4,.4])bx(g,.12,.02,.12,MT.pave,x,.03,z);
+  mesh(new THREE.CylinderGeometry(.25,.56,.5,4,1,true),MT.lattice,g,0,.28,0).rotation.y=Math.PI/4;bx(g,.6,.04,.6,MT.iron,0,.53,0);
+  mesh(new THREE.CylinderGeometry(.11,.24,.52,4,1,true),MT.lattice,g,0,.83,0).rotation.y=Math.PI/4;bx(g,.3,.03,.3,MT.iron,0,1.09,0);
+  mesh(new THREE.CylinderGeometry(.015,.1,.52,4,1,true),MT.lattice,g,0,1.38,0).rotation.y=Math.PI/4;bx(g,.06,.04,.06,MT.iron,0,1.62,0);cy(g,.005,.01,.15,MT.iron,0,1.66,0,6);
+  for(let k=0;k<4;k++){const a=mesh(new THREE.TorusGeometry(.33,.025,6,20,Math.PI),MT.iron,g,0,.1,0);a.rotation.y=k*Math.PI/2;a.position.x=Math.sin(k*Math.PI/2)*.38;a.position.z=Math.cos(k*Math.PI/2)*.38;a.scale.y=.9}},
+IE:g=>{bx(g,1.1,.05,.45,MT.water,0,0,.3);[['rock',0],['rock2',.17],['rock',.34],['rock2',.5]].forEach(([m,y],i)=>bx(g,1.1-i*.02,.17,.62-i*.03,MT[m],0,y,-.18+i*.01));
+  bx(g,1.08,.05,.58,MT.grass,0,.67,-.17);cy(g,.06,.06,.18,MT.stoneD,.3,.72,-.25,12);bx(g,.13,.03,.13,MT.stoneD,.3,.9,-.25);cy(g,.06,.1,.4,MT.rock,-.38,.05,.32,7);sp(g,.06,MT.grass,-.38,.46,.32,1,.3,1)},
+BE:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);const q=new THREE.Quaternion().setFromUnitVectors(V(1,1,1).normalize(),V(0,1,0)),c=V(0,.8,0),pts=[];
+  for(const a of[-1,1])for(const b of[-1,1])for(const d of[-1,1])pts.push(V(a,b,d).multiplyScalar(.27).applyQuaternion(q).add(c));
+  pts.forEach(p=>sp(g,.1,MT.chrome,p.x,p.y,p.z));sp(g,.1,MT.chrome,c.x,c.y,c.z);pts.forEach(p=>tube(g,c,p,.025,MT.chrome));
+  for(let i=0;i<8;i++)for(let j=i+1;j<8;j++)if(pts[i].distanceTo(pts[j])<.6)tube(g,pts[i],pts[j],.022,MT.chrome);
+  const low=pts.reduce((a,b)=>a.y<b.y?a:b);[0,1,2].forEach(k=>{const a=k*Math.PI*2/3+.5;tube(g,V(Math.cos(a)*.32,.03,Math.sin(a)*.32),low,.022,MT.white)})},
+NL:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);['#D7263D','#F6C026','#E86FA0'].forEach((cs,r)=>{const m=std(cs,.6);for(let k=0;k<8;k++)sp(g,.032,m,-.42+k*.12,.07,.24+r*.09)});
+  bx(g,1.0,.02,.05,MT.water,0,.03,.12);cy(g,.13,.22,.72,std('#5B4C3E',.9),0,.03,-.2,8);bx(g,.36,.03,.36,MT.woodD,0,.4,-.2);cn(g,.2,.24,std('#3B3027',.8),0,.75,-.2,8);
+  const hub=new THREE.Group();hub.position.set(0,.78,0);g.add(hub);const sm=std('#EFE8DA',.75);
+  for(let i=0;i<4;i++){const arm=new THREE.Group();arm.rotation.z=i*Math.PI/2;hub.add(arm);bx(arm,.03,.64,.014,MT.woodD,0,0,0);bx(arm,.14,.52,.006,sm,.085,.1,.008)}
+  sp(g,.045,MT.woodD,0,.78,.0);movers.push({o:hub,t:'rz',v:-.9})},
+LU:g=>{bx(g,1.0,.06,1.0,MT.grass,0,0,0);bx(g,1.0,.42,.55,MT.rock,0,.06,-.2);bx(g,.95,.3,.4,MT.rock2,.03,.06,.15);
+  bx(g,.9,.22,.14,MT.stone,0,.48,-.36);for(let i=0;i<7;i++)bx(g,.05,.05,.14,MT.stone,-.42+i*.14,.7,-.36);
+  cy(g,.1,.1,.42,MT.stone,-.32,.48,-.12,12);cn(g,.13,.2,MT.slate,-.32,.9,-.12,12);for(let i=0;i<4;i++)bx(g,.06,.08,.012,MT.black,-.22+i*.15,.18,.355);
+  bx(g,.5,.03,.14,MT.stoneD,.2,.36,.25)},
+DK:g=>{bx(g,1.0,.04,1.0,MT.water,0,0,0);bx(g,1.0,.06,.3,MT.pave,0,.04,-.33);['#E9A23B','#C8553D','#4E7FAE','#F1D88B','#8BAF6B'].forEach((c,i)=>{const w=.19,h=.48+((i*37)%3)*.07;fbox(g,w,h,.24,c,-.4+i*.2,.1,-.36);roof(g,.24,.12,w,std(i%2?'#7B3B2B':'#3E4651',.7),-.4+i*.2,.1+h,-.36,Math.PI/2)});
+  sp(g,.13,MT.rock,.05,.08,.24,1.4,.6,1);sp(g,.09,MT.rock2,-.1,.08,.3,1,.7,1);const br=std('#5E7B5A',.4,.6);sp(g,.05,br,.07,.25,.24,1,1.6,1);sp(g,.036,br,.07,.37,.24);bx(g,.13,.03,.05,br,0,.15,.27)},
+SE:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);fbox(g,1.0,.32,.3,'#E6D3A0',0,.03,-.28);bx(g,1.02,.08,.32,MT.slate,0,.35,-.28);fbox(g,.3,.42,.36,'#E6D3A0',0,.03,-.28);bx(g,.32,.05,.38,MT.slate,0,.45,-.28);dome(g,.13,MT.copper,0,.5,-.28);sp(g,.03,MT.gold,0,.64,-.28);
+  for(let i=-2;i<=2;i++)bx(g,.12,.06,.28,std('#3F6E3A',.9),i*.19,.03,.15);cy(g,.08,.08,.03,MT.water,0,.03,-.02,20);bx(g,1,.01,.06,MT.sand,0,.03,-.06)},
+FI:g=>{bx(g,1.0,.04,1.0,MT.water,0,0,0);cy(g,.46,.5,.08,MT.grass,0,.04,0,6);for(let i=0;i<6;i++){const a=i*Math.PI/3+Math.PI/6;bx(g,.5,.12,.07,MT.stoneD,Math.cos(a)*.42,.1,Math.sin(a)*.42,-a-Math.PI/2)}
+  cy(g,.09,.1,.5,MT.white,0,.12,-.05,12);dome(g,.1,MT.copper,0,.62,-.05);cy(g,.015,.02,.1,MT.white,0,.7,-.05,8);sp(g,.03,std('#FFF4C2',.3,0,{emissive:col('#FFD27A'),emissiveIntensity:1.5}),0,.83,-.05);
+  [[.22,.15],[-.2,.2]].forEach(([x,z])=>{const c=mesh(new THREE.CylinderGeometry(.018,.024,.17,8),MT.black,g,x,.24,z);c.rotation.x=1.2});bx(g,.2,.12,.14,std('#C9A97B',.8),-.22,.12,-.25)},
+PL:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);cy(g,.46,.5,.16,MT.grass,0,.03,-.04,10);
+  bx(g,.72,.22,.12,MT.brick,0,.19,-.36);bx(g,.12,.22,.56,MT.brick,-.33,.19,-.1);bx(g,.12,.22,.56,MT.brick,.33,.19,-.1);
+  roof(g,.14,.1,.74,MT.roof,0,.41,-.36,Math.PI/2);roof(g,.14,.1,.56,MT.roof,-.33,.41,-.1);roof(g,.14,.1,.56,MT.roof,.33,.41,-.1);
+  bx(g,.2,.3,.2,MT.cream,-.06,.19,.1);dome(g,.09,MT.gold,-.06,.49,.1);sp(g,.02,MT.gold,-.06,.6,.1);cy(g,.06,.06,.44,MT.brickD,.15,.19,.13,10);cn(g,.08,.24,MT.copper,.15,.63,.13,10);
+  cy(g,.06,.07,.3,MT.brick,.33,.19,.26,10);cn(g,.08,.16,MT.roof,.33,.49,.26,10)},
+LT:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);sp(g,.5,MT.earth,0,.03,0,1,.42,1);
+  for(let i=0;i<70;i++){const a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random())*.45,x=Math.cos(a)*r,z=Math.sin(a)*r,y=.03+.21*Math.sqrt(Math.max(0,1-(r/.5)**2)),h=rnd(.1,.22),m=Math.random()<.7?MT.woodD:MT.iron,ry=rnd(0,3);bx(g,.012,h,.012,m,x,y-.015,z,ry);bx(g,.07*h/.2,.012,.012,m,x,y+h*.62,z,ry)}
+  for(let i=0;i<3;i++){const x=-.2+i*.2;bx(g,.022,.46,.022,MT.woodD,x,.2,-.06);bx(g,.17,.022,.022,MT.woodD,x,.54,-.06)}},
+LV:g=>{bx(g,1.0,.03,1.0,MT.pave,0,0,0);bx(g,.5,.48,.4,MT.brick,-.14,.03,-.16);[[.5,0],[.42,.1],[.32,.2],[.22,.3],[.12,.4]].forEach(([w,o])=>bx(g,w,.1,.08,MT.brick,-.14,.51+o,.0));cn(g,.04,.13,MT.slate,-.14,1.01,0,8);
+  const tr=std('#F0E9DA',.6);for(let r=0;r<3;r++)for(let k=0;k<4;k++)bx(g,.05,.08,.012,tr,-.32+k*.12,.12+r*.14,.045);sp(g,.04,MT.gold,-.14,.58,.045);bx(g,.3,.03,.015,MT.gold,-.14,.47,.045);
+  fbox(g,.28,.42,.36,'#F2EEE2',.3,.03,-.16);[[.28,0],[.2,.08],[.12,.16]].forEach(([w,o])=>bx(g,w,.08,.06,MT.white,.3,.45+o,.0))},
+EE:g=>{bx(g,1.0,.03,1.0,std('#7A8F55',.95),0,0,0);[[-.15,.25,.12],[.22,.28,.1],[.33,-.02,.08]].forEach(([x,z,r])=>cy(g,r,r,.012,MT.lake,x,.03,z,18));
+  for(let i=0;i<8;i++)bx(g,.08,.02,.06,MT.wood,-.46+i*.13,.04,.1,.08);
+  for(let i=0;i<26;i++){const x=rnd(-.48,.48),z=rnd(-.48,.0);tree(g,x,z,rnd(.35,.62),Math.random()<.5?MT.tree:MT.tree2)}},
+DE:g=>{bx(g,1.0,.03,1.0,MT.pave,0,0,0);bx(g,.95,.05,.34,MT.sand,0,.03,-.1);for(let i=0;i<6;i++)for(let r=0;r<2;r++)cy(g,.03,.034,.5,MT.sand,-.4+i*.16,.08,-.2+r*.2,12);
+  bx(g,.98,.08,.36,MT.sand,0,.58,-.1);bx(g,.9,.1,.32,MT.sand,0,.66,-.1);bx(g,.42,.06,.28,MT.sand,0,.76,-.1);
+  const p=MT.patina;bx(g,.24,.05,.1,p,0,.82,-.1);for(let i=0;i<4;i++)bx(g,.035,.1,.09,p,-.08+i*.055,.87,-.06);bx(g,.04,.12,.04,p,0,.87,-.15);bx(g,.012,.08,.07,p,0,.99,-.15);
+  [-1,1].forEach(s=>bx(g,.1,.36,.3,MT.sand,s*.45,.08,.25))},
+AT:g=>{bx(g,1.0,.03,1.0,MT.sand,0,0,0);fbox(g,1.0,.3,.26,'#E3B94D',0,.03,-.34);fbox(g,.36,.37,.32,'#E3B94D',0,.03,-.32);bx(g,1.02,.06,.28,MT.slate,0,.33,-.34);bx(g,.38,.05,.34,MT.slate,0,.4,-.32);
+  for(let i=-1;i<=1;i++)bx(g,.26,.03,.22,MT.grass,i*.32,.03,.03);cy(g,.09,.1,.04,MT.water,0,.03,.27,18);cy(g,.012,.012,.12,MT.white,0,.07,.27,6);for(let i=0;i<8;i++)round(g,-.45+i*.13,.44,.04)},
+CZ:g=>{bx(g,1.0,.04,1.0,MT.water,0,0,0);bx(g,1.0,.06,.2,MT.stoneD,0,.3,0);for(let i=0;i<4;i++)bx(g,.07,.3,.18,MT.stoneD,-.3+i*.2,.0,0);for(let i=0;i<5;i++){mesh(new THREE.TorusGeometry(.065,.03,6,12,Math.PI),MT.stoneD,g,-.4+i*.2,.24,0)}
+  [-1,1].forEach(s=>{bx(g,.18,.62,.24,std('#4E4943',.9),s*.42,.0,0);cn(g,.17,.22,MT.slate,s*.42,.62,0,4).rotation.y=Math.PI/4;sp(g,.02,MT.gold,s*.42,.86,0)});
+  for(let i=0;i<5;i++)for(const z of[-.08,.08])cy(g,.012,.015,.1,MT.bronze,-.24+i*.12,.36,z,6)},
+SK:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);sp(g,.52,MT.grass,0,.03,0,1,.55,.95);sp(g,.4,MT.rock2,.1,.05,-.05,1,.6,.9);
+  bx(g,.8,.2,.04,MT.white,0,.2,.25);bx(g,.04,.2,.6,MT.white,-.38,.2,-.05);bx(g,.04,.2,.6,MT.white,.38,.2,-.05);bx(g,.8,.2,.04,MT.white,0,.2,-.35);
+  cy(g,.08,.09,.42,MT.white,.15,.3,-.12,12);bx(g,.25,.18,.2,MT.cream,-.15,.3,-.15);roof(g,.2,.1,.25,MT.roof,-.15,.48,-.15,Math.PI/2)},
+HU:g=>{bx(g,1.0,.03,1.0,MT.stone,0,0,0);const wm=MT.white,tip=std('#5B5550',.7);bx(g,1.0,.2,.14,wm,0,.03,.15);for(let i=0;i<8;i++)bx(g,.05,.12,.02,std('#3A3530',.8),-.42+i*.12,.06,.225);
+  [-.4,-.14,.14,.4].forEach((x,i)=>{const h=i%3?.3:.24;cy(g,.07,.07,h,wm,x,.23,.15,10);cn(g,.09,.2,tip,x,.23+h,.15,10)});cy(g,.1,.1,.4,wm,0,.23,.15,10);cn(g,.12,.28,tip,0,.63,.15,10);
+  fbox(g,.5,.4,.28,'#EDE6D6',0,.03,-.28);roof(g,.3,.2,.5,std('#C9A43A',.55,.2),0,.43,-.28,Math.PI/2);cy(g,.06,.07,.66,MT.white,.32,.03,-.3,10);cn(g,.07,.32,std('#7A6A3A',.6),.32,.69,-.3,10)},
+RO:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);sp(g,.4,MT.rock,0,.03,-.05,1.1,.55,1);const wm=MT.white,rf=std('#C0582F',.7);
+  bx(g,.42,.36,.36,wm,0,.2,-.08);roof(g,.36,.16,.42,rf,0,.56,-.08,Math.PI/2);cy(g,.09,.1,.48,wm,-.22,.15,.08,12);cn(g,.12,.22,rf,-.22,.63,.08,12);
+  bx(g,.16,.5,.16,wm,.24,.15,-.2);cn(g,.15,.2,rf,.24,.65,-.2,4).rotation.y=Math.PI/4;cy(g,.06,.07,.3,wm,.2,.2,.14,10);cn(g,.08,.15,rf,.2,.5,.14,10);for(let i=0;i<3;i++)round(g,-.38+i*.38,.38,.06)},
+BG:g=>{bx(g,1.0,.03,1.0,MT.sand,0,0,0);const lead=std('#4A4E55',.5,.3);[[0,-.42,1.0,.14],[0,.42,1.0,.14],[-.43,0,.14,.7],[.43,0,.14,.7]].forEach(([x,z,w,d])=>{bx(g,w,.3,d,MT.stripe,x,.03,z);bx(g,w+.02,.04,d+.02,lead,x,.33,z)});
+  bx(g,.4,.2,.28,MT.stripe,0,.03,0);[[0,0,.1,.2],[-.13,-.08,.06,.12],[.13,-.08,.06,.12],[-.13,.08,.06,.12],[.13,.08,.06,.12]].forEach(([x,z,r,h])=>{cy(g,r*.8,r*.8,h,MT.stripe,x,.23,z,10);dome(g,r*.85,lead,x,.23+h,z)});bx(g,.14,.5,.14,MT.stoneD,.26,.03,.24);cn(g,.11,.1,lead,.26,.53,.24,4)},
+SI:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);cy(g,.46,.46,.02,MT.lake,0,.03,.02,36);sp(g,.17,MT.tree2,.05,.04,.06,1,.5,1);fbox(g,.12,.12,.2,'#F2EEE6',.02,.1,.06);roof(g,.12,.06,.2,MT.roof,.02,.22,.06);bx(g,.06,.32,.06,MT.white,.02,.1,-.07);cn(g,.045,.15,MT.roof,.02,.42,-.07,4);
+  sp(g,.18,MT.rock,-.36,.03,-.36,1,1.3,1);bx(g,.16,.12,.14,MT.cream,-.36,.25,-.37);roof(g,.14,.07,.16,MT.roof,-.36,.37,-.37,Math.PI/2);
+  for(let i=0;i<9;i++){const a=-.2+i*.24;tree(g,Math.cos(a)*.48,Math.sin(a)*.48,.3)}},
+HR:g=>{bx(g,1.0,.03,1.0,MT.grass,0,0,0);[[0,.24,.36,.06],[.1,-.02,.3,.18],[-.05,-.28,.26,.3]].forEach(([x,z,r,y])=>{cy(g,r,r+.03,y,MT.earth,x,.03,z,20);cy(g,r-.02,r-.02,.016,MT.lake,x,.03+y,z,20)});
+  const fall=std('#F4FBFF',.3,0,{emissive:col('#BFE9F5'),emissiveIntensity:.35});bx(g,.14,.13,.012,fall,.05,.09,.1);bx(g,.1,.14,.012,fall,.03,.2,-.15);
+  for(let i=0;i<20;i++){const x=rnd(-.48,.48),z=rnd(-.48,.48);if(Math.abs(x)<.42&&z>-.55&&z<.6&&Math.hypot(x,z)<.5)continue;tree(g,x,z,rnd(.3,.5),Math.random()<.5?MT.tree:MT.tree2)}},
+IT:g=>{bx(g,1.0,.03,1.0,std('#B9AE98',.9),0,0,0);for(let t=0;t<3;t++){const o=mesh(new THREE.CylinderGeometry(.46,.46,.17,48,1,true),MT.arches,g,0,.03+t*.17+.085,0);o.scale.z=.78}
+  const top=mesh(new THREE.CylinderGeometry(.46,.46,.1,48,1,true),std('#CDBB94',.9,0,{side:THREE.DoubleSide}),g,0,.59,0);top.scale.z=.78;
+  const inn=mesh(new THREE.CylinderGeometry(.3,.37,.3,36,1,true),std('#BFAE8A',.95,0,{side:THREE.DoubleSide}),g,0,.18,0);inn.scale.z=.72;
+  const ar=mesh(new THREE.CylinderGeometry(.24,.24,.02,32),MT.sand,g,0,.06,0);ar.scale.z=.65},
+MT:g=>{bx(g,1.0,.03,1.0,std('#C9B07A',.95),0,0,0);const ls=std('#D8C08A',.95);for(let i=0;i<14;i++){const a=Math.PI/2+.4+i*(Math.PI*2-.8)/13,x=Math.cos(a)*.36,z=Math.sin(a)*.3-.04;bx(g,rnd(.1,.16),rnd(.22,.38),.08,ls,x,.03,z,-a-Math.PI/2)}
+  bx(g,.06,.3,.08,ls,-.08,.03,.3);bx(g,.06,.3,.08,ls,.08,.03,.3);bx(g,.28,.06,.1,ls,0,.33,.3);sp(g,.1,MT.rock2,.32,.03,.33,1,.4,1)},
+GR:g=>{bx(g,1.0,.12,1.0,MT.rock2,0,0,0);[[.9,.68],[.86,.64],[.82,.6]].forEach(([w,d],i)=>bx(g,w,.025,d,MT.marble,0,.12+i*.025,-.02));const y0=.195,ch=.34;
+  for(let i=0;i<8;i++){cy(g,.024,.028,ch,MT.marble,-.35+i*.1,y0,.24,10);cy(g,.024,.028,ch,MT.marble,-.35+i*.1,y0,-.28,10)}
+  for(let i=1;i<6;i++){cy(g,.024,.028,ch,MT.marble,-.35,y0,.24-i*.087,10);cy(g,.024,.028,ch,MT.marble,.35,y0,.24-i*.087,10)}
+  bx(g,.6,.3,.4,std('#D9D2C2',.7),0,y0,-.02);bx(g,.82,.07,.6,MT.marble,0,y0+ch,-.02);roof(g,.62,.12,.84,MT.marble,0,y0+ch+.07,-.02,Math.PI/2)},
+CY:g=>{const sd=MT.sand;bx(g,1.0,.2,.22,sd,0,0,-.39);bx(g,1.0,.2,.22,sd,0,0,.39);bx(g,.22,.2,.56,sd,-.39,0,0);bx(g,.22,.2,.56,sd,.39,0,0);bx(g,.56,.02,.56,std('#B89B6A',.95),0,0,0);
+  for(let i=0;i<5;i++){[-.24,.24].forEach(z=>cy(g,.022,.026,.18,MT.stone,-.2+i*.1,.02,z,10));if(i>0&&i<4)[-.24,.24].forEach(x=>cy(g,.022,.026,.18,MT.stone,x,.02,-.2+i*.1,10))}
+  for(let i=0;i<3;i++)bx(g,.06,.1,.012,MT.black,-.12+i*.12,.02,-.278);for(let i=0;i<4;i++)bx(g,.14,.05*(i+1),.04,sd,.0,0,.12+i*.04)},
+EP:g=>{bx(g,1.0,.03,1.0,std('#9AA3AD',.8),0,0,0);bx(g,1.0,.02,.28,MT.water,0,.03,.38);const gd=std('#7FA3C2',.1,.8,{side:THREE.DoubleSide});
+  const tw=mesh(new THREE.CylinderGeometry(.3,.3,.95,36,1,true),MT.glassF,g,0,.505,-.12);tw.scale.z=.7;tw.material=MT.glassF.clone();tw.material.side=THREE.DoubleSide;
+  const tw2=mesh(new THREE.CylinderGeometry(.27,.27,.9,36,1,true),std('#C9CED4',.5,.3,{side:THREE.DoubleSide}),g,0,.48,-.12);tw2.scale.z=.64;
+  const low=mesh(new THREE.CylinderGeometry(.48,.48,.2,36,1,false,0,Math.PI),gd,g,0,.13,.08);low.scale.z=.45;low.rotation.y=Math.PI/2;makeFlag(g,'EU',.38,.03,.26,.6,.24,.16)},
+COM:g=>{bx(g,1.0,.03,1.0,std('#9AA3AD',.8),0,0,0);[30,150,210,330].forEach(d=>{const a=d*Math.PI/180;bx(g,.5,.62,.15,MT.glassF,Math.cos(a)*.24,.03,Math.sin(a)*.24,-a)});cy(g,.12,.12,.7,MT.glassF,0,.03,0,16);bx(g,.2,.05,.2,MT.slate,0,.73,0);makeFlag(g,'EU',.0,.03,.4,.55,.22,.15)},
+CON:g=>{bx(g,1.0,.03,1.0,std('#9AA3AD',.8),0,0,0);bx(g,1.0,.24,.3,MT.glassF,0,.03,-.36);sp(g,.15,std('#FFE6A8',.3,0,{emissive:col('#FFC86B'),emissiveIntensity:1.8}),0,.36,.02,1,1.55,1);
+  const cube=bx(g,.6,.6,.6,MT.patch,0,.03,.02);cube.castShadow=false;const fr=std('#2A2F36',.5,.5);[[-.3,-.28],[.3,-.28],[-.3,.32],[.3,.32]].forEach(([x,z])=>bx(g,.025,.6,.025,fr,x,.03,z))},
+CJ:g=>{bx(g,1.0,.03,1.0,std('#9AA3AD',.8),0,0,0);bx(g,.95,.2,.42,std('#3D3A36',.55,.2),0,.03,.18);[-.18,.18].forEach(x=>bx(g,.22,1.0,.22,MT.goldF,x,.03,-.24));bx(g,.95,.03,.42,MT.goldTrim,0,.23,.18)},
+BCE:g=>{bx(g,1.0,.03,1.0,std('#9AA3AD',.8),0,0,0);bx(g,.26,1.12,.3,MT.glassF,-.13,.03,-.12,.12);bx(g,.24,1.0,.3,MT.glassF,.15,.03,-.12,-.12);bx(g,.08,.9,.24,MT.glass,.01,.03,-.12);
+  bx(g,.95,.14,.26,std('#C9C3B5',.8),0,.03,.3);for(let i=0;i<6;i++)bx(g,.12,.05,.26,std('#8E8A80',.7),-.38+i*.15,.17,.3);const e=mesh(new THREE.TorusGeometry(.08,.016,8,24,Math.PI*1.6),MT.eu,g,.38,.2,.05);e.rotation.z=.55},
+start:g=>{bx(g,1.0,.03,1.0,MT.pave,0,0,0);cy(g,.2,.24,.06,MT.goldTrim,0,.03,0,28);makeFlag(g,'EU',0,.09,0,1.0,.8,.54)},
+erasmus:g=>{fbox(g,.86,.4,.34,'#E8DCC0',0,0,-.3);bx(g,.88,.04,.4,MT.marble,0,.4,-.28);for(let i=0;i<6;i++)cy(g,.025,.025,.3,MT.marble,-.3+i*.12,.03,-.06,8);bx(g,.8,.03,.14,MT.marble,0,0,-.06);roof(g,.82,.14,.14,MT.marble,0,.33,-.06);
+  ['#A8322A','#003399','#2E7D4F'].forEach((c,i)=>bx(g,.42-i*.04,.07,.3-i*.02,std(c,.7),.05,.0+i*.07,.3,i*.12));bx(g,.26,.02,.26,MT.black,.05,.24,.3,.4);cy(g,.07,.08,.05,MT.black,.05,.19,.3,12);cy(g,.004,.004,.1,MT.gold,.17,.16,.3,4)},
+schengen:g=>{bx(g,1.0,.03,1.0,std('#8C8274',.95),0,0,0);for(let i=0;i<9;i++)bx(g,.05,.02,.32,MT.woodD,-.44+i*.11,.03,.0);[-.09,.09].forEach(z=>bx(g,1.0,.03,.025,MT.chrome,0,.05,z));
+  const tr=new THREE.Group();g.add(tr);bx(tr,.36,.18,.2,MT.eu,-.1,.1,0);bx(tr,.12,.24,.2,MT.eu,-.34,.1,0);const n=mesh(new THREE.CylinderGeometry(.09,.09,.12,16),MT.eu,tr,.12,.19,0);n.rotation.z=Math.PI/2;
+  bx(tr,.36,.02,.21,MT.goldTrim,-.1,.2,0);for(const x of[-.3,-.15,0,.12])for(const z of[-.1,.1]){const w=mesh(new THREE.CylinderGeometry(.04,.04,.02,12),MT.black,tr,x,.1,z);w.rotation.x=Math.PI/2}
+  bx(tr,.3,.17,.2,std('#F2EEE6',.6),.38,.1,0);bx(tr,.3,.03,.205,MT.eu,.38,.17,0);movers.push({o:tr,t:'slide',x0:0,amp:.06,v:.8});tree(g,-.4,-.38,.4);tree(g,.38,.36,.35)},
+flash:g=>{bx(g,1.0,.03,1.0,std('#2A3550',.6,.2),0,0,0);const s=new THREE.Shape();[[.05,.55],[-.2,0],[0,0],[-.12,-.55],[.22,.1],[.02,.1],[.18,.55]].forEach(([x,y],i)=>i?s.lineTo(x,y):s.moveTo(x,y));
+  const geo=new THREE.ExtrudeGeometry(s,{depth:.08,bevelEnabled:true,bevelThickness:.02,bevelSize:.02,bevelSegments:2});geo.center();const b=mesh(geo,std('#FFCC00',.2,1,{emissive:col('#FFB000'),emissiveIntensity:.6}),g,0,.75,0);movers.push({o:b,t:'bob',y0:.75});
+  for(let i=0;i<12;i++){const a=i*Math.PI/6;const m=mesh(new THREE.ExtrudeGeometry(starShape(.05,.02),{depth:.02,bevelEnabled:false}),MT.gold,g,Math.sin(a)*.38,.04,Math.cos(a)*.38);m.rotation.x=-Math.PI/2}}};
+
+/* cenário europeu */
+function buildWorld(){
+  const sky=new THREE.Mesh(new THREE.SphereGeometry(3000,32,16),new THREE.MeshBasicMaterial({map:texFrom(skyCanvas()),side:THREE.BackSide,fog:false}));scene.add(sky);
+  const fl=new THREE.Mesh(new THREE.CircleGeometry(1400,64),new THREE.MeshStandardMaterial({map:texFrom(cobbleCanvas(),160),roughness:.95}));fl.rotation.x=-Math.PI/2;fl.position.y=-36;fl.receiveShadow=true;scene.add(fl);
+  const pal=[['#E7C98F','#3E5E3A'],['#D98B6A','#2F3E52'],['#F1E4CB','#6B3B2A'],['#BCD0DE','#2F3E52'],['#E9B4A6','#41513A'],['#F4D57E','#2D4B6B'],['#CFD8C4','#7A3424'],['#E3A35C','#2F3E52']].map(([w,s])=>({w,s,c:facadeCanvas(w,s)}));
+  const roofs=[std('#7E3A2A',.75),std('#3F4752',.6),std('#94523A',.75)];const hg=new THREE.Group();scene.add(hg);
+  for(let i=0;i<34;i++){const a=i/34*Math.PI*2+rnd(-.03,.03),r=rnd(540,620),x=Math.cos(a)*r,z=Math.sin(a)*r,w=rnd(150,200),h=rnd(300,460),d=200,ry=Math.atan2(-x,-z),p=pal[i%pal.length];
+    const m=new THREE.MeshStandardMaterial({map:texFrom(p.c),roughness:.85});const o=bx(hg,w,h,d,m,x,-36,z,ry);o.castShadow=false;roof(hg,d,rnd(70,120),w+8,roofs[i%3],x,-36+h,z,ry+Math.PI/2).castShadow=false}
+  const ca=.9,cx=Math.cos(ca)*700,cz=Math.sin(ca)*700;cy(hg,150,150,420,std('#E8DFCF',.8),cx,-36,cz,32);dome(hg,150,MT.copper,cx,384,cz);cy(hg,18,26,90,std('#E8DFCF',.8),cx,534,cz,12);sp(hg,22,MT.gold,cx,640,cz);
+  const ta=2.6,tx=Math.cos(ta)*680,tz=Math.sin(ta)*680;bx(hg,110,560,110,std('#C9B79A',.85),tx,-36,tz);cn(hg,85,260,MT.slate,tx,524,tz,4).rotation.y=Math.PI/4;
+  hg.traverse(o=>{o.castShadow=false});
+  // vasos com árvores na esplanada
+  for(let i=0;i<10;i++){const a=i/10*Math.PI*2+.2,r=105,x=Math.cos(a)*r,z=Math.sin(a)*r;cy(scene,5,4,9,std('#B5653F',.85),x,-36,z,20);sp(scene,12,MT.tree2,x,-12,z,1,1.15,1);cy(scene,.8,1,8,MT.woodD,x,-27,z,8)}
+  // mesa
+  const top=new THREE.Mesh(new THREE.CylinderGeometry(17,17,.9,96),[std('#4E2F18',.6),new THREE.MeshStandardMaterial({map:texFrom(woodCanvas(),1),roughness:.45,metalness:0}),std('#4E2F18',.6)]);top.position.y=-.95;top.receiveShadow=true;top.castShadow=true;scene.add(top);
+  cy(scene,1.4,1.8,34,std('#2B241E',.4,.6),0,-36,0,24);cy(scene,8,9,1,std('#2B241E',.4,.6),0,-36,0,32);
+  // bandeiras de mesa dos 27 Estados-Membros
+  CODES.forEach((code,i)=>{const a=i/27*Math.PI*2+Math.PI/27,r=15.6,x=Math.cos(a)*r,z=Math.sin(a)*r;const g=new THREE.Group();g.position.set(x,-.5,z);g.rotation.y=-a+Math.PI;scene.add(g);cy(g,.32,.36,.08,MT.chrome,0,0,0,20);makeFlag(g,code,0,.08,0,4.2,1.5,1.0)});
+}
+
+function makeEnv(){const pm=new THREE.PMREMGenerator(renderer),es=new THREE.Scene();
+  es.add(new THREE.Mesh(new THREE.SphereGeometry(50,32,16),new THREE.MeshBasicMaterial({map:texFrom(skyCanvas()),side:THREE.BackSide})));
+  const sun=new THREE.Mesh(new THREE.SphereGeometry(4,16,8),new THREE.MeshBasicMaterial({color:new THREE.Color(1,.88,.7).multiplyScalar(24)}));sun.position.set(26,32,16);es.add(sun);
+  const q=new THREE.Mesh(new THREE.PlaneGeometry(40,12),new THREE.MeshBasicMaterial({color:new THREE.Color(1,1,1).multiplyScalar(2.2),side:THREE.DoubleSide}));q.position.set(-30,22,-12);q.lookAt(0,0,0);es.add(q);
+  const env=pm.fromScene(es,.035).texture;pm.dispose();return env}
+
+function init3D(){
+  const st=$('#stage');
+  renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  st.appendChild(renderer.domElement);renderer.domElement.setAttribute('aria-label','Tabuleiro 3D');
+  scene=new THREE.Scene();scene.fog=new THREE.Fog(col('#E6DAC2'),260,2400);scene.environment=makeEnv();
+  camera=new THREE.PerspectiveCamera(40,1,.3,6000);
+  controls=new THREE.OrbitControls(camera,renderer.domElement);
+  Object.assign(controls,{enableDamping:true,dampingFactor:.08,enablePan:false,minDistance:9,maxDistance:110,maxPolarAngle:1.38,minPolarAngle:.1,autoRotateSpeed:.45});
+  scene.add(new THREE.HemisphereLight(col('#DCEBFF'),col('#8A7558'),.35));
+  const sun=new THREE.DirectionalLight(col('#FFE4BE'),2.1);sun.position.set(22,40,14);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+  Object.assign(sun.shadow.camera,{left:-19,right:19,top:19,bottom:-19,near:1,far:120});sun.shadow.camera.updateProjectionMatrix();sun.shadow.bias=-.0004;sun.shadow.normalBias=.02;scene.add(sun);
+  clock=new THREE.Clock();initMats();
+  bigStarGeo=new THREE.ExtrudeGeometry(starShape(.58,.26),{depth:.26,bevelEnabled:true,bevelThickness:.07,bevelSize:.06,bevelSegments:3,curveSegments:4});bigStarGeo.center();
+  smallStarGeo=new THREE.ExtrudeGeometry(starShape(.25,.11),{depth:.08,bevelEnabled:true,bevelThickness:.03,bevelSize:.03,bevelSegments:2});smallStarGeo.center();
+  flatStarGeo=new THREE.ExtrudeGeometry(starShape(.36,.15),{depth:.05,bevelEnabled:true,bevelThickness:.02,bevelSize:.02,bevelSegments:2});flatStarGeo.center();
+  buildWorld();
+  // tabuleiro lacado azul UE com moldura dourada
+  const N=10*PITCH+.6;
+  const bcv=canvas(1024,1024),bctx=bcv.getContext('2d');bctx.fillStyle='#003399';bctx.fillRect(0,0,1024,1024);const vg=bctx.createRadialGradient(512,512,180,512,512,760);vg.addColorStop(0,'rgba(40,90,200,.35)');vg.addColorStop(1,'rgba(0,10,50,.45)');bctx.fillStyle=vg;bctx.fillRect(0,0,1024,1024);
+  bctx.globalAlpha=.06;for(let i=0;i<220;i++){const a=Math.random()*Math.PI*2;star2D(bctx,Math.random()*1024,Math.random()*1024,rnd(6,12),rnd(2.5,5),'#FFCC00');}bctx.globalAlpha=1;grain(bctx,1024,1024,10);
+  const base=new THREE.Mesh(new THREE.BoxGeometry(N,.5,N),new THREE.MeshPhysicalMaterial({map:texFrom(bcv),roughness:.36,metalness:.05,clearcoat:1,clearcoatRoughness:.14}));base.position.y=-.25;base.receiveShadow=true;base.castShadow=true;scene.add(base);
+  [[0,N/2+.1,N+.4,.2],[0,-N/2-.1,N+.4,.2]].forEach(([x,z,w,d])=>{bx(scene,w,.62,d,MT.goldTrim,x,-.52,z);});
+  [[N/2+.1,0],[-N/2-.1,0]].forEach(([x,z])=>bx(scene,.2,.62,N,MT.goldTrim,x,-.52,z));
+  const inEdge=3.5*PITCH-TS/2-.15;[[0,-inEdge],[0,inEdge]].forEach(([x,z])=>bx(scene,inEdge*2,.03,.06,MT.goldTrim,x,0,z));[[-inEdge,0],[inEdge,0]].forEach(([x,z])=>bx(scene,.06,.03,inEdge*2,MT.goldTrim,x,0,z));
+  // emblema: 12 estrelas douradas
+  for(let i=0;i<12;i++){const a=i*Math.PI/6;const m=mesh(flatStarGeo,MT.gold,scene,Math.sin(a)*2.3,.04,-3.4-Math.cos(a)*2.3);m.rotation.x=-Math.PI/2}
+  const tc=canvas(1024,256);title={cv:tc,ctx:tc.getContext('2d'),tex:texFrom(tc)};const tm=new THREE.Mesh(new THREE.PlaneGeometry(8,2),new THREE.MeshStandardMaterial({map:title.tex,transparent:true,roughness:.4,metalness:.6}));tm.rotation.x=-Math.PI/2;tm.position.set(0,.006,.55);scene.add(tm);
+  // casas com miniaturas
+  BOARD.forEach((b,i)=>{
+    const [r,cc]=gridRC(i),x=(cc-4.5)*PITCH,z=(r-4.5)*PITCH,th=theta(i);
+    const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=th;scene.add(g);
+    const cv=canvas(512,512),tex=texFrom(cv),pm=new THREE.MeshStandardMaterial({map:tex,roughness:.7,emissive:col('#FFCC00'),emissiveIntensity:0});
+    const plate=new THREE.Mesh(new THREE.BoxGeometry(TS,.06,TS),[MT.paperSide,MT.paperSide,pm,MT.paperSide,MT.paperSide,MT.paperSide]);plate.position.y=.03;plate.receiveShadow=true;plate.userData.i=i;g.add(plate);tops.push(plate);
+    const mon=new THREE.Group();const fn=MON[b.t==='c'?b.code:b.id];if(fn)fn(mon);fitGroup(mon,1.26,2.1);mon.position.set(0,.06,-.38);g.add(mon);
+    if(b.t==='c')[-1,1].forEach(s=>{const ring=mesh(new THREE.TorusGeometry(.13,.022,8,28),MT.goldTrim,g,s*.88,.07,-.9);ring.rotation.x=Math.PI/2});
+    tileObjs.push({g,x,z,th,cv,ctx:cv.getContext('2d'),tex,top:{material:pm}});
+  });
+  // montes de cartas
+  cardGeo=new THREE.BoxGeometry(1.5,.05,2.1);sideMat=std('#F3EBDA',.8);
+  THL.forEach((th,k)=>{
+    const bc=canvas(256,360),fc=canvas(256,360);
+    backMats[th[0]]={cv:bc,ctx:bc.getContext('2d'),mat:new THREE.MeshPhysicalMaterial({map:texFrom(bc),roughness:.45,clearcoat:.4})};
+    frontMats[th[0]]={cv:fc,ctx:fc.getContext('2d'),mat:new THREE.MeshStandardMaterial({map:texFrom(fc),roughness:.6})};
+    const pg=new THREE.Group(),px=-4.2+k*2.8;pg.position.set(px,0,3.1);scene.add(pg);
+    for(let n=0;n<10;n++){const m=new THREE.Mesh(cardGeo,[sideMat,sideMat,n===9?backMats[th[0]].mat:sideMat,sideMat,sideMat,sideMat]);m.position.set(rnd(-.03,.03),.03+n*.052,rnd(-.03,.03));m.rotation.y=rnd(-.05,.05);m.castShadow=true;m.receiveShadow=true;pg.add(m)}
+    piles[th[0]]={g:pg,top:V(px,.03+10*.052,3.1)};
+  });
+  // dado de cantos arredondados
+  const dg=new THREE.BoxGeometry(1,1,1,10,10,10),pp=dg.attributes.position,rad=.14,h=.5-rad,tmp=V();
+  for(let i=0;i<pp.count;i++){tmp.fromBufferAttribute(pp,i);const inner=V(Math.max(-h,Math.min(h,tmp.x)),Math.max(-h,Math.min(h,tmp.y)),Math.max(-h,Math.min(h,tmp.z)));const n=tmp.clone().sub(inner);if(n.lengthSq()>0)n.normalize().multiplyScalar(rad);pp.setXYZ(i,inner.x+n.x,inner.y+n.y,inner.z+n.z)}dg.computeVertexNormals();
+  const dm=[3,4,1,6,2,5].map(v=>new THREE.MeshPhysicalMaterial({map:texFrom(diceFace(v)),roughness:.25,clearcoat:.8,clearcoatRoughness:.1}));
+  dice=new THREE.Mesh(dg,dm);dice.rotation.order='YXZ';dice.position.set(0,.5,6.0);dice.castShadow=true;scene.add(dice);
+  resize();addEventListener('resize',resize);
+  const el=renderer.domElement;let down=null;
+  el.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY]});
+  el.addEventListener('pointerup',e=>{if(!down)return;const d=Math.hypot(e.clientX-down[0],e.clientY-down[1]);down=null;if(d<8&&picking)pickAt(e)});
+}
+function diceFace(v){const c=canvas(128,128),x=c.getContext('2d');x.fillStyle='#FBF6EA';x.fillRect(0,0,128,128);grain(x,128,128,6);
+  const P={1:[[64,64]],2:[[36,36],[92,92]],3:[[32,32],[64,64],[96,96]],4:[[36,36],[92,36],[36,92],[92,92]],5:[[34,34],[94,34],[64,64],[34,94],[94,94]],6:[[36,30],[92,30],[36,64],[92,64],[36,98],[92,98]]}[v];
+  P.forEach(([a,b])=>{const r=v===1?16:11;const gr=x.createRadialGradient(a-2,b-2,1,a,b,r);gr.addColorStop(0,v===1?'#0A2A7A':'#2A2A2E');gr.addColorStop(1,v===1?'#003399':'#0B0B10');x.beginPath();x.arc(a,b,r,0,7);x.fillStyle=gr;x.fill()});return c}
+let lastAspectSign=0;
+function camHome(){const a=camera.aspect;const d=Math.max(34,32/a);return V(0,.8,.6).normalize().multiplyScalar(d)}
+function resize(){const st=$('#stage'),w=st.clientWidth||innerWidth,h=st.clientHeight||innerHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();
+  const sg=Math.sign(camera.aspect-1);if(sg!==lastAspectSign){lastAspectSign=sg;camera.position.copy(camHome());controls.target.set(0,0,0)}}
+
+/* ---------------- Texturas que mudam com a língua ---------------- */
+function drawTile(i){const o=tileObjs[i],x=o.ctx,b=BOARD[i],L=S.lang==='pt';
+  x.clearRect(0,0,512,512);x.fillStyle='#F5EDDA';x.fillRect(0,0,512,512);
+  let band='#003399',nm,sub='';
+  if(b.t==='c'){const c=CM[b.code];band=REG[c.reg][0];nm=L?c.pt:c.en;sub=L?c.capPT:c.capEN}
+  else if(b.t==='i'){nm=L?INST[b.id][1]:INST[b.id][2];sub=L?'Instituição da UE':'EU institution'}
+  else{nm=L?SPECIAL[b.id][1]:SPECIAL[b.id][2];band='#B8901F'}
+  x.fillStyle=band;x.fillRect(0,0,512,64);x.fillStyle='rgba(255,255,255,.22)';x.fillRect(0,58,512,6);
+  x.textAlign='center';x.textBaseline='middle';
+  if(b.t==='c'){const R=REG[CM[b.code].reg];x.fillStyle='rgba(255,255,255,.95)';x.font=`700 26px ${FB}`;x.fillText((L?R[1]:R[2]).toUpperCase().split('').join(String.fromCharCode(8202)),256,33)}
+  else if(b.t==='i'){for(let k=0;k<5;k++)star2D(x,176+k*40,32,12,5,'#FFCC00')}
+  else{for(let k=0;k<3;k++)star2D(x,216+k*40,32,12,5,'#FFF3C4')}
+  x.strokeStyle='#003399';x.lineWidth=3;x.beginPath();x.moveTo(24,392);x.lineTo(488,392);x.stroke();
+  if(b.t==='c'){drawFlag(x,b.code,26,412,96,64);x.textAlign='left';x.fillStyle='#0B1B3F';fit(x,nm,350,50,'700');x.fillText(nm,140,438);x.font=`400 26px ${FB}`;x.fillStyle='#4A5677';x.fillText(sub,142,484)}
+  else{x.fillStyle='#0B1B3F';wrap(x,nm,256,sub?436:452,470,44,'700');if(sub){x.font=`400 24px ${FB}`;x.fillStyle='#4A5677';x.fillText(sub,256,488)}}
+  x.strokeStyle='rgba(11,27,63,.55)';x.lineWidth=5;x.strokeRect(3,3,506,506);x.strokeStyle='rgba(184,144,31,.6)';x.lineWidth=2;x.strokeRect(12,12,488,488);
+  grain(x,512,512,10);o.tex.needsUpdate=true}
+function drawLogo(){const x=title.ctx;x.clearRect(0,0,1024,256);x.textAlign='center';x.textBaseline='middle';x.fillStyle='#FFCC00';fit(x,t('title'),960,104,'700');x.fillText(t('title'),512,100);
+  x.font=`700 34px ${FB}`;x.fillStyle='rgba(255,236,170,.9)';x.fillText(t('sub').toUpperCase(),512,200);title.tex.needsUpdate=true}
+function drawCards(){THL.forEach(([k,c,pt,en])=>{const L=S.lang==='pt',nm=L?pt:en;
+  let x=backMats[k].ctx;x.fillStyle='#003399';x.fillRect(0,0,256,360);x.fillStyle=c;x.fillRect(0,286,256,74);x.strokeStyle='#FFCC00';x.lineWidth=5;rr(x,14,14,228,332,16);x.stroke();
+  for(let i=0;i<12;i++){const a=i*Math.PI/6;star2D(x,128+Math.sin(a)*62,140-Math.cos(a)*62,11,4.5,'#FFCC00')}
+  x.fillStyle='#FFCC00';x.textAlign='center';x.textBaseline='middle';x.font=`700 70px ${FD}`;x.fillText('?',128,144);x.fillStyle='#fff';fit(x,nm,196,36,'700');x.fillText(nm,128,322);grain(x,256,360,8);backMats[k].mat.map.needsUpdate=true;
+  x=frontMats[k].ctx;x.textAlign='center';x.textBaseline='middle';x.fillStyle='#FBF6EA';x.fillRect(0,0,256,360);x.strokeStyle=c;x.lineWidth=12;rr(x,12,12,232,336,18);x.stroke();
+  x.beginPath();x.arc(128,150,66,0,7);x.fillStyle=c;x.fill();x.fillStyle='#fff';x.font=`700 96px ${FD}`;x.fillText('!',128,154);x.fillStyle='#0B1B3F';fit(x,nm,196,38,'700');x.fillText(nm,128,268);grain(x,256,360,8);frontMats[k].mat.map.needsUpdate=true})}
+function redrawAll(){BOARD.forEach((_,i)=>drawTile(i));drawLogo();drawCards()}
+
+/* ---------------- Avatares ---------------- */
+function makeAvatar(hex){
+  const g=new THREE.Group(),mat=new THREE.MeshPhysicalMaterial({color:col(hex),roughness:.28,metalness:.05,clearcoat:1,clearcoatRoughness:.08});
+  const body=new THREE.Group();body.position.y=.95;g.add(body);
+  const st=new THREE.Mesh(bigStarGeo,mat);st.castShadow=true;body.add(st);
+  const white=std('#FFFFFF',.25),black=std('#0B1B3F',.2);
+  [-.13,.13].forEach(ex=>{const e=new THREE.Mesh(new THREE.SphereGeometry(.1,16,12),white);e.position.set(ex,.06,.17);e.scale.z=.6;body.add(e);const p=new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),black);p.position.set(ex,.05,.23);body.add(p)});
+  const smile=new THREE.Mesh(new THREE.TorusGeometry(.08,.02,6,14,Math.PI),black);smile.rotation.z=Math.PI;smile.position.set(0,-.08,.21);body.add(smile);
+  const dark=MT.goldTrim;
+  const legs=[-.14,.14].map(lx=>{const p=new THREE.Group();p.position.set(lx,.56,0);const l=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.42,8),dark);l.position.y=-.21;l.castShadow=true;p.add(l);const f=new THREE.Mesh(new THREE.SphereGeometry(.09,14,8),new THREE.MeshPhysicalMaterial({color:col(hex),roughness:.3,clearcoat:1}));f.scale.set(1,.55,1.5);f.position.set(0,-.44,.05);f.castShadow=true;p.add(f);g.add(p);return p});
+  g.scale.setScalar(.66);g.userData={legs,body,walk:false,ph:Math.random()*6};scene.add(g);return g}
+const OFF=[[-.48,.32],[.48,.32],[-.48,.74],[.48,.74]];
+const avPos=(pi,ti)=>local(ti,OFF[pi][0],OFF[pi][1],.06);
+async function hop(pi,from,to,dur,height){const av=G.players[pi].av,a=avPos(pi,from),b=avPos(pi,to);
+  av.userData.walk=true;av.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);const dv=V(b.x-a.x,0,b.z-a.z);if(dv.lengthSq()>1e-4)av.userData.dir=dv.normalize();sfx.step();
+  await tween(dur||(S.cine?.38:.3),e=>{av.position.lerpVectors(a,b,e);av.position.y=a.y+Math.sin(Math.PI*e)*(height||.6);const s=Math.sin(e*Math.PI*2)*.75;av.userData.legs[0].rotation.x=s;av.userData.legs[1].rotation.x=-s},E.lin);
+  av.userData.legs.forEach(l=>l.rotation.x=0);av.userData.walk=false}
+
+/* ---------------- Efeitos ---------------- */
+let cGeo;
+function burst(pos,colors,n){cGeo=cGeo||new THREE.PlaneGeometry(.14,.09);for(let i=0;i<(n||46);i++){const m=new THREE.Mesh(cGeo,new THREE.MeshStandardMaterial({color:col(colors[i%colors.length]),side:THREE.DoubleSide,metalness:.6,roughness:.3}));m.position.copy(pos);
+  const a=Math.random()*Math.PI*2,sp=1.5+Math.random()*2.5;m.userData={v:V(Math.cos(a)*sp,4+Math.random()*4,Math.sin(a)*sp),r:V(Math.random()*8,Math.random()*8,Math.random()*8),life:1.8};scene.add(m);fxs.push(m)}}
+function updFx(dt){for(let i=fxs.length-1;i>=0;i--){const m=fxs[i],u=m.userData;u.life-=dt;u.v.y-=9.8*dt;m.position.addScaledVector(u.v,dt);m.rotation.x+=u.r.x*dt;m.rotation.y+=u.r.y*dt;if(u.life<=0||m.position.y<-1){scene.remove(m);m.material.dispose();fxs.splice(i,1)}}}
+function animWorld(dt,T){flags.forEach(f=>{const p=f.m.geometry.attributes.position,b=f.base;for(let i=0;i<p.count;i++){const x0=b[i*3],y0=b[i*3+1],k=x0/f.w;p.setZ(i,(Math.sin(x0*f.f-T*3.2+f.ph)+Math.sin(y0*f.f*.7+T*2.1)*.3)*f.a*k)}p.needsUpdate=true;f.m.geometry.computeVertexNormals()});
+  movers.forEach(m=>{if(m.t==='rz')m.o.rotation.z+=m.v*dt;else if(m.t==='slide')m.o.position.x=m.x0+Math.sin(T*m.v)*m.amp;else if(m.t==='bob'){m.o.position.y=m.y0+Math.sin(T*2)*.06;m.o.rotation.y+=dt*1.2}})}
+const slotPos=(ti,k)=>local(ti,k?.88:-.88,-.9,.32);
+async function animStarIn(pi,ti,k){const p=G.players[pi],m=new THREE.Mesh(smallStarGeo,new THREE.MeshPhysicalMaterial({color:col(p.color),roughness:.25,metalness:.2,clearcoat:1,emissive:col(p.color),emissiveIntensity:.12}));m.castShadow=true;
+  const a=p.av.position.clone().add(V(0,1.2,0)),b=slotPos(ti,k);m.position.copy(a);m.scale.setScalar(.01);scene.add(m);G.tiles[ti].meshes[k]=m;sfx.star();
+  await tween(.65,e=>{m.position.lerpVectors(a,b,e);m.position.y+=Math.sin(Math.PI*e)*2;m.scale.setScalar(.01+e*1.1);m.rotation.y=e*10},E.out)}
+async function animSteal(ti,k){const m=G.tiles[ti].meshes[k];if(!m)return;sfx.steal();const p0=m.position.clone();burst(p0,['#ffffff','#BBBBBB'],18);
+  await tween(.45,e=>{m.position.y=p0.y+e*2;m.scale.setScalar(Math.max(.01,1.1*(1-e)));m.rotation.y+=.4},E.io);scene.remove(m);G.tiles[ti].meshes[k]=null}
+async function lockAnim(ti,pi){const o=tileObjs[ti],p=G.players[pi],gold=MT.gold;
+  const d=new THREE.Group(),L=TS+.06;[[0,-L/2,L,.08],[0,L/2,L,.08]].forEach(([x,z,w,dd])=>bx(d,w,.08,dd,gold,x,.06,z));[[-L/2,0],[L/2,0]].forEach(([x,z])=>bx(d,.08,.08,L,gold,x,.06,z));
+  cy(d,.025,.03,1.2,MT.chrome,1.0,.06,1.0,8);const fl=new THREE.Mesh(new THREE.PlaneGeometry(.5,.32),new THREE.MeshPhysicalMaterial({color:col(p.color),side:THREE.DoubleSide,roughness:.5,clearcoat:.5}));fl.geometry.translate(.25,0,0);fl.position.set(1.0,1.1,1.0);fl.castShadow=true;d.add(fl);d.userData.flag=fl;
+  d.scale.setScalar(.01);o.g.add(d);G.tiles[ti].deco=d;sfx.lock();burst(V(o.x,1,o.z),[p.color,'#FFCC00','#ffffff']);
+  await tween(.55,e=>d.scale.setScalar(Math.max(.01,e)),E.back)}
+
+/* ---------------- Estado do jogo ---------------- */
+const G={players:[],cur:0,tiles:[],used:new Set(),level:'b',mode:'stars',minutes:30,endAt:0,busy:false,on:false,over:false,awarded:{},follow:null,timeUpShown:false};
+let FLOW=0;const STALE={};
+const boardStars=pi=>G.tiles.reduce((s,t)=>s+t.slots.filter(x=>x===pi).length,0);
+const score=pi=>boardStars(pi)+(G.players[pi]?G.players[pi].bonus:0);
+const isTimed=m=>m==='time'||m==='clock';
+const solo=()=>G.players.length===1;
+const regionOf=ti=>BOARD[ti].t==='c'?CM[BOARD[ti].code].reg:null;
+function announce(m){const el=$('#sr');if(!el)return;el.textContent='';setTimeout(()=>{el.textContent=m},60)}
+const tileName=ti=>{const b=BOARD[ti];return b.t==='c'?(S.lang==='pt'?CM[b.code].pt:CM[b.code].en):''};
+const pname=pi=>G.players[pi].name;
+function clearBoard(){G.tiles.forEach((t,i)=>{t.meshes.forEach(m=>m&&scene.remove(m));if(t.deco)tileObjs[i].g.remove(t.deco)});G.players.forEach(p=>p.av&&scene.remove(p.av));if(winGroup){scene.remove(winGroup);winGroup=null}if(curCard){scene.remove(curCard);curCard=null}G.players=[];G.tiles=[]}
+function newGame(cfg){
+  FLOW++;clearBoard();loadBank();
+  Object.assign(G,{cur:0,used:new Set(),level:cfg.level,mode:cfg.mode,minutes:cfg.mode==='clock'?10:cfg.minutes,rolls:0,busy:false,on:true,over:false,awarded:{},follow:null,timeUpShown:false,endAt:Date.now()+(cfg.mode==='clock'?10:cfg.minutes)*60000});
+  G.tiles=BOARD.map(()=>({slots:[],locked:-1,meshes:[],deco:null}));
+  G.players=cfg.players.map((p,i)=>({name:p.name,color:PC[p.ci][0],pos:0,passes:0,bonus:0,regions:new Set(),stats:{geo:[0,0],hist:[0,0],cult:[0,0],eu:[0,0]},av:null}));
+  G.players.forEach((p,i)=>{p.av=makeAvatar(p.color);p.av.position.copy(avPos(i,0));p.av.position.y=6;const y0=avPos(i,0).y;tween(.6+i*.12,e=>p.av.position.y=y0+6*(1-e),E.out)});
+  controls.autoRotate=false;resetView();showGameUI(true);renderAll();
+}
+/* ---------------- Câmara cinematográfica ---------------- */
+const DIR={mode:null,pos:V(0,0,0),tgt:V(0,0,0),k:3,av:null,id:0};
+const cineOn=()=>S.cine&&G.on;
+function cineLock(){controls.enabled=false;controls.autoRotate=false;controls.minDistance=1.5}
+function cineOff(){DIR.mode=null;DIR.id++;controls.enabled=true;controls.minDistance=9}
+function cinePose(p,t,k){if(!cineOn())return;DIR.id++;DIR.mode='pose';DIR.pos.copy(p);DIR.tgt.copy(t);DIR.k=k||3;cineLock()}
+function cineChase(av){if(!cineOn())return;DIR.id++;DIR.mode='chase';DIR.av=av;DIR.k=4.5;cineLock()}
+function cineDice(){cinePose(V(0,4.6,12.2),V(0,.7,6),3.2)}
+function cineTile(ti){const o=tileObjs[ti],c=V(o.x,0,o.z),out=local(ti,0,1,0).sub(c).normalize(),side=V(-out.z,0,out.x),nar=Math.max(1,1.45/camera.aspect),d=(c.length()>14?2.5:3.4)*nar;
+  cinePose(c.clone().addScaledVector(out,d).addScaledVector(side,.9*nar).setY(2.5*Math.sqrt(nar)),c.clone().addScaledVector(out,.15).setY(.5),3.2)}
+const cardEnd=th=>{const p=piles[th].top;return V(p.x*.35,3.4,p.z+1.4)};
+function fitDist(r){const tv=Math.tan(camera.fov*Math.PI/360),th=tv*camera.aspect;return r/Math.min(tv*.62,th*.8)}
+function cineCards(th){const c=cardEnd(th),dir=V(0,.82,.57).normalize(),d=fitDist(2.1);cinePose(c.clone().addScaledVector(dir,d),c.clone().add(V(0,-.1,0)),3.2)}
+function cineFree(){if(!cineOn())return;cinePose(camHome(),V(0,0,0),2.6);const id=DIR.id;setTimeout(()=>{if(DIR.id===id)cineOff()},1400)}
+function cineUpdate(dt){if(!DIR.mode)return;if(!S.cine){cineOff();return}
+  if(DIR.mode==='chase'&&DIR.av){const p=DIR.av.position,d=DIR.av.userData.dir||V(1,0,0),out=V(p.x,0,p.z).normalize();DIR.pos.set(p.x-d.x*3.3+out.x*1.7,2.5,p.z-d.z*3.3+out.z*1.7);DIR.tgt.set(p.x+d.x*2.4,.55,p.z+d.z*2.4)}
+  const a=1-Math.exp(-dt*DIR.k);camera.position.lerp(DIR.pos,a);controls.target.lerp(DIR.tgt,a)}
+function resetView(){cineOff();const a=camera.position.clone(),b=camHome(),ta=controls.target.clone();G.follow=null;tween(.9,e=>{camera.position.lerpVectors(a,b,e);controls.target.lerpVectors(ta,V(0,0,0),e)},E.io)}
+
+/* ---------------- Fluxo de jogo ---------------- */
+async function takeTurn(){
+  if(G.busy||!G.on||G.over||!$('#overlay').hidden)return;
+  AU.resume();G.busy=true;const my=++FLOW;const ck=()=>{if(my!==FLOW)throw STALE};renderTurn();
+  try{
+    const pi=G.cur,p=G.players[pi];
+    cineDice();const v=await rollDice();ck();G.rolls++;announce(t('rolled',{n:p.name,k:v}));if(G.mode==='tour')renderTourHud();await wait(.25);ck();
+    G.follow=p.av;cineChase(p.av);
+    for(let k=0;k<v;k++){const from=p.pos,to=(from+1)%36;await hop(pi,from,to);ck();p.pos=to;if(to===0){p.passes++;sfx.star();toast(t('passCard',{n:p.name}));renderPlayers()}}
+    announce(t('moved',{n:p.name,k:v,c:sqName(p.pos)}));renderList();cineTile(p.pos);await wait(.9);ck();
+    const again=await resolveLanding(pi,ck);ck();
+    await endTurn(again,ck);
+  }catch(e){if(e!==STALE)console.error(e)}
+}
+async function resolveLanding(pi,ck){const p=G.players[pi],b=BOARD[p.pos];
+  if(b.t==='c'){await countryTurn(pi,p.pos,ck);return false}
+  if(b.t==='i'){await instTurn(pi,b.id,ck);return false}
+  if(b.id==='erasmus'){sfx.lock();toast(t('erasmus',{n:p.name}));burst(p.av.position.clone().add(V(0,1,0)),[p.color,'#FFCC00']);await wait(.7);return true}
+  if(b.id==='schengen'){toast(t('schengen'));announce(t('schengen'));const idx=await chooseTile(i=>i!==p.pos&&BOARD[i].t==='c'&&SCH_Y[BOARD[i].code]>0,'pickTravel');ck();if(idx<0)return false;
+    const from=p.pos;cineChase(p.av);await hop(pi,from,idx,1.1,4.5);cineTile(idx);await wait(.8);ck();ck();p.pos=idx;if(idx===0){p.passes++;toast(t('passCard',{n:p.name}));renderPlayers()}
+    return await resolveLanding(pi,ck)}
+  if(b.id==='flash'){await flashTurn(ck);return false}
+  return false}
+async function countryTurn(pi,ti,ck){const tile=G.tiles[ti],code=BOARD[ti].code;
+  if(tile.locked>=0){toast(tile.locked===pi?t('lockedSelf',{c:tileName(ti)}):t('lockedOther',{c:tileName(ti),o:pname(tile.locked)}));await wait(1);return}
+  const avail=THL.map(r=>r[0]).filter(th=>QB.some(q=>q.key===code&&q.theme===th&&!G.used.has(q.id)));const theme=avail.length?avail[Math.random()*avail.length|0]:THL[Math.random()*4|0][0];const q=pickQ(code,theme);
+  cineCards(q.theme);await wait(.6);ck();await flipCard(q.theme);ck();await wait(.35);ck();
+  const ok=await openQ({q,pi,place:{t:'c',code}});ck();
+  await discardCard();ck();
+  if(ok){cineTile(ti);await wait(.9);ck();await placeStar(pi,ti,ck);await wait(.7);ck()}}
+async function instTurn(pi,id,ck){const nm=S.lang==='pt'?INST[id][1]:INST[id][2];toast(t('inst',{i:nm}));
+  const q=pickQ('INST-'+id,null);cineCards('eu');await wait(.6);ck();await flipCard('eu');ck();await wait(.35);ck();
+  const ok=await openQ({q,pi,place:{t:'i',id}});ck();await discardCard();ck();
+  if(ok)await freeStar(pi,ck)}
+async function flashTurn(ck){if(solo()){toast(t('flashSolo'));announce(t('flashSolo'));
+    for(let k=1;k<=3;k++){const q=pickFlash();cineCards(q.theme);await wait(.6);ck();await flipCard(q.theme);ck();await wait(.35);ck();
+      const ok=await openQ({q,pi:0,step:k,place:{t:'f'}});ck();await discardCard();ck();if(!ok){toast(t('flashSoloLose',{k}));return}}
+    toast(t('flashSoloWin'));await freeStar(0,ck);return}
+  toast(t('flash'));const q=pickFlash();cineCards(q.theme);await wait(.6);ck();await flipCard(q.theme);ck();await wait(.35);ck();
+  const w=await openQ({q,pi:G.cur,flash:true,place:{t:'f'}});ck();await discardCard();ck();
+  if(w>=0){toast(t('flashWin',{n:pname(w)}));await freeStar(w,ck)}else toast(t('nobody'))}
+async function freeStar(pi,ck){const free=i=>BOARD[i].t==='c'&&G.tiles[i].locked<0&&(G.tiles[i].slots.length===0||G.tiles[i].slots[0]===pi);
+  if(!BOARD.some((_,i)=>free(i))){toast(t('noFreeOwn'));return}
+  const idx=await chooseTile(free,'pickStar',pi);ck();if(idx>=0){cineTile(idx);await wait(.9);ck();await placeStar(pi,idx,ck);await wait(.7);ck()}}
+async function placeStar(pi,ti,ck){const tile=G.tiles[ti],nm=tileName(ti);
+  if(tile.slots.length===0){tile.slots.push(pi);await animStarIn(pi,ti,0);toast(t('star',{n:pname(pi),c:nm}))}
+  else if(tile.slots[0]===pi){tile.slots.push(pi);await animStarIn(pi,ti,1);ck();tile.locked=pi;await lockAnim(ti,pi);toast(t('conquer',{n:pname(pi),c:nm}));checkRegion(pi,CM[BOARD[ti].code].reg)}
+  else{const o=tile.slots[0];await animSteal(ti,0);ck();tile.slots[0]=pi;await animStarIn(pi,ti,0);toast(t('steal',{n:pname(pi),o:pname(o),c:nm}))}
+  const rg=regionOf(ti);if(rg)G.players[pi].regions.add(rg);
+  renderPlayers();renderList();if(G.mode==='tour'){renderTourHud();if(G.players[pi].regions.size>=8)G.over=true}
+  if(G.mode==='stars'&&score(pi)>=12)G.over=true}
+function checkRegion(pi,reg){if(G.awarded[reg]!==undefined)return;const all=BOARD.every((b,i)=>b.t!=='c'||CM[b.code].reg!==reg||G.tiles[i].locked===pi);
+  if(all){G.awarded[reg]=pi;G.players[pi].bonus+=2;sfx.win();toast(t('region',{n:pname(pi),r:S.lang==='pt'?REG[reg][1]:REG[reg][2]}))}}
+async function endTurn(again,ck){
+  if(isTimed(G.mode)&&Date.now()>=G.endAt)G.over=true;
+  if(G.over){await finish(ck);return}
+  if(!again)G.cur=(G.cur+1)%G.players.length;
+  G.busy=false;G.follow=null;cineFree();renderAll();renderList()}
+async function finish(ck){G.busy=true;G.follow=null;renderTurn();
+  const sc=G.players.map((p,i)=>({i,s:score(i)})).sort((a,b)=>b.s-a.s);const top=sc[0].s,winners=sc.filter(x=>x.s===top).map(x=>x.i);
+  G.result={sc,winners};sfx.win();await victory(winners.map(i=>G.players[i].color));ck();G.on=false;showGameUI(false);showScreen('end')}
+async function victory(colors){if(winGroup)scene.remove(winGroup);winGroup=new THREE.Group();scene.add(winGroup);
+  const gold=new THREE.MeshStandardMaterial({color:col('#FFCC00'),metalness:.5,roughness:.25,emissive:col('#FFB000'),emissiveIntensity:.35});
+  const ms=[];for(let i=0;i<12;i++){const m=new THREE.Mesh(bigStarGeo,gold);m.scale.setScalar(.6);const a=i*Math.PI/6;m.userData={from:V((Math.random()-.5)*18,.5,(Math.random()-.5)*18),to:V(Math.sin(a)*3.4,5.5-Math.cos(a)*3.4,0)};m.position.copy(m.userData.from);winGroup.add(m);ms.push(m)}
+  G.follow=null;resetView();burst(V(0,3,0),[...colors,'#FFCC00','#ffffff'],90);
+  await tween(1.6,e=>ms.forEach((m,i)=>{const k=Math.min(1,Math.max(0,e*1.4-i*.03));m.position.lerpVectors(m.userData.from,m.userData.to,E.out(k));m.rotation.y=k*6}),E.lin);
+  burst(V(0,5.5,0),[...colors,'#FFCC00'],70);await wait(1)}
+
+/* ---------------- Dado e cartas ---------------- */
+const DR={1:[0,0],2:[-Math.PI/2,0],3:[0,Math.PI/2],4:[0,-Math.PI/2],5:[Math.PI/2,0],6:[Math.PI,0]};
+async function rollDice(){const v=1+(Math.random()*6|0);sfx.dice();$('#tbDice').textContent='…';
+  const a={x:dice.rotation.x,y:dice.rotation.y,z:dice.rotation.z},tg=DR[v],b={x:tg[0]+Math.PI*2*(2+(Math.random()*2|0)),y:Math.PI*2*(1+Math.random()),z:tg[1]+Math.PI*2*2};
+  await tween(1.05,e=>{dice.rotation.x=a.x+(b.x-a.x)*E.out(e);dice.rotation.y=a.y+(b.y-a.y)*E.out(e);dice.rotation.z=a.z+(b.z-a.z)*E.out(e);dice.position.y=.5+(e<.6?Math.sin(e/.6*Math.PI)*3:Math.sin((e-.6)/.4*Math.PI)*.55)},E.lin);
+  dice.rotation.set(tg[0],b.y%(Math.PI*2),tg[1]);dice.position.y=.5;$('#tbDice').textContent=v;return v}
+async function flipCard(theme){const pile=piles[theme];const m=new THREE.Mesh(cardGeo,[sideMat,sideMat,backMats[theme].mat,frontMats[theme].mat,sideMat,sideMat]);m.castShadow=true;
+  m.position.copy(pile.top);scene.add(m);curCard=m;sfx.flip();const p0=m.position.clone(),p1=V(p0.x*.35,3.4,p0.z+1.4);
+  await tween(.65,e=>{m.position.lerpVectors(p0,p1,e);m.position.y+=Math.sin(Math.PI*e)*.8;m.rotation.x=-Math.PI*e+.32*e;m.scale.setScalar(1+e*.6)},E.out)}
+async function discardCard(){const m=curCard;if(!m)return;curCard=null;const p0=m.position.clone();
+  await tween(.35,e=>{m.scale.setScalar(Math.max(.01,1.6*(1-e)));m.position.y=p0.y+e*1.2;m.rotation.y=e*2.5},E.io);scene.remove(m)}
+
+/* ---------------- Perguntas ---------------- */
+function pickQ(key,theme,ex){const pool=QB.filter(q=>q.key===key&&q.id!==ex),tp=theme?pool.filter(q=>q.theme===theme):pool;
+  const gen=QB.filter(q=>q.key==='ALL'||!q.key.startsWith('INST'));const tiers=[tp.filter(q=>q.lvl===G.level&&!G.used.has(q.id)),tp.filter(q=>!G.used.has(q.id)),pool.filter(q=>!G.used.has(q.id)),tp.length?tp:pool,gen.filter(q=>!G.used.has(q.id)),gen,QB];
+  for(const tr of tiers)if(tr.length){const q=tr[Math.random()*tr.length|0];G.used.add(q.id);return q}}
+function pickFlash(){const pool=QB.filter(q=>!q.key.startsWith('INST')),gen=QB.filter(q=>q.key==='ALL');const tiers=[gen.filter(q=>q.lvl===G.level&&!G.used.has(q.id)),gen.filter(q=>!G.used.has(q.id)),pool.filter(q=>q.lvl===G.level&&!G.used.has(q.id)),pool.filter(q=>!G.used.has(q.id)),pool];
+  for(const tr of tiers)if(tr.length){const q=tr[Math.random()*tr.length|0];G.used.add(q.id);return q}}
+const Q={active:false};
+function openQ(o){Object.assign(Q,{active:true,q:o.q,pi:o.pi,step:o.step||0,flash:!!o.flash,place:o.place,perm:permFor(o.q),answered:false,sel:-1,correct:false,timedOut:false,winner:-1,out:new Set(),wrong:new Set(),answering:o.flash?(G.players.length===1?0:-1):o.pi,timing:S.timer,left:20});
+  $('#qmodal').hidden=false;AU.setMode('tense');renderQ();setTimeout(()=>{const b=document.querySelector('#qopts button:not(:disabled),#qbuzz button');b&&b.focus({preventScroll:true})},60);
+  return new Promise(r=>Q.resolve=r)}
+function renderQ(){if(!Q.active)return;const L=S.lang,d=Q.q[L],th=TH[Q.q.theme];
+  $('#qhead').style.background=th.col;$('#qtheme').textContent=L==='pt'?th.pt:th.en;
+  const img=$('#qflag'),pl=Q.place;
+  if(pl.t==='c'){img.hidden=false;img.src=flagURL(pl.code);$('#qplace').textContent=L==='pt'?CM[pl.code].pt:CM[pl.code].en}
+  else if(pl.t==='i'){img.hidden=true;$('#qplace').textContent=INST[pl.id][0]+' '+(L==='pt'?INST[pl.id][1]:INST[pl.id][2])}
+  else{img.hidden=true;$('#qplace').textContent='⚡ '+t('flashName')}
+  $('#qtext').textContent=d.q;
+  const who=Q.flash?(Q.answering>=0?t('answering',{n:esc(pname(Q.answering))}):t('whoBuzz')):t('forPlayer',{n:esc(pname(Q.pi))})+(Q.step?' · '+t('flashStep',{k:Q.step}):'');
+  const wc=Q.flash?(Q.answering>=0?G.players[Q.answering].color:'#FFCC00'):G.players[Q.pi].color;
+  $('#qwho').innerHTML=starSVG(wc,24)+'<span>'+who+'</span>';
+  const bz=$('#qbuzz');bz.innerHTML='';bz.hidden=!(Q.flash&&!Q.answered&&Q.answering<0);
+  if(!bz.hidden)G.players.forEach((p,i)=>{if(Q.out.has(i))return;const b=document.createElement('button');b.type='button';b.style.background=p.color;b.innerHTML=starSVG('#fff',22)+'<span>'+esc(p.name)+': '+t('buzz')+'</span>';b.onclick=()=>{Q.answering=i;sfx.buzz();renderQ();const f=document.querySelector('#qopts button:not(:disabled)');f&&f.focus()};bz.appendChild(b)});
+  const os=$('#qopts');os.innerHTML='';
+  Q.perm.forEach((src,i)=>{const b=document.createElement('button');b.type='button';b.className='qopt';b.dataset.i=i;
+    if(Q.answered){if(src===0)b.classList.add('ok');else if(i===Q.sel)b.classList.add('bad');else b.classList.add('dim')}
+    if(Q.wrong.has(i))b.classList.add('bad');
+    b.disabled=Q.answered||Q.wrong.has(i)||(Q.flash&&Q.answering<0);
+    b.innerHTML=`<span class="k">${'ABCD'[i]}</span><span>${esc(d.o[src])}</span>`;os.appendChild(b)});
+  const fd=$('#qfeed');fd.hidden=!Q.answered;
+  if(Q.answered){fd.className='qfeed '+(Q.correct?'ok':'bad');
+    $('#qres').textContent=Q.flash?(Q.winner>=0?t('correct')+' '+t('flashWin',{n:pname(Q.winner)}):(Q.timedOut?t('timeout')+'. ':'')+t('nobody')):(Q.correct?t('correct'):Q.timedOut?t('timeout'):t('wrong'));
+    $('#qfact').textContent=d.f}
+  const pass=$('#qpass'),pp=G.players[Q.pi];pass.hidden=!(!Q.flash&&!Q.answered&&pp.passes>0);if(!pass.hidden)pass.textContent=t('usePass',{k:pp.passes});
+  const nx=$('#qnext');nx.hidden=!Q.answered;nx.textContent=t('cont');
+  $('#qtimerWrap').style.visibility=Q.timing||Q.answered&&S.timer?'visible':'hidden'}
+function qChoose(i){if(!Q.active||Q.answered||Q.wrong.has(i))return;if(Q.flash&&Q.answering<0)return;
+  const ok=Q.perm[i]===0,pi=Q.flash?Q.answering:Q.pi,st=G.players[pi].stats[Q.q.theme];st[1]++;if(ok)st[0]++;
+  if(ok){Q.answered=true;Q.sel=i;Q.correct=true;Q.winner=pi;sfx.ok();if(curCard)burst(curCard.position.clone(),[G.players[pi].color,'#FFCC00','#fff'],30)}
+  else if(Q.flash){Q.wrong.add(i);Q.out.add(pi);sfx.bad();Q.answering=G.players.length===1?0:-1;if(G.players.every((_,k)=>Q.out.has(k))||Q.wrong.size>=3){Q.answered=true;Q.correct=false;Q.winner=-1}}
+  else{Q.answered=true;Q.sel=i;Q.correct=false;sfx.bad()}
+  if(Q.answered)Q.timing=false;renderQ();if(Q.answered)$('#qnext').focus()}
+function qTimeout(){if(!Q.active||Q.answered)return;Q.answered=true;Q.correct=false;Q.timedOut=true;Q.winner=-1;Q.timing=false;if(!Q.flash){G.players[Q.pi].stats[Q.q.theme][1]++}sfx.bad();renderQ();$('#qnext').focus()}
+function qNext(){if(!Q.active)return;Q.active=false;$('#qmodal').hidden=true;AU.setMode('calm');const r=Q.resolve;Q.resolve=null;r&&r(Q.flash?Q.winner:Q.correct)}
+$('#qopts').addEventListener('click',e=>{const b=e.target.closest('.qopt');if(b)qChoose(+b.dataset.i)});
+$('#qnext').addEventListener('click',qNext);
+$('#qpass').addEventListener('click',()=>{if(!Q.active||Q.answered||Q.flash)return;const p=G.players[Q.pi];if(p.passes<1)return;p.passes--;
+  const key=Q.q.key,nq=pickQ(key,Q.q.theme,Q.q.id)||Q.q;Q.q=nq;Q.perm=permFor(nq);Q.left=20;sfx.flip();renderQ();renderPlayers()});
+
+/* ---------------- Escolher casa no tabuleiro ---------------- */
+let picking=null;const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+function chooseTile(filter,msgKey,pi){return new Promise(res=>{const ok=BOARD.map((_,i)=>filter(i));if(!ok.some(Boolean)){res(-1);return}
+  picking={ok,res,msgKey};G.follow=null;cineFree();tileObjs.forEach((o,i)=>o.top.material.color.set(ok[i]?0xffffff:0x8a8a8a));renderPick();renderTurn();renderList();announce(t(msgKey)+(S.lang==='pt'?' ':' ')+t('lvPick'));if(!$('#listview').hidden){const b=document.querySelector('#lvList .lvpick');b&&b.focus()}})}
+function pickAt(e){const r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mouse,camera);
+  const h=ray.intersectObjects(tops)[0];if(!h)return;pickResolve(h.object.userData.i)}
+function pickResolve(i){if(!picking||!picking.ok[i])return;const p=picking;picking=null;tileObjs.forEach(o=>{o.top.material.color.set(0xffffff);o.top.material.emissiveIntensity=0});renderPick();renderList();sfx.click();p.res(i)}
+function renderPick(){const el=$('#pickmsg');el.hidden=!picking||!$('#listview').hidden;if(picking)el.textContent=t(picking.msgKey)}
+
+/* ---------------- Interface ---------------- */
+const ICON={note:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',spk:'<path d="M11 5L6 9H3v6h3l5 4V5z"/>',waves:'<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>',x:'<path d="M3 3l18 18"/>',mute:'<path d="M22 9l-6 6M16 9l6 6"/>'};
+const svgI=s=>`<svg viewBox="0 0 24 24" aria-hidden="true">${s}</svg>`;
+function renderHUD(){$('#brandName').textContent=t('title');
+  const bl=$('#bLang');bl.textContent=S.lang==='pt'?'EN':'PT';bl.setAttribute('aria-label',t('lang'));bl.title=t('lang');
+  const bm=$('#bMusic');bm.innerHTML=svgI(ICON.note+(S.music?'':ICON.x));bm.setAttribute('aria-pressed',S.music);bm.setAttribute('aria-label',t('music'));bm.title=t('music');
+  const bs=$('#bSfx');bs.innerHTML=svgI(ICON.spk+(S.sfx?ICON.waves:ICON.mute));bs.setAttribute('aria-pressed',S.sfx);bs.setAttribute('aria-label',t('effects'));bs.title=t('effects');
+  $('#bView').setAttribute('aria-label',t('resetView'));$('#bView').title=t('resetView');
+  $('#bMenu').setAttribute('aria-label',t('settings'));$('#bMenu').title=t('settings');
+  $('#bList').setAttribute('aria-label',t('listT'));$('#bList').title=t('listT');renderList();
+  $('#hint').textContent=t('hint');$('#loading').textContent=t('loading');document.documentElement.lang=S.lang==='pt'?'pt-PT':'en'}
+function renderPlayers(){const el=$('#players');if(!G.on){el.hidden=true;return}el.hidden=false;
+  el.innerHTML=G.players.map((p,i)=>`<div class="pchip${i===G.cur?' cur':''}">${starSVG(p.color,30)}<div style="min-width:0"><div class="pn">${esc(p.name)}</div><div class="ps">${t('passes',{k:p.passes})}</div></div><div class="sc" aria-label="${G.mode==='tour'?esc(t('tourStop',{r:p.regions.size})):esc(t('scoreAria',{b:boardStars(i),x:p.bonus}))}">${G.mode==='tour'?`${p.regions.size}<small>/8</small>`:`${boardStars(i)}★${p.bonus?`<small>+${p.bonus}</small>`:''}${G.mode==='stars'?'<small>/12</small>':''}`}</div></div>`).join('')}
+function renderTourHud(){if(G.mode!=='tour'||!G.on)return;const ce=$('#clock');ce.textContent=t('tourHud',{r:G.players[0].regions.size,k:G.rolls});ce.classList.remove('low')}
+function renderTurn(){const tb=$('#turnbar');if(!G.on){tb.hidden=true;return}tb.hidden=false;const p=G.players[G.cur];
+  $('#tbStar').innerHTML=starSVG(p.color,28);$('#tbText').textContent=t('turn',{n:p.name});
+  const b=$('#bRoll');b.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="#fff" stroke="#1B2340" stroke-width="2"/><circle cx="8" cy="8" r="1.7" fill="#1B2340"/><circle cx="12" cy="12" r="1.7" fill="#1B2340"/><circle cx="16" cy="16" r="1.7" fill="#1B2340"/></svg>${t('roll')}`;
+  b.disabled=G.busy||!!picking;b.style.background=G.busy?'':p.color;b.style.color=G.busy?'':'#fff'}
+function renderAll(){renderHUD();renderPlayers();renderTurn();renderPick()}
+function showGameUI(on){$('#hint').hidden=!on;$('#clock').hidden=!(on&&(isTimed(G.mode)||G.mode==='tour'));if(on)renderTourHud();if(!on){$('#listview').hidden=true;$('#bList').setAttribute('aria-pressed','false');$('#players').hidden=true;$('#turnbar').hidden=true;$('#pickmsg').hidden=true}}
+function toast(msg){const el=$('#toasts'),d=document.createElement('div');d.className='toast';d.textContent=msg;el.appendChild(d);while(el.children.length>3)el.firstChild.remove();setTimeout(()=>d.remove(),3200)}
+
+/* ---------------- Tabuleiro em lista (acessível) ---------------- */
+function sqName(i){const b=BOARD[i],L=S.lang==='pt';return b.t==='c'?(L?CM[b.code].pt:CM[b.code].en):b.t==='i'?(L?INST[b.id][1]:INST[b.id][2]):(L?SPECIAL[b.id][1]:SPECIAL[b.id][2])}
+function renderList(){const lv=$('#listview');if(!lv||lv.hidden)return;const L=S.lang==='pt';
+  $('#lvTitle').textContent=t('listT');$('#lvClose').setAttribute('aria-label',t('closeList'));$('#lvSum').textContent=picking?t(picking.msgKey):t('lvSum',{n:36});
+  $('#lvList').innerHTML=BOARD.map((b,i)=>{let sub=[],dot='#B8901F';
+    if(b.t==='c'){const c=CM[b.code],tl=G.tiles[i];dot=REG[c.reg][0];sub.push(L?REG[c.reg][1]:REG[c.reg][2]);
+      if(tl){if(tl.locked>=0)sub.push(t('stLock',{n:pname(tl.locked)}));else if(tl.slots.length)sub.push(t('stOcc',{n:pname(tl.slots[0])}));else sub.push(t('stFree'))}
+      if(picking&&picking.msgKey==='pickTravel'&&!SCH_Y[b.code])sub.push(t('outSch'))}
+    else if(b.t==='i'){dot='#003399';sub.push(L?'Instituição da UE':'EU institution')}
+    const here=G.on?G.players.filter(p=>p.pos===i).map(p=>p.name):[];if(here.length)sub.push(t('stHere',{n:here.join(', ')}));
+    const can=picking&&picking.ok[i];
+    return `<li class="lvrow${here.length?' here':''}${picking&&!can?' off':''}"><span class="lvn">${i+1}</span><span class="lvdot" style="background:${dot}" aria-hidden="true"></span><div class="lvt"><b>${esc(sqName(i))}</b><span>${esc(sub.join(' · '))}</span></div>${can?`<button class="btn lvpick" type="button" data-pick="${i}">${t('choose')}<span class="sr-only"> ${esc(sqName(i))}</span></button>`:''}</li>`}).join('')}
+function toggleList(force){const lv=$('#listview'),open=force!==undefined?force:lv.hidden;lv.hidden=!open;$('#bList').setAttribute('aria-pressed',String(open));renderPick();if(open){renderList();const b=document.querySelector('#lvList .lvpick')||$('#lvClose');b&&b.focus({preventScroll:true})}else $('#bList').focus({preventScroll:true})}
+$('#lvList').addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(b)pickResolve(+b.dataset.pick)});
+$('#lvClose').addEventListener('click',()=>toggleList(false));
+$('#bList').addEventListener('click',()=>{sfx.click();toggleList()});
+
+/* ---------------- Ecrãs ---------------- */
+const SU={n:2,names:['','','',''],colors:[0,1,2,3],level:store.get('level','b'),mode:'stars',minutes:30};
+let scr=null,scrBack='start';
+function seg(act,items,cur){return `<div class="seg" role="group">${items.map(([v,l])=>`<button type="button" data-act="${act}" data-v="${v}" class="${String(cur)===String(v)?'on':''}" aria-pressed="${String(cur)===String(v)}">${l}</button>`).join('')}</div>`}
+function togBtn(key,label){return `<button type="button" class="tog" role="switch" aria-checked="${S[key]}" data-act="tog" data-v="${key}"><span>${label}</span><span class="sw"></span></button>`}
+function showScreen(name){scr=name;const P=$('#panel'),L=S.lang;let h='';
+  if(name==='start'){h=`<div class="logo">${euLogoSVG(120)}</div><h1>${t('title')}</h1><p class="lead">${t('tagline')}</p>
+    <div class="row">${seg('lang',[['pt','Português'],['en','English']],S.lang)}</div>
+    <div class="row"><button class="btn big" type="button" data-act="setup">${t('play')}</button></div>
+    <div class="row"><button class="btn ghost" type="button" data-act="rules">${t('rules')}</button><button class="btn ghost" type="button" data-act="settings">${t('settings')}</button></div>`}
+  else if(name==='setup'){const rows=[];for(let i=0;i<SU.n;i++){const c=PC[SU.colors[i]][0];rows.push(`<div class="prow"><button type="button" class="chip" data-act="color" data-v="${i}" aria-label="${t('changeColor')}: ${t('colorNames')[SU.colors[i]]}">${starSVG(c,34)}</button><input id="pname${i}" data-i="${i}" maxlength="14" autocomplete="off" value="${esc(SU.names[i])}" placeholder="${t('player')} ${i+1}" aria-label="${t('player')} ${i+1}"></div>`)}
+    h=`<h2>${t('newGame')}</h2>
+    <div class="field"><span class="lbl">${t('players')}</span>${seg('np',[[1,'1'],[2,'2'],[3,'3'],[4,'4']],SU.n)}</div>
+    <div class="plist">${rows.join('')}</div>
+    <div class="field"><span class="lbl">${t('level')}</span>${seg('lvl',[['b',t('beginner')],['a',t('advanced')]],SU.level)}</div>
+    <div class="field"><span class="lbl">${t('mode')}</span>${SU.n===1?seg('mode',[['tour',t('modeTour')],['clock',t('modeClock')]],SU.mode):seg('mode',[['stars',t('modeStars')],['time',t('modeTime')]],SU.mode)}${SU.mode==='time'?seg('min',[[15,t('minutes',{m:15})],[30,t('minutes',{m:30})],[45,t('minutes',{m:45})]],SU.minutes):''}<p class="goal">${t({stars:'goalStars',time:'goalTime',tour:'goalTour',clock:'goalClock'}[SU.mode])}</p></div>
+    ${togBtn('timer',t('answerTimer'))}
+    <div class="row end"><button class="btn ghost" type="button" data-act="start">${t('back')}</button><button class="btn big" type="button" data-act="go">${t('begin')}</button></div>`}
+  else if(name==='rules'){h=`<h2>${t('rules')}</h2><ol class="rules">${t('rulesList5').map(r=>`<li>${r}</li>`).join('')}</ol>
+    <div class="field"><span class="lbl">${t('regions')}</span><p class="regnote">${t('regionsNote')}</p><div class="regs">${Object.values(REG).map(r=>`<span style="background:${r[0]}">${L==='pt'?r[1]:r[2]}</span>`).join('')}</div></div>
+    <div class="row"><button class="btn" type="button" data-act="back">${t('back')}</button></div>`}
+  else if(name==='settings'){h=`<h2>${t('settings')}</h2>
+    <div class="row">${seg('lang',[['pt','Português'],['en','English']],S.lang)}</div>
+    ${togBtn('music',t('music'))}${togBtn('sfx',t('effects'))}
+    <label class="volrow" for="vol"><span>${t('volume')}</span><input id="vol" type="range" min="0" max="1" step="0.05" value="${S.vol}"></label>
+    ${togBtn('cine',t('cine'))}${togBtn('reduced',t('reduced'))}${togBtn('timer',t('answerTimer'))}
+    <div class="field qsec"><span class="lbl">${t('questionsH')}</span><p class="qstat" id="qstat">${esc(bankStatus())}</p>
+      ${seg('impmode',[['add',t('modeAdd')],['replace',t('modeRep')]],impMode)}
+      <div class="row start"><button class="btn" type="button" data-act="import">${t('importBtn')}</button><button class="btn ghost" type="button" data-act="tpl">${t('copyTpl')}</button>${impData()?`<button class="btn ghost" type="button" data-act="resetq">${t('resetQ')}</button>`:''}</div>
+      <input type="file" id="qfile" accept=".js,.json,.csv,.txt,text/csv,application/json,text/javascript" hidden>
+      ${impMsg?`<p class="qmsg${impBad?' bad':''}" role="status">${esc(impMsg)}</p>`:''}
+      <textarea id="tplbox" readonly hidden rows="4" aria-label="CSV"></textarea>
+      <p class="qhelp">${t('qHelp')}</p></div>
+    <div class="row">${G.on?`<button class="btn ghost" type="button" data-act="rules">${t('rules')}</button><button class="btn ghost" type="button" data-act="exit">${t('exit')}</button>`:''}<button class="btn blue" type="button" data-act="close">${t('close')}</button></div>`}
+  else if(name==='confirm'){h=`<h2>${t('exitQ')}</h2><div class="row"><button class="btn ghost" type="button" data-act="settings">${t('cancel')}</button><button class="btn" type="button" data-act="exitYes" style="background:var(--bad);color:#fff">${t('yes')}</button></div>`}
+  else if(name==='end'){const R=G.result,ws=R.winners.map(i=>pname(i));
+    const p0=G.players[0],acc=G.players.map(p=>{const s=Object.values(p.stats);const a=s.reduce((x,y)=>x+y[0],0),n=s.reduce((x,y)=>x+y[1],0);return n?Math.round(a/n*100):0});
+    const title=G.mode==='tour'?(p0.regions.size>=8?t('tourDone',{k:G.rolls}):t('tourStop',{r:p0.regions.size})):G.mode==='clock'?t('clockDone',{s:score(0)}):ws.length>1?t('tie',{n:ws.join(' · ')}):(G.mode==='stars'&&score(R.winners[0])>=12?t('winner',{n:ws[0]}):t('winnerTime',{n:ws[0]}));
+    h=`<div class="logo">${starSVG(G.players[R.winners[0]].color,90)}</div><h2 class="wintitle">${esc(title)}</h2>
+    <div class="field"><span class="lbl">${t('ranking')}</span><ol class="rank">${R.sc.map(x=>`<li class="${R.winners.includes(x.i)?'w':''}">${starSVG(G.players[x.i].color,28)}<span>${esc(pname(x.i))}</span><span class="sc">${G.mode==='tour'?`${G.players[x.i].regions.size}/8 <small style="font-size:.6em">${t('regionsW')} · ${G.rolls} ${t('rollsW')}</small>`:`${x.s} <small style="font-size:.6em">${t('starsWord')} (${boardStars(x.i)}★${G.players[x.i].bonus?' + '+G.players[x.i].bonus:''}) · ${t('accuracy')} ${acc[x.i]}%</small>`}</span></li>`).join('')}</ol></div>
+    <div class="field"><span class="lbl">${t('stats')}</span><div class="tablewrap"><table><thead><tr><th></th>${THL.map(th=>`<th><span class="th-dot" style="background:${th[1]}"></span>${L==='pt'?th[2]:th[3]}</th>`).join('')}</tr></thead><tbody>${G.players.map(p=>`<tr><td>${esc(p.name)}</td>${THL.map(th=>`<td>${p.stats[th[0]][0]}/${p.stats[th[0]][1]}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+    <div class="row"><button class="btn ghost" type="button" data-act="menu">${t('menu')}</button><button class="btn big" type="button" data-act="again">${t('again')}</button></div>`}
+  P.innerHTML=h;$('#overlay').hidden=false;
+  const f=P.querySelector('.btn.big,.btn.blue,.btn');f&&setTimeout(()=>f.focus({preventScroll:true}),30)}
+function hideScreen(){$('#overlay').hidden=true;scr=null}
+function setLang(l){if(S.lang===l)return;S.lang=l;save();redrawAll();renderAll();if(scr)showScreen(scr);renderQ()}
+$('#overlay').addEventListener('change',e=>{if(e.target.id==='qfile'){handleQFile(e.target.files&&e.target.files[0]);e.target.value=''}});
+$('#overlay').addEventListener('input',e=>{if(e.target.id==='vol'){S.vol=+e.target.value;save();AU.resume();AU.apply()}else if(e.target.dataset.i!==undefined){SU.names[+e.target.dataset.i]=e.target.value}});
+$('#overlay').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,v=b.dataset.v;AU.resume();sfx.click();
+  switch(a){
+    case 'lang':setLang(v);break;
+    case 'setup':showScreen('setup');break;
+    case 'start':showScreen('start');break;
+    case 'rules':scrBack=scr;showScreen('rules');break;
+    case 'back':showScreen(scrBack||'start');break;
+    case 'settings':scrBack=G.on?'settings':'start';showScreen('settings');break;
+    case 'close':if(G.on)hideScreen();else showScreen('start');break;
+    case 'np':SU.n=+v;if(SU.n===1&&!['tour','clock'].includes(SU.mode))SU.mode='tour';if(SU.n>1&&!['stars','time'].includes(SU.mode))SU.mode='stars';showScreen('setup');break;
+    case 'color':{const i=+v,old=SU.colors[i],nw=(old+1)%4;const j=SU.colors.findIndex((c,k)=>k<SU.n&&k!==i&&c===nw);if(j>=0)SU.colors[j]=old;SU.colors[i]=nw;showScreen('setup');break}
+    case 'lvl':SU.level=v;store.set('level',v);showScreen('setup');break;
+    case 'mode':SU.mode=v;showScreen('setup');break;
+    case 'min':SU.minutes=+v;showScreen('setup');break;
+    case 'impmode':impMode=v;showScreen('settings');break;
+    case 'import':{const f=$('#qfile');f&&f.click();break}
+    case 'resetq':store.set('imp',null);loadBank();impMsg=t('resetDone');impBad=false;showScreen('settings');break;
+    case 'tpl':{const box=$('#tplbox');const fail=()=>{box.hidden=false;box.value=TPL_CSV;box.focus();box.select();impMsg=t('copyFail');impBad=true;const m=document.querySelector('.qmsg');if(m){m.textContent=impMsg;m.classList.add('bad')}};
+      try{navigator.clipboard.writeText(TPL_CSV).then(()=>{impMsg=t('copied');impBad=false;showScreen('settings')},fail)}catch(err){fail()}break}
+    case 'tog':S[v]=!S[v];save();if(v==='cine'&&!S.cine)cineOff();AU.apply();renderHUD();b.setAttribute('aria-checked',S[v]);break;
+    case 'go':{const players=[];for(let i=0;i<SU.n;i++)players.push({name:(SU.names[i]||'').trim()||t('colorNames')[SU.colors[i]]+' '+(i+1),ci:SU.colors[i]});
+      hideScreen();newGame({players,level:SU.level,mode:SU.mode,minutes:SU.minutes});break}
+    case 'exit':showScreen('confirm');break;
+    case 'exitYes':exitToMenu();break;
+    case 'again':{hideScreen();const players=G.players.map((p,i)=>({name:p.name,ci:PC.findIndex(c=>c[0]===p.color)}));newGame({players,level:G.level,mode:G.mode,minutes:G.minutes});break}
+    case 'menu':exitToMenu();break}});
+function exitToMenu(){FLOW++;cineOff();if(Q.active){Q.active=false;$('#qmodal').hidden=true;AU.setMode('calm')}if(picking){picking=null;tileObjs.forEach(o=>{o.top.material.color.set(0xffffff);o.top.material.emissiveIntensity=0})}
+  G.on=false;G.busy=false;clearBoard();showGameUI(false);renderAll();controls.autoRotate=true;showScreen('start')}
+
+$('#bLang').addEventListener('click',()=>{AU.resume();setLang(S.lang==='pt'?'en':'pt')});
+$('#bMusic').addEventListener('click',()=>{AU.resume();S.music=!S.music;save();AU.apply();renderHUD();if(scr==='settings')showScreen('settings')});
+$('#bSfx').addEventListener('click',()=>{AU.resume();S.sfx=!S.sfx;save();AU.apply();renderHUD();sfx.click();if(scr==='settings')showScreen('settings')});
+$('#bView').addEventListener('click',()=>{sfx.click();resetView()});
+$('#bMenu').addEventListener('click',()=>{AU.resume();sfx.click();if(scr==='settings'&&G.on){hideScreen();return}scrBack=G.on?'settings':'start';showScreen('settings')});
+$('#bRoll').addEventListener('click',()=>takeTurn());
+addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;
+  if(e.key==='Escape'&&!$('#listview').hidden){toggleList(false);return}
+  if((e.key==='l'||e.key==='L')&&!Q.active&&$('#overlay').hidden&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();toggleList();return}
+  if(Q.active&&$('#overlay').hidden){if(/^[1-4]$/.test(e.key)){qChoose(+e.key-1);e.preventDefault()}return}
+  if((e.code==='Space'||e.key===' ')&&G.on&&!G.busy&&!picking&&$('#overlay').hidden&&e.target.tagName!=='BUTTON'){e.preventDefault();takeTurn()}});
+addEventListener('pointerdown',()=>AU.resume(),{once:true});
+
+/* ---------------- Ciclo principal ---------------- */
+const lerpAng=(a,b,k)=>{let d=((b-a+Math.PI)%(Math.PI*2)+Math.PI*2)%(Math.PI*2)-Math.PI;return a+d*Math.min(1,k)};
+let clockTick=0;
+function loop(){requestAnimationFrame(loop);const dt=Math.min(.05,clock.getDelta()),T=clock.elapsedTime;
+  updTweens(dt);
+  cineUpdate(dt);
+  controls.update();
+  G.players.forEach(p=>{const a=p.av;if(!a||a.userData.walk)return;const tg=Math.atan2(camera.position.x-a.position.x,camera.position.z-a.position.z);a.rotation.y=lerpAng(a.rotation.y,tg,dt*4);a.userData.body.position.y=.95+Math.sin(T*3+a.userData.ph)*.05;a.userData.body.rotation.z=Math.sin(T*2+a.userData.ph)*.06});
+  G.tiles.forEach(tl=>{tl.meshes.forEach(m=>{if(m)m.rotation.y+=dt*1.6});if(tl.deco)tl.deco.userData.flag.rotation.y=Math.sin(T*3)*.35});
+  animWorld(dt,T);
+  updFx(dt);
+  if(picking){const k=.25+.25*Math.sin(T*6);tileObjs.forEach((o,i)=>{o.top.material.emissiveIntensity=picking.ok[i]?k:0})}
+  if(winGroup)winGroup.rotation.y+=dt*.6;
+  if(Q.active&&Q.timing&&$('#overlay').hidden){Q.left-=dt;const p=Math.max(0,Q.left/20);const bar=$('#qbar');bar.style.width=(p*100)+'%';bar.style.background=p<.3?'#E04848':p<.6?'#FFCC00':'#22A045';if(Q.left<=0)qTimeout()}
+  if(G.on&&isTimed(G.mode)&&(clockTick+=dt)>.25){clockTick=0;const rem=Math.max(0,G.endAt-Date.now()),m=Math.floor(rem/60000),s=Math.floor(rem/1000)%60;const ce=$('#clock');ce.textContent=`${m}:${String(s).padStart(2,'0')}`;ce.classList.toggle('low',rem<60000);if(rem===0&&!G.timeUpShown){G.timeUpShown=true;toast(t('gameTimeUp'))}}
+  renderer.render(scene,camera)}
+function assemble(){tileObjs.forEach((o,i)=>{o.g.position.y=7;o.g.scale.setScalar(.6);(async()=>{await wait(i*.035);await tween(.55,e=>{o.g.position.y=7*(1-e);o.g.scale.setScalar(.6+.4*e)},E.back)})()})}
+
+async function boot(){
+  renderHUD();
+  if(!window.THREE||!THREE.OrbitControls){$('#loading').textContent=t('nowebgl');return}
+  try{init3D()}catch(e){console.error(e);$('#loading').textContent=t('nowebgl');return}
+  try{await Promise.race([Promise.all([document.fonts.load('700 40px "Fraunces"'),document.fonts.load('600 40px "Fraunces"'),document.fonts.load('700 20px "Atkinson Hyperlegible"')]),new Promise(r=>setTimeout(r,2500))])}catch(e){}
+  loadBank();redrawAll();loop();assemble();
+  $('#loading').hidden=true;controls.autoRotate=true;showScreen('start');
+}
+boot();
+})();
+</script>
+
+</body></html>
