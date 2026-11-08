@@ -1,0 +1,11 @@
+WRO LAB — versão 0.7.0
+
+1. Extrai todos os ficheiros do ZIP para uma pasta. A pasta blockly-media (ícones do editor Blockly) tem de ficar ao lado de WRO-Lab.html.
+2. Abre WRO-Lab.html no Microsoft Edge, Chrome ou Firefox atualizado. O nível Smart Warehouse (Future Engineers 2027) está em WRO-Smart-Warehouse.html, também com duplo clique.
+3. Não é necessário instalar programas, iniciar um servidor ou ligar à Internet para jogar.
+
+O navegador precisa de WebGL/aceleração gráfica. Os links para os regulamentos oficiais precisam de Internet.
+O programa é guardado neste navegador quando o armazenamento local está disponível; a tentativa em curso não é guardada.
+
+Projeto educativo independente. Tapetes © World Robot Olympiad Association. Babylon.js e Blockly: Apache-2.0, licenças incluídas.
+Geometria, peças, manipulação e colisões são aproximações para aprendizagem. Não certifica resultados de competição.
