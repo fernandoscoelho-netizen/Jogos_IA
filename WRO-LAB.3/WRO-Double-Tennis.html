@@ -1,0 +1,2085 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101925">
+  <title>Double Tennis — WRO Lab</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%23101925'/%3E%3Ccircle cx='20' cy='20' r='9' fill='%23ffb35c'/%3E%3C/svg%3E">
+<style>:root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#e5eaf0;background:#101720;font-size:14px;--line:#2a3542;--muted:#8e9bac;--lime:#bbed71;--panel:#18222e}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;flex-direction:column}button,select,input,textarea{font:inherit;color:inherit}
+.bar{display:flex;align-items:center;gap:20px;padding:10px 20px;border-bottom:1px solid var(--line)}.bar h1{font-size:18px;margin:0;font-weight:700}.bar small{font-weight:400;color:var(--muted);margin-left:8px}
+.brand{text-decoration:none;font-weight:760;font-size:18px;color:#e5eaf0}.brand span{font-weight:350;color:#c3ccd6}.tag{margin-left:auto;font-size:12px;color:var(--muted)}
+.layout{flex:1;display:grid;grid-template-columns:290px minmax(420px,1fr) minmax(380px,540px);gap:12px;padding:12px;min-height:0}
+.side,.code{overflow:hidden;display:flex;flex-direction:column;gap:12px;min-width:0}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);margin:0;display:flex;align-items:baseline;gap:6px}h2 b{font-size:22px;color:#fff;margin-left:auto}
+label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);flex:1}.row{display:flex;gap:8px;align-items:flex-end}
+select,input,textarea{max-width:100%;background:#0f1721;border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.btn{background:#223142;border:1px solid var(--line);border-radius:7px;padding:7px 12px;cursor:pointer}.btn:hover{border-color:#40546a}.btn.primary{background:var(--lime);color:#14202b;font-weight:700;border-color:var(--lime)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.muted{color:var(--muted)}.small{font-size:12px}p{margin:0;line-height:1.45}
+.stage{display:flex;flex-direction:column;gap:8px;min-width:0}.stagebar{display:flex;align-items:center;gap:6px;font-size:16px}.spacer{flex:1}.state{margin-left:12px;font-size:12px;padding:2px 8px;border-radius:99px;background:#223142}
+.state.err{background:#5a2a2a}.state.ok{background:#27472f}
+.seg{display:flex}.seg button{background:#223142;border:1px solid var(--line);padding:5px 12px;cursor:pointer}.seg button:first-child{border-radius:6px 0 0 6px}.seg button:last-child{border-radius:0 6px 6px 0}.seg .on{background:var(--lime);color:#14202b;font-weight:700}
+.canvaswrap{position:relative;flex:1;min-height:420px;background:#111d29;border-radius:10px;overflow:hidden;border:1px solid var(--line)}canvas{width:100%;height:100%;display:block;outline:none}
+.loading{position:absolute;inset:0;display:grid;place-items:center;background:#111d29}.loading.hidden{display:none}
+.play{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}.play label{flex:0 0 auto}
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:12.5px}.items li{display:flex;gap:8px;justify-content:space-between}.items li span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}.items li.full span:last-child{color:var(--lime)}
+.row select{flex:1;min-width:0}.code textarea{width:100%;min-height:330px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.45;resize:vertical;tab-size:2;white-space:pre}
+.api{margin:6px 0 0;font-size:12px}.api dt{font-family:ui-monospace,Consolas,monospace;color:var(--lime);margin-top:6px}.api dd{margin:0;color:var(--muted)}
+.log{list-style:none;margin:0;padding:0;max-height:220px;overflow:auto;font-size:12.5px;display:flex;flex-direction:column;gap:3px}.log li{border-left:3px solid #3b4b5c;padding-left:8px}.log li.success{border-color:#7ccf72}.log li.warning{border-color:#e6b84c}.log li.error{border-color:#e86a5e}.log small{color:var(--muted)}
+code{background:#0f1721;padding:1px 5px;border-radius:4px}details summary{cursor:pointer;color:var(--muted)}
+@media(max-width:1100px){.layout{grid-template-columns:1fr}.canvaswrap{min-height:360px}}
+.check{flex-direction:row;align-items:center;gap:6px;flex:0 0 auto;font-size:12px}.check input{padding:0}
+
+dialog{background:var(--panel);color:#e5eaf0;border:1px solid var(--line);border-radius:14px;max-width:620px;width:calc(100% - 32px);padding:22px 24px;box-shadow:0 20px 60px #000a}dialog::backdrop{background:#000a}
+dialog h2{font-size:20px;text-transform:none;letter-spacing:0;color:var(--lime);margin-bottom:10px}dialog .lead{margin-bottom:12px}
+.steps{list-style:none;counter-reset:s;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;position:relative;padding-left:44px;display:flex;flex-direction:column;gap:2px;line-height:1.45}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--lime);color:#14202b;font-weight:800;display:grid;place-items:center}
+.steps span{color:#b9c4d0}.row.end{justify-content:flex-end;margin-bottom:8px}
+
+.seg.wide{width:100%}.seg.wide button{flex:1}
+#blocksHost{height:520px;border:1px solid var(--line);border-radius:8px;overflow:hidden;position:relative}#blocksPane{display:flex;flex-direction:column;gap:6px}
+#genCode{max-height:260px;overflow:auto;background:#0f1721;padding:8px;border-radius:6px;font-size:12px;white-space:pre-wrap;margin:6px 0 0}
+[hidden]{display:none!important}
+/* 0.7.0: rever a execução, dicas, acessibilidade */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.btn.file{cursor:pointer;display:inline-flex;align-items:center}
+.btn.file:focus-within{outline:2px solid #bbed71;outline-offset:2px}
+:where(button,select,input,textarea,summary,a,[tabindex]):focus-visible{outline:2px solid #bbed71;outline-offset:2px}
+#review h3{font-size:12px;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.06em;color:#9fb0c2}
+.replay{align-items:center;flex-wrap:nowrap}.replay input[type=range]{flex:1;min-width:80px;accent-color:#bbed71}
+.hints{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.hints li{border-left:3px solid #4aa3ff;padding:4px 8px;background:#15212d;border-radius:4px;font-size:12px;line-height:1.4}
+.hints li.erro{border-color:#ff6b6b}.hints li.aviso{border-color:#f2c200}.hints li small{display:block;color:#9fb0c2;margin-top:2px}
+.compare table{width:100%;border-collapse:collapse;margin-top:6px}.compare th,.compare td{text-align:right;padding:2px 4px;border-bottom:1px solid #26384a}.compare th:first-child,.compare td:first-child{text-align:left}
+.compare .up{color:#bbed71}.compare .down{color:#ff8a8a}
+#calib label,#calib .row{margin-top:6px}#calib summary{cursor:pointer;margin-top:8px}
+@media (max-width:700px){.bar{flex-wrap:wrap;gap:6px}.bar .tag{display:none}.row{flex-wrap:wrap}.side,.code{min-width:0}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media (max-width:700px){.stagebar{flex-wrap:wrap;row-gap:6px}.stagebar .seg{max-width:100%}.stage,.code,.side,.layout>*{min-width:0;max-width:100%}#blocksHost{overflow:hidden;max-width:100%}html,body{overflow-x:hidden}}
+.note-warn{margin:6px 0 0;padding:6px 8px;border-left:3px solid #f2c200;background:#2a2410;color:#f3e6b3;border-radius:4px;line-height:1.4}
+[hidden]{display:none!important}
+@media(min-width:1101px){.stage{position:sticky;top:12px;align-self:start;height:calc(100vh - 90px);max-height:760px}.canvaswrap{min-height:0}}   /* 0.7.0: o 3D não estica com a coluna da direita */
+
+/* Botão Executar flutuante (quick-run.js) */
+.quick-run{position:fixed;right:16px;bottom:16px;z-index:50;min-height:48px;min-width:120px;padding:0 20px;border:0;border-radius:999px;background:#e8590c;color:#fff;font-weight:700;font-size:16px;font-family:inherit;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
+.quick-run:hover{background:#cf4d08}.quick-run:disabled{opacity:.5;cursor:default}
+.quick-run:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #14284b}
+.quick-run[hidden]{display:none!important}
+/* Double Tennis */
+.layout{grid-template-columns:290px minmax(420px,1fr) minmax(340px,480px)}
+.canvaswrap{min-height:0;aspect-ratio:236.2/114.3;flex:none}
+.score{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;text-align:center}
+.score .team{display:flex;flex-direction:column}.score .team b{font-size:26px}.score .a b{color:#7fd0ff}.score .b b{color:#ffb35c}
+.series{display:flex;gap:6px;flex-wrap:wrap;font-size:12.5px}.series span{padding:2px 8px;border-radius:12px;background:#223142}
+.series .w{background:#27472f}.series .l{background:#5a2a2a}
+.tabs{display:flex}.tabs button{flex:1;background:#223142;border:1px solid var(--line);padding:6px;cursor:pointer}.tabs button.on{background:var(--lime);color:#14202b;font-weight:700}
+.code textarea{min-height:300px}
+.levelnote{min-height:3em}
+@media(max-width:1100px){.layout{grid-template-columns:1fr}}
+@media(max-width:520px){.bar{flex-wrap:wrap;gap:8px}.tag{display:none}.score .team b{font-size:22px}}
+
+a.btn,a.btn:visited{color:#e5eaf0;text-decoration:none;display:inline-flex;align-items:center}
+</style></head>
+<body>
+  <header class="bar">
+    <a class="brand" href="WRO-Lab.html" title="Abrir o WRO Lab (se estiver na mesma pasta)">← WRO<span>lab</span></a>
+    <h1>Double Tennis <small>RoboSports · WRO 2026</small></h1>
+    <a class="btn" href="WRO-Smart-Warehouse.html" style="text-decoration:none">Smart Warehouse ↗</a><button id="howBtn" class="btn">? Como jogar</button><button id="teacherBtn" class="btn" aria-pressed="false" title="Mostra os programas de exemplo (pede o código de professor)">🔒 Modo professor</button><span class="tag">Versão experimental · adversário inventado para o simulador</span>
+  </header>
+  <dialog id="how" aria-labelledby="howTitle">
+    <h2 id="howTitle">Como jogar</h2>
+    <p class="lead">Programas <b>dois robôs</b> que jogam em conjunto contra um adversário do nível que escolheres. Ganha quem tiver <b>menos pontos</b>: cada bola laranja no teu lado vale +1 e cada bola roxa −2... por isso manda as laranjas para o outro lado e deixa as roxas lá.</p>
+    <ol class="steps">
+      <li><b>Escreve o programa de cada robô.</b><span>No separador «Robô 1» e «Robô 2» (<code>await robot.forward(30)</code>, <code>await robot.kick(1)</code>, <code>robot.camera()</code>). Podes deixar o robô 2 vazio e jogar só com um.</span></li>
+      <li><b>Combina com o parceiro.</b><span><code>team.send('livre')</code> e <code>team.receive()</code> deixam os dois robôs esperar um pelo outro.</span></li>
+      <li><b>Joga 3 partidas.</b><span>A duração (1 a 2 minutos) é sorteada e não é revelada. Passar à zona vermelha ou ficar parado 10 s custa caro.</span></li>
+    </ol>
+    <div class="row end"><button id="howClose" class="btn primary">Começar</button></div>
+  </dialog>
+  <main class="layout">
+    <aside class="side">
+      <section><h2>Adversário</h2>
+        <select autocomplete="off" id="level" aria-label="Nível do adversário"><option value="treino">Treino (sem adversário)</option><option value="aprendiz">Aprendiz</option><option value="regular" selected>Regular</option><option value="avancado">Avançado</option></select>
+        <p id="levelNote" class="muted small levelnote"></p>
+        <div class="row"><label>Sorteio nº <input autocomplete="off" id="seed" type="number" min="1" max="99999" value="1"></label><button id="reseed" class="btn" title="Novo sorteio">⤨ Sortear</button></div>
+      </section>
+      <section><h2>Robôs da equipa</h2>
+        <label>Tração <select autocomplete="off" id="drive"><option value="diff">Diferencial (só avança e roda)</option><option value="holo">Omnidirecional (anda de lado)</option></select></label>
+        <div class="row"><label>Comprimento <input autocomplete="off" id="len" type="number" min="8" max="20" step="0.5" value="18"></label><label>Largura <input autocomplete="off" id="wid" type="number" min="8" max="20" step="0.5" value="16"></label></div>
+        <label>Realismo <select autocomplete="off" id="realism"><option value="ideal">Ideal · sem erros</option><option value="realista">Realista · erros leves</option><option value="dificil">Difícil · erros fortes</option></select></label>
+        <p class="muted small">Limite oficial: 20 × 20 × 20 cm, 1,2 kg por robô (GR 8.1, 8.2). Cada robô começa dentro da sua zona de 20 × 20 cm.</p>
+      </section>
+      <section aria-live="polite"><h2>Partida</h2>
+        <div class="score"><div class="team a">Equipa A (tu)<b id="scoreA">0</b><span class="muted small" id="detA"></span></div><span class="muted">:</span><div class="team b">Equipa B<b id="scoreB">0</b><span class="muted small" id="detB"></span></div></div>
+        <p class="muted small">Menos pontos é melhor. A bola laranja do meio, se ninguém lhe tocar, não conta.</p>
+      </section>
+      <section aria-live="polite"><h2>Jogo de 3 partidas</h2><div id="series" class="series"></div><p id="seriesText" class="muted small"></p></section>
+    </aside>
+    <section class="stage">
+      <div class="stagebar"><b id="clock" aria-label="Tempo de jogo">0:00.0</b><span class="muted"> / 1:00–2:00</span><span id="state" class="state" role="status" aria-live="polite">Pronto</span><span class="spacer"></span><span id="matchNo" class="muted">Partida 1 de 3</span></div>
+      <div class="canvaswrap"><canvas id="canvas" tabindex="0" aria-label="Campo Double Tennis"></canvas></div>
+      <div class="play"><button id="run" class="btn primary">▶ Executar</button><button id="reset" class="btn">↺ Reiniciar partida</button><button id="next" class="btn" disabled>Próxima partida ▶</button><button id="newGame" class="btn">Novo jogo</button>
+        <label>Velocidade <select autocomplete="off" id="speed"><option value="1">1×</option><option value="2" selected>2×</option><option value="4">4×</option><option value="10">10×</option></select></label>
+        <label class="check"><input autocomplete="off" id="showFov" type="checkbox" checked> Campo de visão</label></div>
+      <section><h2>Registo</h2><ul id="log" class="log"></ul></section>
+    </section>
+    <aside class="code">
+      <section><h2>Programas <span class="muted small">o robô é <code>robot</code>, a equipa é <code>team</code></span></h2>
+        <div class="tabs" role="group" aria-label="Linguagem"><button id="langJs" class="on">JavaScript</button><button id="langPy" title="Um subconjunto de Python 3: os comandos do robô são os mesmos, sem await">Python</button></div>
+        <p id="pyNote" class="muted small" hidden>Python: os comandos são os mesmos (robot.forward(20), robot.kick(1), team.send(…)), sem <code>await</code>. As bolas da câmara são dicionários: <code>b['color']</code>, <code>b['distance']</code>. Subconjunto de Python 3: sem classes nem try/except.</p>
+        <div class="tabs" role="group" aria-label="Robô"><button id="tab1" class="on">Robô 1</button><button id="tab2">Robô 2</button></div>
+        <textarea id="source1" spellcheck="false" aria-label="Código do robô 1"></textarea>
+        <textarea id="source2" spellcheck="false" aria-label="Código do robô 2" hidden></textarea>
+        <div class="row"><select autocomplete="off" id="example" aria-label="Exemplos"></select><button id="loadExample" class="btn">Carregar</button></div>
+        <details><summary>Comandos disponíveis</summary><dl id="api" class="api"></dl></details>
+        <p class="muted small">Blocos, repetição e Python ainda não existem neste desafio: só JavaScript.</p>
+      </section>
+    </aside>
+  </main>
+<script>(function(){'use strict';const __modules=Object.create(null);
+__modules["official-rules.js"] = (() => {
+// Botão «Regras oficiais (PDF)»: abre as regras da WRO que vêm na pasta regras/, ao lado da página (funciona offline).
+const OFFICIAL_RULES = {
+  lab: [
+    ['WRO-2026-RoboMission-General-Rules.pdf', 'RoboMission — regras gerais', 'Regras comuns a todas as categorias (em português)'],
+    ['WRO-2026-RoboMission-Elementary-Game-Rules.pdf', 'Elementary — regras do jogo', 'Em português: tapete, tarefas e pontos'],
+    ['WRO-2026-RoboMission-Junior-Game-Rules.pdf', 'Junior — regras do jogo', 'Em português: tapete, tarefas e pontos'],
+    ['WRO-2026-RoboMission-Senior-Game-Rules.pdf', 'Senior — regras do jogo', 'Em português: tapete, tarefas e pontos'],
+  ],
+  warehouse: [
+    ['WRO-2027-Future-Engineers-Game-Rules.pdf', 'Future Engineers — regras do jogo', 'Smart Warehouse: campo, caixas, missões e pontos'],
+    ['WRO-2027-Future-Engineers-General-Rules.pdf', 'Future Engineers — regras gerais', 'Robô, tempo, reparações e comportamento'],
+    ['WRO-2027-FE-Documentation-Rubric.pdf', 'Grelha de documentação', 'Como a documentação da equipa é avaliada'],
+  ],
+  tennis: [
+    ['WRO-2026-RoboSports-Double-Tennis-General-Rules.pdf', 'Double Tennis — regras gerais', 'Em português: jogo, robôs, pontuação e infrações'],
+    ['WRO-2026-RoboSports-Double-Tennis-Tapete.pdf', 'Double Tennis — tapete', 'Medidas e marcações do campo'],
+  ],
+};
+function installOfficialRules(kind, after, doc = document) {
+  const list = OFFICIAL_RULES[kind]; if (!list || !after || doc.getElementById('officialRulesBtn')) return null;
+  const button = doc.createElement('button');
+  button.type = 'button'; button.id = 'officialRulesBtn'; button.className = after.className.replace(/\bactive\b/, '').trim();
+  button.textContent = '📄 Regras oficiais (PDF)'; button.title = 'Abre os documentos oficiais da WRO';
+  after.insertAdjacentElement('afterend', button);
+  const dialog = doc.createElement('dialog'); dialog.id = 'officialRulesDialog'; dialog.setAttribute('aria-labelledby', 'officialRulesTitle');
+  dialog.style.cssText = 'max-width:520px;width:calc(100% - 28px);padding:22px;border-radius:12px;border:1px solid #2a3542;background:#18222e;color:#e5eaf0';
+  const items = list.map(([file, title, text]) => `<li style="margin:0 0 10px"><a href="regras/${file}" target="_blank" rel="noopener" style="color:#bbed71;font-weight:700;font-size:16px">${title} ↗</a><br><span style="color:#8e9bac;font-size:14px">${text}</span></li>`).join('');
+  dialog.innerHTML = `<h2 id="officialRulesTitle" style="margin:0 0 6px;font-size:20px">Regras oficiais da WRO</h2><p style="margin:0 0 14px;color:#8e9bac;font-size:14px">Documentos originais, só para consulta. Abrem num novo separador. O simulador é uma interpretação educativa: em caso de dúvida, vale sempre o documento oficial.</p><ul style="list-style:none;margin:0 0 14px;padding:0">${items}</ul><p style="margin:0 0 14px;font-size:13px;color:#8e9bac">Versão mais recente: <a href="https://wro-association.org" target="_blank" rel="noopener" style="color:#bbed71">wro-association.org</a> (precisa de internet). © World Robot Olympiad Association.</p><button type="button" class="btn button" style="min-height:40px;padding:0 18px">Fechar</button>`;
+  doc.body.appendChild(dialog);
+  button.addEventListener('click', () => dialog.showModal());
+  dialog.querySelector('button').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+  return button;
+}
+
+return {OFFICIAL_RULES,installOfficialRules};
+})();
+__modules["quick-run.js"] = (() => {
+// Botão «Executar» flutuante: aparece quando o verdadeiro sai do ecrã (programas longos, telemóvel).
+// Copia o texto e o estado do botão original e limita-se a chamar o seu click(); não mexe nas regras.
+function installQuickRun(source, doc = document) {
+  if (!source || source.dataset.quick) return null;
+  source.dataset.quick = '1';
+  const fab = doc.createElement('button');
+  fab.type = 'button'; fab.className = 'quick-run'; fab.hidden = true;
+  fab.setAttribute('aria-label', 'Executar (atalho flutuante)'); fab.title = 'Ctrl+Enter';
+  doc.body.appendChild(fab);
+  let visible = true;
+  const sync = () => {
+    fab.textContent = source.textContent; fab.disabled = source.disabled;
+    fab.hidden = visible || source.offsetParent === null;
+  };
+  fab.addEventListener('click', () => { if (!source.disabled) source.click(); });
+  new MutationObserver(sync).observe(source, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['disabled'] });
+  if ('IntersectionObserver' in globalThis) {
+    new IntersectionObserver(entries => { visible = entries[entries.length - 1].isIntersecting; sync(); }).observe(source);
+  }
+  sync();
+  return fab;
+}
+
+return {installQuickRun};
+})();
+__modules["teacher-mode.js"] = (() => {
+// Modo professor (0.7.0): as demonstrações e as soluções completas só aparecem quando o professor as ativa neste navegador.
+// O aluno vê apenas um primeiro movimento de exemplo. Na primeira ativação o professor define um código (guardado como resumo).
+// Nota: é uma proteção de sala de aula, não de segurança: quem souber usar as ferramentas do navegador consegue contorná-la.
+
+const TEACHER_KEYS = { on: 'wro-lab-professor-v1', pin: 'wro-lab-professor-codigo-v1' };
+
+function pinHash(pin) {   // resumo FNV-1a com várias voltas (não guarda o código em texto)
+  let h = 0x811c9dc5; const s = `wro-lab|${pin}`;
+  for (let round = 0; round < 64; round++) for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i) + round; h = Math.imul(h, 0x01000193) >>> 0; }
+  return h.toString(16).padStart(8, '0');
+}
+
+function createTeacherMode(storage = globalThis.localStorage) {
+  const get = k => { try { return storage?.getItem(k) ?? null; } catch { return null; } };
+  const set = (k, v) => { try { if (v === null) storage?.removeItem(k); else storage?.setItem(k, v); return true; } catch { return false; } };
+  return {
+    get enabled() { return get(TEACHER_KEYS.on) === '1' && !!get(TEACHER_KEYS.pin); },
+    hasPin: () => !!get(TEACHER_KEYS.pin),
+    setPin(pin) { if (String(pin || '').length < 4) throw new Error('O código tem de ter pelo menos 4 caracteres.'); set(TEACHER_KEYS.pin, pinHash(pin)); },
+    check: pin => !!get(TEACHER_KEYS.pin) && get(TEACHER_KEYS.pin) === pinHash(pin),
+    enable(pin) { if (!this.check(pin)) return false; set(TEACHER_KEYS.on, '1'); return true; },
+    disable() { set(TEACHER_KEYS.on, null); },
+  };
+}
+
+// Janela para ativar/desativar (DOM). onChange(enabled) é chamado quando o estado muda.
+function openTeacherDialog(doc, mode, onChange) {
+  if (mode.enabled) { mode.disable(); onChange(false); return; }
+  const first = !mode.hasPin(), d = doc.createElement('dialog');
+  d.setAttribute('aria-labelledby', 'teacherTitle');
+  d.style.cssText = 'max-width:380px;border:1px solid #364657;border-radius:12px;background:#17222e;color:#dfe7ef;padding:18px 20px;font:14px system-ui,sans-serif';
+  d.innerHTML = `<h2 id="teacherTitle" style="margin:0 0 6px;font-size:18px">Modo professor</h2>
+    <p style="margin:0 0 12px;color:#9fb0c2;line-height:1.45">${first ? 'Define um código de professor para este navegador (pelo menos 4 caracteres). Ficas a ver as demonstrações e as soluções; os alunos só veem um primeiro movimento de exemplo.' : 'Escreve o código de professor para mostrar as demonstrações e as soluções.'}</p>
+    <form method="dialog" style="display:grid;gap:8px">
+      <label style="display:grid;gap:4px">Código<input type="password" name="pin" autocomplete="off" minlength="4" required style="padding:8px;border-radius:6px;border:1px solid #364657;background:#202d3b;color:#dfe7ef"></label>
+      ${first ? '<label style="display:grid;gap:4px">Repete o código<input type="password" name="pin2" autocomplete="off" minlength="4" required style="padding:8px;border-radius:6px;border:1px solid #364657;background:#202d3b;color:#dfe7ef"></label>' : ''}
+      <p class="teacher-msg" role="alert" style="margin:0;min-height:1.2em;color:#ff8a8a"></p>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" value="cancel" style="padding:7px 12px;border-radius:6px;border:1px solid #364657;background:#202d3b;color:#dfe7ef;cursor:pointer">Cancelar</button><button type="submit" style="padding:7px 12px;border-radius:6px;border:0;background:#bbed71;color:#101925;font-weight:700;cursor:pointer">Ativar</button></div>
+    </form>`;
+  doc.body.append(d);
+  const form = d.querySelector('form'), msg = d.querySelector('.teacher-msg');
+  d.querySelector('button[value=cancel]').addEventListener('click', () => d.close());
+  d.addEventListener('close', () => d.remove());
+  form.addEventListener('submit', e => {
+    e.preventDefault(); const pin = form.pin.value;
+    try {
+      if (first) { if (pin !== form.pin2.value) { msg.textContent = 'Os dois códigos não são iguais.'; return; } mode.setPin(pin); }
+      if (!mode.enable(pin)) { msg.textContent = 'Código errado.'; form.pin.select(); return; }
+      d.close(); onChange(true);
+    } catch (err) { msg.textContent = err.message; }
+  });
+  d.showModal(); form.pin.focus();
+}
+
+return {TEACHER_KEYS,pinHash,createTeacherMode,openTeacherDialog};
+})();
+__modules["warehouse-realism.js"] = (() => {
+// Smart Warehouse — imperfeições opcionais do robô (Parte B1 da 0.7.0).
+// Todos os valores são ESTIMATIVAS para fins educativos (não vêm do regulamento: cada equipa constrói o seu robô).
+// O gerador usa uma semente: o mesmo programa, com a mesma semente e o mesmo nível, dá sempre o mesmo resultado.
+// No nível «ideal» nada é sorteado e o comportamento é exatamente o da simulação sem realismo.
+
+const WAREHOUSE_REALISM = {
+  ideal: {
+    label: 'Ideal · sem erros', moveSd: 0, turnSd: 0, driftDegPerM: 0, mecanumLoss: 0, mecanumDevSd: 0,
+    accel: 0, turnAccel: 0, odoSd: 0, gyroDriftDegPerMin: 0, poseSd: 0, poseHeadingSd: 0,
+    camDistSd: 0, camBearingSd: 0, camDropout: 0, camLatency: 0, productErr: 0,
+    rangeSd: 0, rangeRel: 0, rangeDropout: 0, gripFail: 0, gripTol: 1, dropSd: 0, repairSeconds: 0,
+  },
+  realista: {
+    label: 'Realista · erros leves', moveSd: .01, turnSd: .008, driftDegPerM: .6, mecanumLoss: .04, mecanumDevSd: 1.2,
+    accel: 120, turnAccel: 480, odoSd: .004, gyroDriftDegPerMin: .3, poseSd: .3, poseHeadingSd: .3,
+    camDistSd: .02, camBearingSd: .6, camDropout: .03, camLatency: .1, productErr: .02,
+    rangeSd: .4, rangeRel: .01, rangeDropout: .01, gripFail: .04, gripTol: .8, dropSd: .3, repairSeconds: 20,
+  },
+  dificil: {
+    label: 'Difícil · erros fortes', moveSd: .025, turnSd: .02, driftDegPerM: 1.5, mecanumLoss: .1, mecanumDevSd: 3,
+    accel: 70, turnAccel: 300, odoSd: .01, gyroDriftDegPerMin: 1.2, poseSd: 1, poseHeadingSd: 1,
+    camDistSd: .05, camBearingSd: 1.5, camDropout: .1, camLatency: .25, productErr: .08,
+    rangeSd: 1, rangeRel: .02, rangeDropout: .04, gripFail: .1, gripTol: .65, dropSd: .7, repairSeconds: 20,
+  },
+};
+
+function seededRandom(seed) {
+  let a = seed >>> 0;
+  return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+
+// Tempo de um movimento com aceleração e travagem iguais (perfil trapezoidal ou triangular).
+function profileTime(distance, vmax, accel) {
+  const d = Math.abs(distance); if (!(d > 0)) return 0;
+  if (!(accel > 0)) return d / vmax;
+  const dAcc = vmax * vmax / accel;                // distância para acelerar e travar
+  return d >= dAcc ? d / vmax + vmax / accel : 2 * Math.sqrt(d / accel);
+}
+
+class WarehouseRealism {
+  constructor(level = 'ideal', seed = 1) {
+    this.level = WAREHOUSE_REALISM[level] ? level : 'ideal'; this.p = WAREHOUSE_REALISM[this.level];
+    this.rand = seededRandom((seed * 2654435761) ^ { ideal: 0, realista: 0x9e3779b9, dificil: 0x7f4a7c15 }[this.level]);
+  }
+  get active() { return this.level !== 'ideal'; }
+  gauss() { const u = Math.max(1e-12, this.rand()), v = this.rand(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  clamp(v, m) { return Math.max(-m, Math.min(m, v)); }
+  noise(sd, cap = 3) { return sd ? this.clamp(this.gauss() * sd, sd * cap) : 0; }
+  chance(p) { return p > 0 && this.rand() < p; }
+  // Erros sorteados no início de cada deslocação: escala à frente e de lado, desvio da direção e deriva do rumo por cm.
+  driveError(holonomicStrafe) {
+    const p = this.p; if (!this.active) return { kF: 1, kS: 1, dev: 0, drift: 0 };
+    return { kF: 1 + this.noise(p.moveSd), kS: holonomicStrafe ? 1 - p.mecanumLoss + this.noise(p.moveSd * 2) : 1, dev: holonomicStrafe ? this.noise(p.mecanumDevSd) : 0, drift: this.noise(p.driftDegPerM) / 100 };
+  }
+  turnScale() { return this.active ? 1 + this.noise(this.p.turnSd) : 1; }
+  encoder() { return this.active ? 1 + this.noise(this.p.odoSd) : 1; }
+}
+
+return {WAREHOUSE_REALISM,seededRandom,profileTime,WarehouseRealism};
+})();
+__modules["robot-model.js"] = (() => {
+// Modelo físico comum do robô (0.9.0): geometria dos kits, tipos de garra, polígonos, colisões (SAT com vetor de separação)
+// e sensores (refletância, distância). Lógica pura, sem Babylon nem DOM, usada pelo WRO Lab e pelo Double Tennis.
+// Todas as medidas são ESTIMATIVAS aproximadas de robôs típicos (ver ESTIMATIVAS.md); confirmem no vosso robô.
+// Convenções: cm, origem no canto superior esquerdo, y para baixo, rumo 0° = +x, 90° = +y.
+
+// length: comprimento do corpo (sem garra); width: largura total (com rodas); track: distância entre rodas (bitola);
+// wheelR: raio da roda; accel: aceleração útil (cm/s²); turnShare: fração da velocidade usada ao rodar no lugar.
+const KITS = {
+  jetbot: { label: 'JetBot', length: 14, width: 16, track: 14, wheelR: 3.25, wheelW: 2.1, accel: 90, turnShare: .6, color: '#31a46c' },
+  spike:  { label: 'LEGO SPIKE Prime', length: 17.6, width: 14.4, track: 11.2, wheelR: 2.8, wheelW: 1.8, accel: 120, turnShare: .6, color: '#f2c230' },
+  ev3:    { label: 'LEGO EV3', length: 18.4, width: 15.2, track: 12, wheelR: 2.8, wheelW: 1.8, accel: 100, turnShare: .6, color: '#c9ced3' },
+};
+
+// jaw: comprimento dos dedos/garfos à frente do corpo; opening: abertura máxima entre dedos; lift: altura de transporte;
+// closeTime/liftTime: duração das fases (s); drop: altura residual ao largar (cm); slip: fator da falha ocasional;
+// capacity: elementos pequenos (cimento) transportados de uma vez; wide: leva atravessados objetos compridos e finos
+// (mais largos do que a abertura), como um empilhador leva uma palete, se a espessura couber no comprimento dos dedos.
+const GRIPPERS = {
+  pinca:  { label: 'Pinça de 2 dedos', jaw: 6, opening: 9, lift: 3, closeTime: .5, liftTime: .3, openTime: .35, drop: .3, slip: 1, capacity: 3, wide: false },
+  pa:     { label: 'Pá / concha', jaw: 8, opening: 12, lift: 0, closeTime: .3, liftTime: 0, openTime: .25, drop: 0, slip: .6, capacity: 10, wide: true },
+  garfos: { label: 'Garfos com elevação', jaw: 7, opening: 10, lift: 6, closeTime: .4, liftTime: .6, openTime: .35, drop: 1.2, slip: .8, capacity: 6, wide: true },
+};
+
+// Refletância (0–100) aproximada de cada cor do tapete lida por um sensor de luz refletida (estimativa).
+const REFLECTANCE = { black: 6, white: 92, red: 58, yellow: 80, green: 28, blue: 24, other: 60 };
+
+const rad = deg => deg * Math.PI / 180;
+const normDeg = a => ((a % 360) + 360) % 360;
+const angleDiff = (a, b) => ((a - b + 540) % 360) - 180;   // a − b em (−180, 180]
+
+// Retângulo orientado: centro (x, y), comprimento ao longo do rumo, largura transversal.
+function orientedRect(x, y, heading, length, width, forward = 0) {
+  const c = Math.cos(rad(heading)), s = Math.sin(rad(heading)), hl = length / 2, hw = width / 2;
+  return [[hl, -hw], [hl, hw], [-hl, hw], [-hl, -hw]].map(([f, l]) => [x + (f + forward) * c - l * s, y + (f + forward) * s + l * c]);
+}
+function robotBody(pose, kit) { return orientedRect(pose.x, pose.y, pose.heading, kit.length, kit.width); }
+// Zona entre os dedos (à frente do corpo), onde um objeto pode ser agarrado.
+function jawZone(pose, kit, gripper) { return orientedRect(pose.x, pose.y, pose.heading, gripper.jaw, gripper.opening, kit.length / 2 + gripper.jaw / 2); }
+
+// Coordenadas de um ponto no referencial do robô: fwd (à frente) e lat (à direita).
+function toRobotFrame(pose, x, y) {
+  const c = Math.cos(rad(pose.heading)), s = Math.sin(rad(pose.heading)), dx = x - pose.x, dy = y - pose.y;
+  return { fwd: dx * c + dy * s, lat: -dx * s + dy * c };
+}
+function fromRobotFrame(pose, fwd, lat) {
+  const c = Math.cos(rad(pose.heading)), s = Math.sin(rad(pose.heading));
+  return [pose.x + fwd * c - lat * s, pose.y + fwd * s + lat * c];
+}
+// Meia-extensão de um polígono projetado num eixo de ângulo `heading` (ao longo) e no eixo perpendicular.
+function halfExtents(poly, heading) {
+  const c = Math.cos(rad(heading)), s = Math.sin(rad(heading));
+  const along = poly.map(([x, y]) => x * c + y * s), across = poly.map(([x, y]) => -x * s + y * c);
+  return { along: (Math.max(...along) - Math.min(...along)) / 2, across: (Math.max(...across) - Math.min(...across)) / 2 };
+}
+
+// SAT simples: os polígonos convexos sobrepõem-se com área (um toque na aresta não conta). Usado também pelo Double Tennis.
+function satOverlap(a, b, eps = 1e-7) {
+  for (const poly of [a, b]) for (let i = 0; i < poly.length; i++) {
+    const [x1, y1] = poly[i], [x2, y2] = poly[(i + 1) % poly.length], nx = y1 - y2, ny = x2 - x1;
+    let minA = Infinity, maxA = -Infinity, minB = Infinity, maxB = -Infinity;
+    for (const [x, y] of a) { const p = x * nx + y * ny; minA = Math.min(minA, p); maxA = Math.max(maxA, p); }
+    for (const [x, y] of b) { const p = x * nx + y * ny; minB = Math.min(minB, p); maxB = Math.max(maxB, p); }
+    if (maxA <= minB + eps || maxB <= minA + eps) return false;
+  }
+  return true;
+}
+// SAT com vetor mínimo de translação: devolve [dx, dy] que afasta B de A (ou null se não se sobrepõem).
+function separation(a, b) {
+  let best = Infinity, axisBest = null;
+  for (const poly of [a, b]) for (let i = 0; i < poly.length; i++) {
+    const p = poly[i], q = poly[(i + 1) % poly.length]; let ax = q[1] - p[1], ay = p[0] - q[0]; const len = Math.hypot(ax, ay) || 1; ax /= len; ay /= len;
+    const pa = a.map(v => v[0] * ax + v[1] * ay), pb = b.map(v => v[0] * ax + v[1] * ay);
+    const overlap = Math.min(Math.max(...pa), Math.max(...pb)) - Math.max(Math.min(...pa), Math.min(...pb));
+    if (overlap <= 1e-7) return null;
+    if (overlap < best) { best = overlap; axisBest = [ax, ay]; }
+  }
+  const ca = centroid(a), cb = centroid(b), dir = (cb[0] - ca[0]) * axisBest[0] + (cb[1] - ca[1]) * axisBest[1] < 0 ? -1 : 1;
+  return [axisBest[0] * best * dir, axisBest[1] * best * dir];
+}
+function centroid(poly) { return [poly.reduce((n, p) => n + p[0], 0) / poly.length, poly.reduce((n, p) => n + p[1], 0) / poly.length]; }
+
+// Distância de um raio (origem, direção em graus) a um polígono; Infinity se não o atinge.
+function rayToPolygon(ox, oy, heading, poly) {
+  const dx = Math.cos(rad(heading)), dy = Math.sin(rad(heading)); let best = Infinity;
+  for (let i = 0; i < poly.length; i++) {
+    const [ax, ay] = poly[i], [bx, by] = poly[(i + 1) % poly.length], ex = bx - ax, ey = by - ay, den = dx * ey - dy * ex;
+    if (Math.abs(den) < 1e-12) continue;
+    const t = ((ax - ox) * ey - (ay - oy) * ex) / den, u = ((ax - ox) * dy - (ay - oy) * dx) / den;
+    if (t >= 0 && u >= 0 && u <= 1) best = Math.min(best, t);
+  }
+  return best;
+}
+// Distância de um raio às paredes de um campo retangular (0..width × 0..height).
+function rayToField(ox, oy, heading, size) {
+  const dx = Math.cos(rad(heading)), dy = Math.sin(rad(heading)); let best = Infinity;
+  if (dx > 1e-9) best = Math.min(best, (size.width - ox) / dx); if (dx < -1e-9) best = Math.min(best, -ox / dx);
+  if (dy > 1e-9) best = Math.min(best, (size.height - oy) / dy); if (dy < -1e-9) best = Math.min(best, -oy / dy);
+  return Math.max(0, best);
+}
+
+// Velocidades a partir da geometria: velocidade linear (cm/s) → velocidade de rotação no lugar (°/s).
+function pivotRate(kit, moveRate) { return moveRate * kit.turnShare / (kit.track / 2) * 180 / Math.PI; }
+// Num arco de raio r (medido ao centro), a roda exterior anda mais depressa: limita a velocidade do centro.
+function arcSpeed(kit, moveRate, radius) { return radius <= 1e-6 ? 0 : moveRate * radius / (radius + kit.track / 2); }
+// Perfil trapezoidal: velocidade seguinte dada a velocidade atual, o máximo, a aceleração e a distância que falta.
+function nextSpeed(v, vmax, accel, remaining, dt) {
+  const brake = Math.sqrt(2 * accel * Math.max(0, remaining));
+  return Math.max(Math.min(vmax, v + accel * dt, brake), Math.min(vmax, accel * dt * .5, remaining / dt));
+}
+
+return {KITS,GRIPPERS,REFLECTANCE,rad,normDeg,angleDiff,orientedRect,robotBody,jawZone,toRobotFrame,fromRobotFrame,halfExtents,satOverlap,separation,centroid,rayToPolygon,rayToField,pivotRate,arcSpeed,nextSpeed};
+})();
+__modules["tennis.js"] = (() => {
+// WRO RoboSports · Double Tennis (2026) — motor de regras e física. Sem vista: só números (cm, graus, segundos).
+// Fontes: Regras Gerais (PT, 15 jan. 2026, «embargo») e o PDF do tapete. A geometria foi medida nos vetores do tapete.
+// Convenções (as mesmas do Smart Warehouse): origem no canto superior esquerdo, y para baixo, rumo 0° = +x, 90° = +y,
+// a direita do robô é (−sen h, cos h). A equipa A (a do aluno) joga na metade da esquerda; a equipa B (adversário), na da direita.
+// Tudo o que NÃO vem do regulamento (atrito das bolas, força do pontapé, comportamento do adversário…) está marcado «estimativa»
+// e listado em ESTIMATIVAS.md.
+const { WarehouseRealism, seededRandom } = __modules["warehouse-realism.js"];
+const { orientedRect, satOverlap } = __modules["robot-model.js"];
+
+const FIELD = { width: 236.2, height: 114.3, wall: 10 };        // GR 9.2 (a borda tem 10 cm)
+const CENTER_X = 118.1;                                        // linha do meio: a face das duas rampas fecha-a por completo
+const BALL = { r: 2, orange: 'laranja', purple: 'roxa' };       // GR 9.10: bolas de pingue-pongue de 40 mm
+const BARRIER = { x0: 40.0, x1: 196.2, y0: 56.3, y1: 58.0 };     // GR 9.9: 156,2 × 1,7 × 5 cm
+const RAMP_HEIGHT = 5;                                          // GR 9.8: 30 × 56,3 × 5 cm
+// Cada rampa pertence à metade onde está. A vermelha (5 cm, junto à linha do meio) é proibida aos robôs (GR 6.27).
+const RAMPS = {
+  upper: { owner: 'B', y0: 0, y1: 56.3, red: [118.1, 123.1], blue: [123.1, 133.1], green: [133.1, 148.1], low: 148.1, high: 133.1 },
+  lower: { owner: 'A', y0: 58.0, y1: 114.3, green: [88.1, 103.1], blue: [103.1, 113.1], red: [113.1, 118.1], low: 88.1, high: 103.1 },
+};
+const RED = { A: { x0: 113.1, x1: 118.1, y0: 58.0, y1: 114.3 }, B: { x0: 118.1, x1: 123.1, y0: 0, y1: 56.3 } };
+const START_ZONES = {   // GR 9.7: 20 × 20 cm (medidas no tapete: 20,1 × 20,2)
+  A: [{ x0: 0, y0: 11.9, x1: 20.1, y1: 32.1 }, { x0: 0, y0: 68.2, x1: 20.1, y1: 88.4 }],
+  B: [{ x0: 216.1, y0: 25.9, x1: 236.2, y1: 46.1 }, { x0: 216.1, y0: 82.2, x1: 236.2, y1: 102.4 }],
+};
+// Linhas pretas: finas (2 cm) e grossas (6 cm). Servem para o sensor de chão.
+const BLACK_LINES = [
+  { x0: 13.3, y0: 0, x1: 15.3, y1: 114.3 }, { x0: 220.8, y0: 0, x1: 222.9, y1: 114.3 },
+  { x0: 82.1, y0: 0, x1: 88.1, y1: 56.3 }, { x0: 82.1, y0: 58.0, x1: 88.1, y1: 114.3 },
+  { x0: 148.1, y0: 0, x1: 154.1, y1: 56.3 }, { x0: 148.1, y0: 58.0, x1: 154.1, y1: 114.3 },
+  { x0: 0, y0: 21.05, x1: 118.1, y1: 23.05 }, { x0: 0, y0: 45.05, x1: 118.1, y1: 47.05 },
+  { x0: 0, y0: 77.3, x1: 82.1, y1: 79.3 }, { x0: 0, y0: 101.3, x1: 82.1, y1: 103.3 },
+  { x0: 154.1, y0: 11, x1: 236.2, y1: 13 }, { x0: 154.1, y0: 35, x1: 236.2, y1: 37 },
+  { x0: 118.1, y0: 67.25, x1: 236.2, y1: 69.25 }, { x0: 118.1, y0: 91.25, x1: 236.2, y1: 93.25 },
+];
+// Linhas de colocação das bolas da metade A (de cima para baixo) e as duas posições em cada uma (GR 6.12, Fig. 2b/3a):
+// «A» é a mais perto do meio e «B» a mais perto da zona de partida.
+const LINE_Y = [22.05, 46.05, 78.3, 102.3];
+const SLOT_X = { A: 67.0, B: 52.0 };
+const CENTER_BALL = { x: CENTER_X, y: (BARRIER.y0 + BARRIER.y1) / 2 };
+
+// ---- estimativas físicas (ver ESTIMATIVAS.md) ----
+const PHYS = {
+  rollDecel: 25,       // desaceleração da bola a rolar no tapete (cm/s²)
+  g: 981, rollFactor: 5 / 7,
+  wallRestitution: .6, barrierRestitution: .45, robotRestitution: .1, ballRestitution: .85,
+  fallKeep: .8,        // parte da velocidade que a bola mantém ao cair da rampa
+  kickSpeed: 150,      // velocidade máxima de um pontapé (cm/s)
+  kickCooldown: 1,     // s entre pontapés
+  kickReach: 3,        // cm à frente da face do robô em que a bola ainda é pontapeada
+};
+const TIMING = { idleRemove: 10, halfAfter: 30, halfHold: 10, operateMax: 4, operateGrace: 5, operateTouch: .5 };   // GR 6.20, 6.32.4, 6.30
+const MIN_DURATION = 60, MAX_DURATION = 120;                                                                    // GR §5: 1 a 2 minutos
+const ROBOT_LIMIT = { size: 20, height: 20, mass: 1.2 };                                                       // GR 8.1, 8.2.1
+const LEVELS = ['treino', 'aprendiz', 'regular', 'avancado'];   // treino (0.9.4): sem adversário
+
+const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
+const norm = a => ((a % 360) + 540) % 360 - 180;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const inRect = (x, y, r) => x >= r.x0 && x <= r.x1 && y >= r.y0 && y <= r.y1;
+const teamOf = x => (x < CENTER_X ? 'A' : 'B');
+const otherTeam = t => (t === 'A' ? 'B' : 'A');
+
+// ---- geometria de polígonos convexos (SAT) ----
+function robotPoly(r) { return orientedRect(r.x, r.y, r.heading, r.length, r.width); }   // geometria comum (robot-model.js, 0.9.0)
+const rectPoly = r => [[r.x0, r.y0], [r.x1, r.y0], [r.x1, r.y1], [r.x0, r.y1]];
+function polyOverlap(a, b) { return satOverlap(a, b, 1e-9); }
+const polyInside = (poly, r) => poly.every(([x, y]) => x >= r.x0 - 1e-9 && x <= r.x1 + 1e-9 && y >= r.y0 - 1e-9 && y <= r.y1 + 1e-9);
+
+// ---- disposição das bolas (GR 6.12, Fig. 3a, 3b e 4) ----
+// Moeda ao ar por linha: «cara» = posição A, «coroa» = posição B. A roxa vai para a posição livre de uma das 4 linhas.
+// A outra metade é a rotação de 180° da primeira; a 9.ª bola laranja fica no meio, sobre a barreira.
+function layoutBalls(seed) {
+  const rand = seededRandom((seed * 2246822519) ^ 0x51ed270b), balls = [];
+  const slots = LINE_Y.map(() => (rand() < .5 ? 'A' : 'B'));
+  const purpleLine = Math.floor(rand() * 4), free = slots[purpleLine] === 'A' ? 'B' : 'A';
+  LINE_Y.forEach((y, i) => balls.push({ color: BALL.orange, x: SLOT_X[slots[i]], y, slot: slots[i], line: i }));
+  balls.push({ color: BALL.purple, x: SLOT_X[free], y: LINE_Y[purpleLine], slot: free, line: purpleLine });
+  const mirrored = balls.map(b => ({ ...b, x: +(FIELD.width - b.x).toFixed(2), y: +(FIELD.height - b.y).toFixed(2), line: b.line + 4, mirror: true }));
+  return [...balls, ...mirrored, { color: BALL.orange, x: CENTER_BALL.x, y: CENTER_BALL.y, slot: 'centro', line: -1, center: true }];
+}
+// Duração (GR §5: aleatória entre 1 e 2 minutos, sorteada antes do início). Em segundos inteiros.
+const matchDuration = seed => { const r = seededRandom((seed * 3266489917) ^ 0x2c1b3c6d)(); return MIN_DURATION + Math.floor(r * (MAX_DURATION - MIN_DURATION + 1)); };
+
+// ---- rampas ----
+function rampAt(x, y) {
+  for (const key of ['upper', 'lower']) { const r = RAMPS[key]; if (y >= r.y0 && y <= r.y1 && x >= Math.min(r.red[0], r.green[0]) && x <= Math.max(r.red[1], r.green[1])) return key; }
+  return null;
+}
+function rampHeight(key, x) {   // sobe ao longo da zona verde (15 cm) e é plana no topo (estimativa: a descrição não dá o perfil)
+  const r = RAMPS[key]; if (!r) return 0;
+  const t = key === 'upper' ? (r.low - x) / (r.low - r.high) : (x - r.low) / (r.high - r.low);
+  return RAMP_HEIGHT * clamp(t, 0, 1);
+}
+const rampSlope = key => (key === 'upper' ? -RAMP_HEIGHT / 15 : RAMP_HEIGHT / 15);   // dh/dx na zona verde
+function floorColor(x, y) {
+  const key = rampAt(x, y);
+  if (key) { const r = RAMPS[key]; if (x >= r.red[0] && x <= r.red[1]) return 'vermelho'; if (x >= r.blue[0] && x <= r.blue[1]) return 'azul'; return 'verde'; }
+  for (const l of BLACK_LINES) if (inRect(x, y, l)) return 'preto';
+  return 'branco';
+}
+
+// ---- especificação do robô ----
+const DEFAULT_SPEC = { length: 18, width: 16, height: 15, mass: .9, holonomic: false, driveSpeed: 30, turnSpeed: 120, kicker: true, kickSpeed: 120, camera: true, cameraRange: 110, cameraFov: 70 };
+function checkSpec(input = {}) {
+  const s = { ...DEFAULT_SPEC, ...input };
+  const problems = [];
+  if (!(s.length > 0 && s.width > 0)) problems.push('As dimensões do robô têm de ser positivas.');
+  if (s.length > ROBOT_LIMIT.size + 1e-9 || s.width > ROBOT_LIMIT.size + 1e-9) problems.push(`O robô não pode exceder ${ROBOT_LIMIT.size} × ${ROBOT_LIMIT.size} cm (GR 8.1).`);
+  if (s.height > ROBOT_LIMIT.height + 1e-9) problems.push(`A altura máxima é ${ROBOT_LIMIT.height} cm (GR 8.1).`);
+  if (s.mass > ROBOT_LIMIT.mass + 1e-9) problems.push(`O peso máximo é ${String(ROBOT_LIMIT.mass).replace(".", ",")} kg (GR 8.2.1).`);
+  if (s.kickSpeed > PHYS.kickSpeed + 1e-9) problems.push(`A velocidade máxima do pontapé simulado é ${PHYS.kickSpeed} cm/s.`);
+  if (problems.length) throw new Error(problems.join(' '));
+  return s;
+}
+
+class TennisWorld {
+  // options: seed, level ('aprendiz'|'regular'|'avancado'), realism, duration (s; por omissão sorteada), robot (spec), spec2 (spec do 2.º robô), robots (quantos robôs a equipa A usa: 1 ou 2)
+  constructor(options = {}) {
+    this.seed = options.seed ?? 1; this.level = LEVELS.includes(options.level) ? options.level : 'regular';
+    this.specs = [checkSpec(options.robot), checkSpec(options.robot2 || options.robot)];
+    this.duration = options.duration ?? matchDuration(this.seed);
+    this.realismName = options.realism || 'ideal'; this.real = new WarehouseRealism(this.realismName, this.seed);
+    this.elapsed = 0; this.finished = null; this.events = []; this.infractions = { A: [], B: [] };
+    this.balls = layoutBalls(this.seed).map((b, i) => ({ id: i, ...b, vx: 0, vy: 0, moved: false, fixed: !!b.center, lastTouch: null, lastTouchT: -9 }));
+    const use2 = (options.robots ?? 2) >= 2;
+    this.robots = [];
+    const mk = (team, idx, zone, spec, active) => {
+      const cx = (zone.x0 + zone.x1) / 2, cy = (zone.y0 + zone.y1) / 2;
+      const r = { id: `${team}${idx + 1}`, team, index: idx, ...spec, x: cx, y: cy, heading: team === 'A' ? 0 : 180, vx: 0, vy: 0, action: null, ai: null, status: active ? 'ativo' : 'ausente', moved: false, kickReadyAt: 0, zone, outbox: [] };
+      if (!polyInside(robotPoly(r), zone)) throw new Error(`O robô ${r.id} não cabe na zona de partida (20 × 20 cm).`);
+      return r;
+    };
+    this.robots.push(mk('A', 0, START_ZONES.A[0], this.specs[0], true), mk('A', 1, START_ZONES.A[1], this.specs[1], use2));
+    const oppSpec = { ...DEFAULT_SPEC, holonomic: false };
+    this.robots.push(mk('B', 0, START_ZONES.B[0], oppSpec, true), mk('B', 1, START_ZONES.B[1], oppSpec, true));
+    this.mail = { A: [[], []], B: [[], []] };   // caixas de correio entre os robôs da mesma equipa (GR 8.6: só entre robôs da equipa)
+    this.timers = { half: 0, operate: 0 }; this.touchCount = { A: 0, B: 0 };
+    this.emit('info', `Partida começou: ${Math.round(this.duration)} s, nível do adversário «${this.level}».`, `Semente ${this.seed}.`);
+  }
+  emit(type, title, detail = '') { this.events.push({ type, title, detail, t: +this.elapsed.toFixed(2) }); if (this.events.length > 3000) this.events.splice(0, 1000); }
+  say(robot, text) {   // «balão» por cima do robô e linha no registo: ajuda a perceber o que o programa decidiu (não altera o jogo)
+    text = String(text).slice(0, 90); if (robot.bubble?.text !== text) this.emit('info', `${robot.id}: ${text}`); robot.bubble = { text, until: this.elapsed + 4 };
+  }
+  get active() { return !this.finished; }
+  robot(id) { return this.robots.find(r => r.id === id); }
+  teamRobots(team) { return this.robots.filter(r => r.team === team && r.status === 'ativo'); }
+
+  // ---------- ações dos robôs (programas do aluno) ----------
+  start(robot, a) {
+    return new Promise(resolve => {
+      if (this.finished || robot.status !== 'ativo') { resolve({ ok: false, reason: 'fim' }); return; }
+      a.resolve = resolve; a.t = 0; a.done = 0; const s = robot;
+      if (a.type === 'drive') {
+        if (a.str && !s.holonomic) { resolve({ ok: false, reason: 'not-holonomic' }); return; }
+        const e = this.real.driveError(!!a.str); a.e = e; a.dist = Math.hypot(a.fwd * e.kF, a.str * e.kS) || 0; a.total = a.dist;
+        if (!(a.total > 1e-9)) { resolve({ ok: true, done: 0 }); return; }
+      } else if (a.type === 'turn') { a.total = Math.abs(a.deg * this.real.turnScale()); a.sign = Math.sign(a.deg); if (!(a.total > 1e-9)) { resolve({ ok: true, done: 0 }); return; } }
+      else if (a.type === 'wait') { a.total = Math.max(0, a.seconds); if (!(a.total > 1e-9)) { resolve({ ok: true }); return; } }
+      else if (a.type === 'kick') {
+        if (!s.kicker) { resolve({ ok: false, reason: 'no-kicker' }); return; }
+        if (this.elapsed < s.kickReadyAt - 1e-9) { a.type = 'wait'; a.total = s.kickReadyAt - this.elapsed; a.then = { type: 'kick', power: a.power, resolve }; a.resolve = null; }
+        else { this.doKick(s, a.power); s.kickReadyAt = this.elapsed + PHYS.kickCooldown; a.type = 'wait'; a.total = .15; }
+      }
+      s.action = a;
+    });
+  }
+  speedOf(r) { return r.driveSpeed * (r.slow || 1); }
+  tick(dt) {
+    if (this.finished) return;
+    const sub = Math.max(1, Math.ceil(dt / (1 / 120)));
+    const h = dt / sub;
+    for (let i = 0; i < sub && !this.finished; i++) this.subtick(h);
+  }
+  subtick(h) {
+    this.elapsed += h; this.h = h;
+    for (const r of this.robots) { r.vx = 0; r.vy = 0; }
+    if (this.opponent) this.opponent.step(this, h);
+    for (const r of this.robots) if (r.status === 'ativo' && r.action) this.advanceRobot(r, h);
+    this.stepBalls(h);
+    this.checkRules(h);
+    if (!this.finished && this.elapsed >= this.duration - 1e-9) this.endMatch('time', 'Tempo esgotado: o juiz grita «STOP!».');
+  }
+  advanceRobot(r, h) {
+    const a = r.action; if (!a) return;
+    if (a.type === 'wait') { a.t += h; if (a.t >= a.total - 1e-9) this.complete(r, a, { ok: true }); return; }
+    let amount;
+    if (a.type === 'drive') amount = this.speedOf(r) * h; else amount = r.turnSpeed * h;
+    amount = Math.min(amount, a.total - a.done);
+    let blocked = null;
+    if (a.type === 'drive') {
+      const k = amount / a.total, c = Math.cos(rad(r.heading + (a.e?.drift ? a.e.drift * a.done : 0) + (a.e?.dev || 0))), s = Math.sin(rad(r.heading + (a.e?.drift ? a.e.drift * a.done : 0) + (a.e?.dev || 0)));
+      const fx = a.fwd * (a.e?.kF || 1) * k, sx = a.str * (a.e?.kS || 1) * k;
+      const dx = fx * c - sx * s, dy = fx * s + sx * c;
+      blocked = this.moveRobot(r, r.x + dx, r.y + dy, r.heading, h);
+    } else blocked = this.moveRobot(r, r.x, r.y, norm(r.heading + a.sign * amount), h);
+    if (!blocked) a.done += amount;
+    if (blocked) { this.complete(r, a, { ok: false, reason: blocked, done: a.done }); return; }
+    if (a.done >= a.total - 1e-9) this.complete(r, a, { ok: true, done: a.done });
+  }
+  complete(r, a, result) {
+    r.action = null;
+    if (!result.ok && result.reason && result.reason !== 'fim' && result.reason !== 'not-holonomic') {
+      const why = { parede: 'a parede', barreira: 'a barreira', meio: 'a linha do meio (face da rampa)', 'robô': 'outro robô' }[result.reason] || result.reason;
+      this.emit('warning', `${r.id}: movimento interrompido por ${why}.`, `Só andou ${(result.done || 0).toFixed(1)} ${a.type === 'turn' ? '°' : 'cm'}. Afasta-te antes de rodar ou muda a trajetória.`);
+    }
+    if (a.then) { const next = a.then; this.start(r, { type: 'kick', power: next.power }).then(next.resolve); return; }
+    a.resolve?.(result);
+  }
+  // Move o robô para uma nova pose se não bater em nada; devolve a razão do bloqueio ou null.
+  moveRobot(r, nx, ny, nh, h = 1 / 60) {
+    const old = { x: r.x, y: r.y, heading: r.heading };
+    const cand = { ...r, x: nx, y: ny, heading: nh }, poly = robotPoly(cand);
+    const hull = r.ghost ? robotPoly({ ...cand, length: cand.width * .72, width: cand.width * .72 }) : poly;   // o adversário é tratado como um círculo de raio igual a meia largura (rodar junto às paredes não o prende): simplificação
+    const spin = r.ghost && nx === old.x && ny === old.y;
+    if (!spin && !polyInside(hull, { x0: 0, y0: 0, x1: FIELD.width, y1: FIELD.height })) return 'parede';
+    if (!spin && polyOverlap(hull, rectPoly(BARRIER))) return 'barreira';
+    const xs = poly.map(p => p[0]);
+    if (r.team === 'A' ? Math.max(...xs) > CENTER_X + 1e-9 : Math.min(...xs) < CENTER_X - 1e-9) return 'meio';
+    for (const o of this.robots) if (o !== r && o.status === 'ativo' && !(r.ghost && o.team === r.team) && polyOverlap(poly, robotPoly(o))) return 'robô';   // o adversário coordena os seus dois robôs: não se bloqueiam entre si
+    r.x = nx; r.y = ny; r.heading = nh;
+    r.vx = (nx - old.x) / h; r.vy = (ny - old.y) / h;
+    if (Math.abs(nx - old.x) + Math.abs(ny - old.y) + Math.abs(norm(nh - old.heading)) > 1e-6) r.moved = true;
+    if (!r.left && !polyInside(poly, r.zone)) r.left = true;
+    r.slow = rampAt(nx, ny) ? .8 : 1;   // estimativa: subir a rampa custa velocidade
+    // A zona vermelha da rampa é proibida (GR 6.27): terminar a partida.
+    if (polyOverlap(poly, rectPoly(RED[r.team]))) { this.violation(r.team, `O robô ${r.id} tocou na área vermelha da rampa (GR 6.27).`, '6.27'); }
+    return null;
+  }
+  doKick(r, power = 1) {
+    const p = clamp(power, 0, 1), v = r.kickSpeed * (r.team === 'A' ? 1 : 1) * p, c = Math.cos(rad(r.heading)), s = Math.sin(rad(r.heading));
+    let hit = null, best = 1e9;
+    for (const b of this.balls) {
+      const dx = b.x - r.x, dy = b.y - r.y, f = dx * c + dy * s, q = -dx * s + dy * c;
+      if (f >= r.length / 2 - .2 && f <= r.length / 2 + BALL.r + PHYS.kickReach && Math.abs(q) <= r.width / 2 + BALL.r * .5 && f < best) { hit = b; best = f; }
+    }
+    if (!hit) { this.emit('info', `${r.id}: pontapé no vazio.`, 'Aproxima-te mais da bola e alinha o robô com ela.'); return; }
+    const err = this.real.active ? rad(this.real.noise(this.real.p.moveSd * 100, 3)) : 0;
+    hit.vx = v * Math.cos(rad(r.heading) + err); hit.vy = v * Math.sin(rad(r.heading) + err); this.touch(hit, r);
+  }
+  touch(b, r) { b.moved = true; b.fixed = false; b.lastTouch = r.team; b.lastTouchT = this.elapsed; b.touchedBy = r.id; }
+
+  // ---------- física das bolas ----------
+  stepBalls(h) {
+    const { rollDecel: dec, g, rollFactor } = PHYS;
+    for (const b of this.balls) {
+      if (b.fixed) continue;
+      const key = rampAt(b.x, b.y); b.ramp = key;
+      let speed = Math.hypot(b.vx, b.vy);
+      if (speed > 0) { const ns = Math.max(0, speed - dec * h); b.vx *= ns / speed; b.vy *= ns / speed; }
+      if (key) {   // a rampa só inclina na zona verde
+        const r = RAMPS[key], inGreen = b.x >= r.green[0] && b.x <= r.green[1];
+        if (inGreen) b.vx += -rollFactor * g * rampSlope(key) * h;
+      }
+      const ox = b.x, oy = b.y, was = key;
+      b.x += b.vx * h; b.y += b.vy * h;
+      this.ballBounds(b, ox, oy, was);
+    }
+    // bolas contra robôs e entre si
+    for (const r of this.robots) if (r.status === 'ativo') for (const b of this.balls) this.ballRobot(b, r);
+    for (let i = 0; i < this.balls.length; i++) for (let j = i + 1; j < this.balls.length; j++) this.ballBall(this.balls[i], this.balls[j]);
+  }
+  ballBounds(b, ox, oy, was) {
+    const { r } = BALL, W = FIELD.width, H = FIELD.height, e = PHYS.wallRestitution;
+    if (b.x < r) { b.x = r; b.vx = Math.abs(b.vx) * e; } if (b.x > W - r) { b.x = W - r; b.vx = -Math.abs(b.vx) * e; }
+    if (b.y < r) { b.y = r; b.vy = Math.abs(b.vy) * e; } if (b.y > H - r) { b.y = H - r; b.vy = -Math.abs(b.vy) * e; }
+    // barreira (retângulo): empurra a bola para fora pelo lado mais próximo
+    const bx = clamp(b.x, BARRIER.x0, BARRIER.x1), by = clamp(b.y, BARRIER.y0, BARRIER.y1), dx = b.x - bx, dy = b.y - by, d = Math.hypot(dx, dy);
+    if (d < r) {
+      let nx, ny;
+      if (d > 1e-9) { nx = dx / d; ny = dy / d; b.x = bx + nx * r; b.y = by + ny * r; }
+      else { const up = b.y - BARRIER.y0 < BARRIER.y1 - b.y; ny = up ? -1 : 1; nx = 0; b.y = (up ? BARRIER.y0 - r : BARRIER.y1 + r); }
+      const vn = b.vx * nx + b.vy * ny; if (vn < 0) { b.vx -= (1 + PHYS.barrierRestitution) * vn * nx; b.vy -= (1 + PHYS.barrierRestitution) * vn * ny; }
+    }
+    // face das rampas na linha do meio: fecha a passagem às bolas que estão no chão
+    const now = rampAt(b.x, b.y);
+    if (!was && now === null) {
+      const inUpper = b.y <= RAMPS.upper.y1 + 1e-9, inLower = b.y >= RAMPS.lower.y0 - 1e-9;
+      if (inUpper && ox < CENTER_X - r + 1e-9 && b.x > CENTER_X - r) { b.x = CENTER_X - r; b.vx = -Math.abs(b.vx) * PHYS.barrierRestitution; }
+      if (inLower && ox > CENTER_X + r - 1e-9 && b.x < CENTER_X + r) { b.x = CENTER_X + r; b.vx = Math.abs(b.vx) * PHYS.barrierRestitution; }
+    }
+    if (was && !now && (was === 'upper' ? b.x < CENTER_X : b.x > CENTER_X)) {   // caiu da rampa para a outra metade (5 cm)
+      b.vx *= PHYS.fallKeep; b.vy *= PHYS.fallKeep; b.crossings = (b.crossings || 0) + 1;
+      this.emit('success', `Uma bola ${b.color} passou para o campo da equipa ${teamOf(b.x)}.`, b.lastTouch ? `Última a tocar: equipa ${b.lastTouch}.` : '');
+    }
+  }
+  ballRobot(b, r) {
+    if (b.fixed && !this.robotTouches(b, r)) return;
+    const c = Math.cos(rad(r.heading)), s = Math.sin(rad(r.heading)), hl = r.length / 2, hw = r.width / 2, dx = b.x - r.x, dy = b.y - r.y;
+    const px = dx * c + dy * s, py = -dx * s + dy * c;
+    const qx = clamp(px, -hl, hl), qy = clamp(py, -hw, hw);
+    let ex = px - qx, ey = py - qy, d = Math.hypot(ex, ey);
+    if (d >= BALL.r) { b.touching = b.touching === r.id ? null : b.touching; return; }
+    let nxl, nyl, pen;
+    if (d > 1e-9) { nxl = ex / d; nyl = ey / d; pen = BALL.r - d; }
+    else { const dxl = hl - Math.abs(px), dyl = hw - Math.abs(py); if (dxl < dyl) { nxl = Math.sign(px) || 1; nyl = 0; pen = BALL.r + dxl; } else { nxl = 0; nyl = Math.sign(py) || 1; pen = BALL.r + dyl; } }
+    const nx = nxl * c - nyl * s, ny = nxl * s + nyl * c;
+    b.x += nx * pen; b.y += ny * pen;
+    const vrx = b.vx - r.vx, vry = b.vy - r.vy, vn = vrx * nx + vry * ny;
+    if (vn < 0) { const k = (1 + PHYS.robotRestitution) * vn; b.vx -= k * nx; b.vy -= k * ny; }
+    this.touch(b, r); b.touching = r.id;
+  }
+  robotTouches(b, r) { return polyOverlap(robotPoly({ ...r, length: r.length + 2 * (BALL.r + .1), width: r.width + 2 * (BALL.r + .1) }), [[b.x - .1, b.y - .1], [b.x + .1, b.y - .1], [b.x + .1, b.y + .1], [b.x - .1, b.y + .1]]); }
+  ballBall(a, b) {
+    const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy), min = BALL.r * 2;
+    if (d >= min || d < 1e-9) return;
+    const nx = dx / d, ny = dy / d, pen = min - d;
+    if (a.fixed || b.fixed) { const mover = a.fixed ? b : a, still = a.fixed ? a : b; if (Math.hypot(mover.vx, mover.vy) > 1e-6) { still.fixed = false; still.moved = true; } else return; }
+    a.x -= nx * pen / 2; a.y -= ny * pen / 2; b.x += nx * pen / 2; b.y += ny * pen / 2;
+    const vn = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+    if (vn < 0) { const j = -(1 + PHYS.ballRestitution) * vn / 2; a.vx -= j * nx; a.vy -= j * ny; b.vx += j * nx; b.vy += j * ny; }
+    if (Math.hypot(a.vx, a.vy) > 1e-6) a.moved = true; if (Math.hypot(b.vx, b.vy) > 1e-6) b.moved = true;
+    if (a.lastTouchT > b.lastTouchT) { b.lastTouch = a.lastTouch; } else if (b.lastTouchT > a.lastTouchT) { a.lastTouch = b.lastTouch; }
+  }
+
+  // ---------- regras ----------
+  checkRules(h) {
+    if (this.finished) return;
+    // GR 6.20: um robô que não sai da zona de partida em 10 s é retirado; se forem os dois, a equipa perde por 9:-4
+    if (this.elapsed >= TIMING.idleRemove - 1e-9 && !this.idleChecked) {
+      this.idleChecked = true;
+      for (const team of ['A', 'B']) {
+        const mine = this.robots.filter(r => r.team === team && r.status === 'ativo'), idle = mine.filter(r => !r.moved && !r.left);
+        for (const r of idle) { r.status = 'retirado'; r.action = null; this.emit('warning', `Robô ${r.id} retirado do campo: ficou parado na zona de partida durante 10 s (GR 6.20).`, 'Programa um movimento logo no início.'); }
+        if (mine.length && idle.length === mine.length) { this.violation(team, `Os robôs da equipa ${team} não saíram da zona de partida em 10 s (GR 6.20).`, '6.20'); return; }
+      }
+    }
+    // GR 6.32.4: depois de 30 s, se as bolas laranja estiverem todas na mesma metade durante 10 s, a partida termina e pontua-se
+    if (this.elapsed >= TIMING.halfAfter) {
+      const o = this.balls.filter(b => b.color === BALL.orange), counted = o.filter(b => !(b.fixed));
+      const sides = new Set(o.map(b => (b.fixed ? 'meio' : this.sideOf(b))));
+      if (counted.length === o.length && sides.size === 1) { this.timers.half += h; if (this.timers.half >= TIMING.halfHold) { this.endMatch('half', 'As 9 bolas laranja estiveram 10 s na mesma metade (GR 6.32.4).'); return; } } else this.timers.half = 0;
+    } else this.timers.half = 0;
+    // GR 6.30: os dois robôs de uma equipa não podem operar mais de 4 bolas ao mesmo tempo (>5 s)
+    for (const team of ['A', 'B']) {
+      const n = this.balls.filter(b => b.lastTouch === team && this.elapsed - b.lastTouchT < TIMING.operateTouch).length; this.touchCount[team] = n;
+    }
+    const over = ['A', 'B'].find(t => this.touchCount[t] > TIMING.operateMax);
+    if (over) { this.timers.operate += h; if (this.timers.operate >= TIMING.operateGrace) { this.violation(over, `A equipa ${over} operou mais de ${TIMING.operateMax} bolas durante ${TIMING.operateGrace} s (GR 6.30).`, '6.30', true); return; } } else this.timers.operate = 0;
+    // GR 6.32.10: todos os robôs de uma equipa retirados
+    for (const team of ['A', 'B']) {
+      const all = this.robots.filter(r => r.team === team && r.status !== 'ausente');
+      if (all.length && all.every(r => r.status === 'retirado')) { this.violation(team, `Todos os robôs da equipa ${team} foram retirados do campo (GR 6.32.10).`, '6.32.10'); return; }
+    }
+  }
+  sideOf(b) {   // GR 7.4: sem contacto com robô, a posição da bola define a equipa; com contacto, conta para o robô
+    for (const r of this.robots) if (r.status === 'ativo' && this.robotTouches(b, r)) return r.team;
+    return teamOf(b.x);
+  }
+  // Pontuação (GR 7.2): laranja +1, roxa −2; menos é melhor. A laranja do meio que não se moveu não conta (GR §5).
+  tally() {
+    const t = { A: { orange: 0, purple: 0, score: 0 }, B: { orange: 0, purple: 0, score: 0 } };
+    for (const b of this.balls) {
+      if (b.fixed && b.center) continue;
+      const side = this.sideOf(b); if (b.color === BALL.orange) t[side].orange++; else t[side].purple++;
+    }
+    for (const k of ['A', 'B']) t[k].score = t[k].orange - 2 * t[k].purple;
+    return t;
+  }
+  result() {
+    if (this.override) return this.override;
+    const t = this.tally(), a = t.A.score, b = t.B.score;
+    return { A: a, B: b, winner: a < b ? 'A' : b < a ? 'B' : 'empate', tally: t };
+  }
+  // Infração: a equipa que a comete perde por 9:-4 (GR 6.20, 6.27, 6.32.10…), ou a partida é pontuada como está (interromper=true).
+  violation(team, text, rule, keepScore = false) {
+    this.infractions[team].push({ rule, text, t: +this.elapsed.toFixed(2) });
+    if (keepScore) { this.endMatch('violation', text); return; }
+    this.override = team === 'A' ? { A: 9, B: -4, winner: 'B', tally: this.tally(), forfeit: team } : { A: -4, B: 9, winner: 'A', tally: this.tally(), forfeit: team };
+    this.endMatch('violation', text);
+  }
+  endMatch(reason, text) {
+    if (this.finished) return; this.finished = reason;
+    for (const r of this.robots) { if (r.action) { const a = r.action; r.action = null; a.resolve?.({ ok: false, reason: 'fim' }); } }
+    const res = this.result();
+    this.emit(reason === 'violation' ? 'error' : 'info', text, `Resultado: ${res.A} : ${res.B} — ${res.winner === 'empate' ? 'empate' : 'vence a equipa ' + res.winner}.`);
+  }
+
+  // ---------- sensores (para os programas) ----------
+  pose(robot) {
+    const p = this.real.p; let x = robot.x, y = robot.y, h = robot.heading;
+    if (this.real.active) { x += this.real.noise(p.poseSd); y += this.real.noise(p.poseSd); h += this.real.noise(p.poseHeadingSd); }
+    return { x: +x.toFixed(1), y: +y.toFixed(1), heading: +norm(h).toFixed(1) };
+  }
+  camera(robot) {
+    const out = [], fov = robot.cameraFov, range = robot.cameraRange, p = this.real.p;
+    for (const b of this.balls) {
+      const dx = b.x - robot.x, dy = b.y - robot.y, d = Math.hypot(dx, dy); if (d > range || d < 1e-9) continue;
+      const bearing = norm(deg(Math.atan2(dy, dx)) - robot.heading); if (Math.abs(bearing) > fov / 2) continue;
+      if (this.real.chance(p.camDropout)) continue;
+      if (this.blockedLine(robot.x, robot.y, b.x, b.y)) continue;
+      out.push({ color: b.color, distance: +(d * (1 + this.real.noise(p.camDistSd))).toFixed(1), bearing: +(bearing + this.real.noise(p.camBearingSd)).toFixed(1) });
+    }
+    return out.sort((a, b) => a.distance - b.distance);
+  }
+  blockedLine(x0, y0, x1, y1) {   // a barreira tapa a vista (a rampa não: é baixa, 5 cm)
+    const n = 24; for (let i = 1; i < n; i++) { const x = x0 + (x1 - x0) * i / n, y = y0 + (y1 - y0) * i / n; if (inRect(x, y, BARRIER)) return true; } return false;
+  }
+  range(robot, angle = 0) {   // distância (cm) até ao obstáculo à frente: parede, barreira, face da rampa ou robô
+    const a = rad(robot.heading + angle), c = Math.cos(a), s = Math.sin(a), maxD = 200, step = .5, p = this.real.p;
+    for (let d = 0; d <= maxD; d += step) {
+      const x = robot.x + c * d, y = robot.y + s * d;
+      if (x < 0 || y < 0 || x > FIELD.width || y > FIELD.height || inRect(x, y, BARRIER)) return +(Math.max(0, d - 0) + this.real.noise(p.rangeSd)).toFixed(1);
+      if (d > 0 && ((robot.team === 'A' && x > CENTER_X) || (robot.team === 'B' && x < CENTER_X))) return +d.toFixed(1);
+      for (const o of this.robots) if (o !== robot && o.status === 'ativo' && Math.hypot(o.x - x, o.y - y) < Math.min(o.length, o.width) / 2) return +d.toFixed(1);
+    }
+    return maxD;
+  }
+  floor(robot) { return floorColor(robot.x, robot.y); }
+}
+
+// ---------- jogo de 3 partidas (GR 7.6, 7.7) ----------
+function gamePoints(results) {   // results: [{winner:'A'|'B'|'empate'}…] das partidas já disputadas
+  const w = { A: 0, B: 0 }; for (const r of results) if (r.winner === 'A' || r.winner === 'B') w[r.winner]++;
+  const done = results.length;
+  if (done < 3) return { A: null, B: null, wins: w, done };
+  if (w.A > w.B) return { A: 3, B: 0, wins: w, done, winner: 'A' };
+  if (w.B > w.A) return { A: 0, B: 3, wins: w, done, winner: 'B' };
+  return { A: 1, B: 1, wins: w, done, winner: 'empate' };   // GR 7.7
+}
+
+return {FIELD,CENTER_X,BALL,BARRIER,RAMP_HEIGHT,RAMPS,RED,START_ZONES,BLACK_LINES,LINE_Y,SLOT_X,CENTER_BALL,PHYS,TIMING,MIN_DURATION,ROBOT_LIMIT,LEVELS,norm,teamOf,otherTeam,robotPoly,polyOverlap,layoutBalls,matchDuration,rampAt,rampHeight,floorColor,DEFAULT_SPEC,checkSpec,TennisWorld,gamePoints};
+})();
+__modules["tennis-ai.js"] = (() => {
+// WRO Double Tennis — adversário com níveis. NÃO vem do regulamento (que só descreve as regras): é uma invenção deste simulador.
+// Os robôs do adversário cumprem as mesmas regras e usam o mesmo motor que os do aluno (colisões, rampas, zona vermelha).
+// Cada nível define velocidade, quantos robôs usa e se pontapeia. Tudo é determinístico (sem sorteios durante a partida).
+const { TennisWorld, FIELD, BARRIER, RAMPS, CENTER_X, BALL:B, norm } = __modules["tennis.js"];
+
+const AI_LEVELS = {
+  treino:   { label: 'Treino (sem adversário)', robots: 0, speed: 0, push: 0, turn: 0, pause: 0, kick: false, lower: false, text: 'O adversário não joga: os robôs dele ficam fora do campo. Serve para afinar o programa sem o adversário mandar bolas para o teu lado.' },
+  aprendiz: { label: 'Aprendiz', robots: 1, speed: 22, push: 40, turn: 100, pause: 1.5, kick: false, lower: false, text: 'Um só robô, devagar, só trata das bolas do lado de cima e faz pausas.' },
+  regular:  { label: 'Regular',  robots: 2, speed: 35, push: 45, turn: 130, pause: .3,  kick: false, lower: true,  text: 'Dois robôs a empurrar as bolas pela rampa, sem tocar na bola roxa.' },
+  avancado: { label: 'Avançado', robots: 2, speed: 55, push: 55, turn: 160, pause: 0,   kick: true,  lower: true,  text: 'Dois robôs rápidos que pontapeiam as bolas pela rampa e as mandam fundo no teu campo.' },
+};
+const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ROBOT_MARGIN = 1.2;
+
+// Para onde empurrar uma bola do lado B (metade da direita), ou null se não vale a pena / não é possível.
+// Trajeto das bolas de baixo: para a direita até passarem a ponta da barreira, para cima até à linha de cima e para a rampa.
+function legFor(ball, level, robot) {
+  if (ball.color !== B.orange) return null;                       // nunca mexe na roxa: fica na sua metade (−2 para quem a tem)
+  if (ball.x < CENTER_X + 1) return null;
+  const hw = robot.width / 2 + ROBOT_MARGIN, db = robot.length / 2 + B.r + 1.5, cfg = AI_LEVELS[level];
+  const topY = RAMPS.upper.y1 - 2.5, botY = RAMPS.lower.y0 + 2.5, pastBarrier = ball.x > BARRIER.x1 + 3;
+  if (ball.y < topY || (pastBarrier && ball.y <= 46.5)) {   // zona de cima: a rampa de B está aqui
+    if (ball.x < RAMPS.upper.red[1] + 1.2) return null;                       // já está no topo da rampa (zona vermelha): o robô não pode lá ir
+    if (ball.x > FIELD.width - robot.length / 2 - db) return null;        // encostada à parede do fundo: sem espaço para ficar atrás dela
+    const yr = clamp(ball.y, hw + .5, RAMPS.upper.y1 - hw - .5);
+    if (Math.abs(ball.y - yr) > 1.2) return { D: { x: ball.x, y: yr }, v: cfg.push, kick: false, role: 0 };
+    return { D: { x: RAMPS.upper.red[1] - .3, y: yr }, v: cfg.push, kick: cfg.kick && ball.x > 150 && ball.x < 205, role: 0 };
+  }
+  if (!cfg.lower) return null;
+  if (pastBarrier) return ball.y < FIELD.height - robot.width * .36 - db - 1 ? { D: { x: ball.x > 205 ? ball.x : Math.min(ball.x, 210.5), y: 40 }, v: cfg.push * .8, kick: false, role: 1 } : null;   // empurra para cima, ao longo da parede do fundo (o robô do adversário é estreito: cabe junto à parede)
+  if (ball.y > botY) {   // zona de baixo: tem de dar a volta à ponta da barreira
+    if (ball.x < CENTER_X + robot.length + B.r + 6 || ball.y < BARRIER.y1 + robot.width * .36 + ROBOT_MARGIN - .8) return null;   // colada à rampa do adversário ou à barreira: não dá para ficar atrás dela
+    return { D: { x: BARRIER.x1 + hw + 6, y: ball.y }, v: cfg.push * .8, kick: false, role: 1 };
+  }
+  return null;
+}
+
+function createOpponent(level = 'regular') {
+  const cfg = AI_LEVELS[level] || AI_LEVELS.regular;
+  const brains = new Map();
+  const target = (w, r, tx, ty, v, tol = 1.2) => {   // vai para um ponto; devolve true quando chegou
+    const dx = tx - r.x, dy = ty - r.y, d = Math.hypot(dx, dy); if (d <= tol) return true;
+    const err = norm(deg(Math.atan2(dy, dx)) - r.heading), h = w.h;
+    if (Math.abs(err) > 12) { w.moveRobot(r, r.x, r.y, norm(r.heading + Math.sign(err) * Math.min(Math.abs(err), cfg.turn * h)), h); return false; }
+    const step = Math.min(d, v * h), nh = norm(r.heading + clamp(err, -cfg.turn * h * 2, cfg.turn * h * 2));
+    const bad = w.moveRobot(r, r.x + Math.cos(rad(r.heading)) * step, r.y + Math.sin(rad(r.heading)) * step, nh, h);
+    if (bad) { r.ai.blocked = (r.ai.blocked || 0) + 1; }
+    return false;
+  };
+  const GATE_X = BARRIER.x1 + 16, side = y => (y < (BARRIER.y0 + BARRIER.y1) / 2 ? 'N' : 'S');
+  const go = (w, r, tx, ty, v, tol) => {   // como target(), mas contorna a barreira pela ponta direita
+    const sr = side(r.y), sd = side(ty);
+    if (sr !== sd) return target(w, r, GATE_X, (r.x < GATE_X - 8 ? sr : sd) === 'N' ? 38 : 76, v, 2) && false;
+    return target(w, r, tx, ty, v, tol);
+  };
+  const face = (w, r, angle) => {
+    const err = norm(angle - r.heading), h = w.h; if (Math.abs(err) < 3) return true;
+    w.moveRobot(r, r.x, r.y, norm(r.heading + Math.sign(err) * Math.min(Math.abs(err), cfg.turn * h)), h); return false;
+  };
+  // Um passo do empurrão: aproxima-se por trás da bola, alinha-se e empurra (ou pontapeia).
+  const pushStep = (w, r, ball, leg) => {
+    const dx = leg.D.x - ball.x, dy = leg.D.y - ball.y, dist = Math.hypot(dx, dy);
+    const sp = Math.hypot(ball.vx, ball.vy);
+    if (dist < 1.4 || (leg.D.x >= 130 && sp > 8 && dist <= .9 * sp * sp / (2 * 25))) return 'feito';   // a bola ainda rola: pára de empurrar e deixa-a chegar
+    const ux = dx / dist, uy = dy / dist, nx = -uy, ny = ux, db = r.length / 2 + B.r + 1.5, ang = deg(Math.atan2(uy, ux));
+    const rx = r.x - ball.x, ry = r.y - ball.y, s = rx * ux + ry * uy, q = rx * nx + ry * ny;
+    const behind = s < -db + 3 && s > -db - 5 && Math.abs(q) < 2.6;
+    if (behind) {
+      if (leg.D.x < 130 && r.x < RAMPS.upper.red[1] + r.length / 2 + r.width / 2 * .45 + 2.2) return 'feito';   // não encostar à zona vermelha (GR 6.27)
+      if (!face(w, r, ang)) return 'a';
+      if (leg.kick && Math.hypot(ball.vx, ball.vy) < 3 && -s <= r.length / 2 + B.r + 2.2) { if (w.elapsed >= r.kickReadyAt) { w.doKick(r, 1); r.kickReadyAt = w.elapsed + 1; } return 'a'; }
+      if (leg.kick && Math.hypot(ball.vx, ball.vy) > 3) return 'a';
+      const aim = ang + clamp(-q * 3, -12, 12);
+      const bad = w.moveRobot(r, r.x + Math.cos(rad(r.heading)) * leg.v * w.h, r.y + Math.sin(rad(r.heading)) * leg.v * w.h, norm(r.heading + clamp(norm(aim - r.heading), -2, 2)), w.h);
+      if (bad) { r.ai.blocked = (r.ai.blocked || 0) + 1; return 'bloq'; }
+      return 'a';
+    }
+    // chegar ao ponto de partida (atrás da bola), contornando-a se estiver no caminho
+    let px = ball.x - ux * db, py = ball.y - uy * db;
+    const near = (ax, ay, bx, by) => {   // distância da bola ao segmento a→b
+      const vx = bx - ax, vy = by - ay, l2 = vx * vx + vy * vy || 1, t = clamp(((ball.x - ax) * vx + (ball.y - ay) * vy) / l2, 0, 1);
+      return Math.hypot(ball.x - (ax + vx * t), ball.y - (ay + vy * t));
+    };
+    if (near(r.x, r.y, px, py) < 11.5 && Math.hypot(px - r.x, py - r.y) > 3) {   // a bola está no caminho: contorna-a e chega ao ponto de partida pelo lado
+      const m = r.width * .36 * Math.SQRT2 + 1;
+      let sd = (rx * nx + ry * ny) >= 0 ? 1 : -1;
+      const wp = k => ({ x: px + nx * k * 16, y: py + ny * k * 16 }), inField = p => p.x >= m && p.x <= FIELD.width - m && p.y >= m && p.y <= FIELD.height - m;
+      if (!inField(wp(sd))) sd = -sd;
+      let tgt = wp(sd);
+      if (near(r.x, r.y, tgt.x, tgt.y) < 11.5) tgt = { x: ball.x + nx * sd * 18, y: ball.y + ny * sd * 18 };   // ainda passaria por cima da bola: vai primeiro para o lado dela
+      go(w, r, clamp(tgt.x, m, FIELD.width - m), clamp(tgt.y, m, FIELD.height - m), cfg.speed, 2); return 'a';
+    }
+    const hh = r.width * .36; px = clamp(px, hh + 1, FIELD.width - hh - 1); py = clamp(py, hh + 1, FIELD.height - hh - 1);   // o robô do adversário usa um casco estreito: cabe junto às paredes
+    if (go(w, r, px, py, cfg.speed, 1.5)) face(w, r, ang);
+    return 'a';
+  };
+  return {
+    level, cfg, brains,
+    step(w, h) {
+      const mine = w.robots.filter(r => r.team === 'B' && r.status === 'ativo');
+      const claimed = new Set([...brains.values()].map(b => b.ball).filter(x => x != null));
+      for (const r of mine) {
+        r.ai = r.ai || {}; let b = brains.get(r.id); if (!b) { b = { ball: null, wait: 0, stuck: 0 }; brains.set(r.id, b); }
+        if (b.wait > 0) { b.wait -= h; continue; }
+        let ball = b.ball != null ? w.balls[b.ball] : null, leg = ball ? legFor(ball, level, r) : null;
+        if (leg && cfg.robots >= 2 && leg.role !== r.index) leg = null;   // cada robô tem o seu papel: B1 rampa, B2 bolas de baixo
+        if (ball && !leg) { claimed.delete(b.ball); b.ball = null; ball = null; if (cfg.pause) b.wait = cfg.pause; continue; }
+        if (!ball) {
+          let best = null, bestCost = 1e9;
+          for (const c of w.balls) {
+            if (claimed.has(c.id) || c.fixed) continue; const l = legFor(c, level, r); if (!l || (l.role !== undefined && l.role !== (cfg.robots < 2 ? 0 : r.index))) continue;
+            const cost = Math.hypot(c.x - r.x, c.y - r.y) + Math.hypot(l.D.x - c.x, l.D.y - c.y) * .5;
+            if (cost < bestCost) { bestCost = cost; best = { c, l }; }
+          }
+          if (!best) {   // sem trabalho: espera (as bolas que sobram estão coladas à parede, à barreira ou à rampa e o robô não consegue ficar atrás delas)
+            r.ai.idle = (r.ai.idle || 0) + h;
+            if (r.ai.idle > 3 && !r.ai.said) { r.ai.said = true; w.emit('info', `${r.id} (adversário): já não há bolas que consiga empurrar.`, 'As que sobram ficam coladas à parede, à barreira ou à rampa. Fica à espera.'); }
+            continue;
+          }
+          r.ai.idle = 0; r.ai.said = false;
+          b.ball = best.c.id; claimed.add(best.c.id); ball = best.c; leg = best.l; b.stuck = 0;
+        }
+        const res = pushStep(w, r, ball, leg); r.ai.last = res;
+        if (res === 'feito') { claimed.delete(b.ball); b.ball = null; b.wait = cfg.pause; }
+        else if (res === 'bloq' || (r.ai.blocked || 0) > 90) { r.ai.blocked = 0; claimed.delete(b.ball); b.ball = null; b.wait = .4 + (r.index ? .2 : 0); }
+      }
+    },
+  };
+}
+
+// Cria uma partida completa (motor + adversário do nível pedido).
+function createMatch(options = {}) {
+  const w = new TennisWorld(options), level = w.level, cfg = AI_LEVELS[level];
+  w.robots[3].status = cfg.robots >= 2 ? 'ativo' : 'ausente'; if (cfg.robots < 1) w.robots[2].status = 'ausente';   // treino: sem adversário
+  for (const r of w.robots) if (r.team === 'B') r.ghost = true;
+  w.opponent = createOpponent(level);
+  return w;
+}
+
+return {AI_LEVELS,legFor,createOpponent,createMatch};
+})();
+__modules["loop-guard.js"] = (() => {
+// Proteção contra ciclos infinitos (Parte C da 0.7.0).
+// O programa do aluno corre no próprio separador; um `while (true) {}` sem `await` bloquearia a página.
+// Antes de executar, cada cabeçalho de `while (…)`, `do … while (…)` e `for (…; cond; …)` passa a chamar `__guard()`,
+// que conta voltas desde o último avanço do simulador e lança um erro claro quando passam do limite.
+// Analisador léxico mínimo: ignora texto dentro de cadeias, modelos (`…`) e comentários.
+
+const LOOP_LIMIT = 2_000_000;
+
+function skipString(src, i) {   // i aponta para a aspa de abertura; devolve o índice a seguir à aspa de fecho
+  const q = src[i]; i++;
+  while (i < src.length) {
+    if (src[i] === '\\') { i += 2; continue; }
+    if (q === '`' && src[i] === '$' && src[i + 1] === '{') {   // ${ … } dentro de um modelo
+      let depth = 1; i += 2;
+      while (i < src.length && depth) { const c = src[i]; if (c === "'" || c === '"' || c === '`') { i = skipString(src, i); continue; } if (c === '{') depth++; else if (c === '}') depth--; i++; }
+      continue;
+    }
+    if (src[i] === q) return i + 1;
+    i++;
+  }
+  return i;
+}
+function skipComment(src, i) {
+  if (src[i + 1] === '/') { const e = src.indexOf('\n', i); return e < 0 ? src.length : e; }
+  const e = src.indexOf('*/', i + 2); return e < 0 ? src.length : e + 2;
+}
+function matchParen(src, i) {   // i aponta para '('; devolve o índice do ')' correspondente, ou -1
+  let depth = 0;
+  for (let k = i; k < src.length;) {
+    const c = src[k];
+    if (c === "'" || c === '"' || c === '`') { k = skipString(src, k); continue; }
+    if (c === '/' && (src[k + 1] === '/' || src[k + 1] === '*')) { k = skipComment(src, k); continue; }
+    if (c === '(') depth++; else if (c === ')') { depth--; if (!depth) return k; }
+    k++;
+  }
+  return -1;
+}
+function topLevelSemicolons(s) {
+  const out = []; let depth = 0;
+  for (let k = 0; k < s.length;) {
+    const c = s[k];
+    if (c === "'" || c === '"' || c === '`') { k = skipString(s, k); continue; }
+    if ('([{'.includes(c)) depth++; else if (')]}'.includes(c)) depth--; else if (c === ';' && !depth) out.push(k);
+    k++;
+  }
+  return out;
+}
+
+// Devolve o código com as chamadas a __guard() inseridas. Não altera o significado do programa.
+function instrumentLoops(src) {
+  const edits = [];   // [posição, texto a inserir]
+  for (let i = 0; i < src.length;) {
+    const c = src[i];
+    if (c === "'" || c === '"' || c === '`') { i = skipString(src, i); continue; }
+    if (c === '/' && (src[i + 1] === '/' || src[i + 1] === '*')) { i = skipComment(src, i); continue; }
+    const m = /^(while|for)\b/.exec(src.slice(i, i + 6));
+    if (m && !/[\w$.]/.test(src[i - 1] || '')) {
+      let k = i + m[1].length; while (/\s/.test(src[k] || '')) k++;
+      if (m[1] === 'for' && src.startsWith('await', k)) { k += 5; while (/\s/.test(src[k] || '')) k++; }
+      if (src[k] === '(') {
+        const end = matchParen(src, k);
+        if (end > 0) {
+          if (m[1] === 'while') { edits.push([k + 1, '__guard() && ('], [end, ')']); }
+          else {
+            const inner = src.slice(k + 1, end), semis = topLevelSemicolons(inner);
+            if (semis.length === 2) {   // for (início; condição; passo): só a condição é protegida; for…of/in percorrem coleções finitas
+              const a = k + 1 + semis[0] + 1, b = k + 1 + semis[1], cond = src.slice(a, b);
+              if (cond.trim()) edits.push([a, ' __guard() && ('], [b, ')']); else edits.push([a, ' __guard()']);
+            }
+          }
+        }
+      }
+      i += m[1].length; continue;
+    }
+    i++;
+  }
+  edits.sort((p, q) => q[0] - p[0]);
+  let out = src; for (const [pos, text] of edits) out = out.slice(0, pos) + text + out.slice(pos);
+  return out;
+}
+
+// Contador partilhado: o executor chama reset() sempre que o simulador avança.
+function createGuard(limit = LOOP_LIMIT) {
+  let n = 0;
+  const guard = () => { if (++n > limit) throw new Error('Ciclo sem fim: o programa repetiu mais de 2 milhões de vezes sem esperar pelo robô. Dentro de um ciclo, usa pelo menos um comando com await (por exemplo, await robot.wait(0.1)).'); return true; };
+  return { guard, reset: () => { n = 0; } };
+}
+
+return {LOOP_LIMIT,instrumentLoops,createGuard};
+})();
+__modules["tennis-runner.js"] = (() => {
+// Executor dos programas do Double Tennis: a equipa tem DOIS robôs, cada um com o seu programa (JavaScript assíncrono).
+// Os dois correm em paralelo no mesmo relógio da simulação e podem trocar mensagens (team.send / team.receive).
+// O código do aluno recebe cópias congeladas do mapa e da especificação do robô (não pode alterar o motor).
+const { instrumentLoops, createGuard } = __modules["loop-guard.js"];
+const { FIELD, CENTER_X, BARRIER, BALL, RAMPS, START_ZONES, RED, LINE_Y, SLOT_X, RAMP_HEIGHT, PHYS, TIMING, MIN_DURATION, MAX_DURATION, ROBOT_LIMIT } = __modules["tennis.js"];
+
+class RunEnded extends Error { constructor() { super('A partida terminou.'); this.name = 'RunEnded'; } }
+const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+const INSTANT_LIMIT = 5000;
+const deepFreeze = o => { if (o && typeof o === 'object' && !Object.isFrozen(o)) { Object.freeze(o); for (const v of Object.values(o)) deepFreeze(v); } return o; };
+const MAP = deepFreeze(structuredClone({
+  field: FIELD, centerX: CENTER_X, barrier: BARRIER, ball: { radius: BALL.r }, ramps: RAMPS, redZones: RED, startZones: START_ZONES,
+  ballLines: LINE_Y, ballSlotX: SLOT_X, rampHeight: RAMP_HEIGHT, minDuration: MIN_DURATION, maxDuration: MAX_DURATION, robotLimit: ROBOT_LIMIT,
+  idleSeconds: TIMING.idleRemove, kickCooldown: PHYS.kickCooldown,
+}));
+const MAIL_LIMIT = 100;
+
+function createApi(world, robot, counter = { instant: 0 }) {
+  const guard = () => { if (world.finished || robot.status !== 'ativo') throw new RunEnded(); };
+  const act = a => {
+    guard();
+    if (++counter.instant > INSTANT_LIMIT) throw new Error(`O programa deu mais de ${INSTANT_LIMIT} comandos seguidos sem o robô se mexer. Verifica se um ciclo repete um comando que não faz nada (por exemplo, andar 0 cm).`);
+    return world.start(robot, a);
+  };
+  const num = (v, name) => { if (!Number.isFinite(v)) throw new Error(`${name}: valor inválido.`); return v; };
+  const sideways = (str, name) => { if (str && !robot.holonomic) { world.emit('warning', `${robot.id}: este robô não se desloca de lado.`, 'Escolhe «Omnidirecional» na tração, ou usa robot.turn() e robot.forward().'); throw new Error(`${name}: este robô tem tração diferencial e não anda de lado.`); } };
+  const mine = robot.index, partner = world.robots.find(r => r.team === robot.team && r !== robot);
+  const api = {
+    id: robot.id, number: robot.index + 1, map: MAP, spec: deepFreeze({ length: robot.length, width: robot.width, height: robot.height, mass: robot.mass, holonomic: robot.holonomic, driveSpeed: robot.driveSpeed, turnSpeed: robot.turnSpeed, kicker: robot.kicker, cameraRange: robot.cameraRange, cameraFov: robot.cameraFov }),
+    drive: (forward, strafe = 0) => { sideways(num(strafe, 'drive'), 'robot.drive'); return act({ type: 'drive', fwd: num(forward, 'drive'), str: strafe }); },
+    forward: cm => act({ type: 'drive', fwd: num(cm, 'forward'), str: 0 }),
+    strafe: cm => { sideways(num(cm, 'strafe'), 'robot.strafe'); return act({ type: 'drive', fwd: 0, str: cm }); },
+    turn: deg => act({ type: 'turn', deg: num(deg, 'turn') }),
+    wait: s => act({ type: 'wait', seconds: num(s, 'wait') }),
+    kick: (power = 1) => act({ type: 'kick', power: num(power, 'kick') }),
+    // sensores (instantâneos)
+    pose: () => { guard(); return world.pose(robot); },
+    camera: () => { guard(); return world.camera(robot); },
+    range: (angle = 0) => { guard(); return world.range(robot, num(angle, 'range')); },
+    floorColor: () => { guard(); return world.floor(robot); },
+    time: () => world.elapsed,
+    say: text => { guard(); world.say(robot, text); },
+    log: (...a) => world.emit('info', `${robot.id}: ${a.join(' ')}`),
+  };
+  const team = {
+    // Só entre os dois robôs da mesma equipa (GR 8.6). Aceita números, texto, listas e objetos simples.
+    send: msg => { guard(); if (!partner) return false; let copy; try { copy = structuredClone(msg); } catch { throw new Error('team.send: só se podem enviar números, texto, listas e objetos simples.'); } const box = world.mail[robot.team][partner.index]; if (box.length >= MAIL_LIMIT) box.shift(); box.push({ from: robot.index + 1, t: +world.elapsed.toFixed(2), data: copy }); return true; },
+    receive: () => { guard(); const m = world.mail[robot.team][mine].shift(); return m === undefined ? undefined : m.data; },
+    peek: () => { guard(); return world.mail[robot.team][mine].length; },
+    partnerPose: () => { guard(); return partner && partner.status === 'ativo' ? world.pose(partner) : null; },   // posição do parceiro (por rádio/odometria partilhada)
+  };
+  return { api, team };
+}
+
+class TennisRunner {
+  // codes: [programa do robô 1, programa do robô 2]. Um programa vazio = esse robô não entra em jogo (GR 6.16: pode-se jogar só com um robô).
+  constructor(world, codes) {
+    this.world = world; this.slots = [];
+    for (let i = 0; i < 2; i++) {
+      const robot = world.robots[i], code = (codes[i] || '').trim();
+      const slot = { robot, done: !code, error: null, started: false, loops: createGuard(), counter: { instant: 0 }, fn: null };
+      if (!code) { robot.status = 'ausente'; }
+      else {
+        try { slot.fn = new AsyncFunction('robot', 'team', '__guard', `"use strict";\n${instrumentLoops(code)}`); }
+        catch (e) { slot.error = e; slot.done = true; world.emit('error', `Erro de sintaxe no programa do robô ${i + 1}.`, String(e.message)); }
+      }
+      this.slots.push(slot);
+    }
+    if (this.slots.every(s => s.robot.status === 'ausente')) world.emit('warning', 'Nenhum programa escrito.', 'Escreve pelo menos o programa do robô 1.');
+  }
+  async settle() { for (let i = 0; i < 12; i++) await Promise.resolve(); }
+  async begin() {
+    for (const s of this.slots) {
+      if (s.started || s.done) continue; s.started = true;
+      const { api, team } = createApi(this.world, s.robot, s.counter);
+      s.fn(api, team, s.loops.guard).then(() => { s.done = true; }, e => { s.done = true; if (!(e instanceof RunEnded)) { s.error = e; this.world.emit('error', `Erro no programa do robô ${s.robot.index + 1}.`, String(e.message)); } });
+    }
+    await this.settle();
+  }
+  async advance(dt) {
+    for (const s of this.slots) { s.loops.reset(); s.counter.instant = 0; }
+    await this.begin();
+    if (this.world.finished) return;
+    this.world.tick(dt); await this.settle();
+  }
+  get over() { return !!this.world.finished; }
+  get errors() { return this.slots.filter(s => s.error).map(s => ({ robot: s.robot.index + 1, message: String(s.error.message) })); }
+}
+
+// Corre a partida até ao fim (testes, «testar em 10 sorteios»).
+async function runMatch(world, codes, { dt = 1 / 30, maxSteps = 20000 } = {}) {
+  const runner = new TennisRunner(world, codes);
+  for (let i = 0; i < maxSteps && !runner.over; i++) await runner.advance(dt);
+  return { runner, result: world.result() };
+}
+
+return {RunEnded,INSTANT_LIMIT,deepFreeze,MAP,createApi,TennisRunner,runMatch};
+})();
+__modules["tennis-examples.js"] = (() => {
+// Programas de exemplo do Double Tennis. Cada exemplo tem DOIS programas (robô 1 e robô 2). Usam o mapa fixo e a câmara.
+// Ideia central: pontapear uma bola ao longo da linha onde está, para cima da rampa; ela cai do outro lado da linha do meio.
+const LIB = `
+// ---- auxiliares: andar para um ponto e alinhar, confirmando a posição com robot.pose() ----
+function norm(a) { return ((a % 360) + 540) % 360 - 180; }
+async function face(h) { for (let i = 0; i < 4; i++) { const d = norm(h - robot.pose().heading); if (Math.abs(d) <= .6) return; await robot.turn(d); } }
+async function moveTo(x, y) {                       // vira para o ponto e anda até lá (corrige 2 vezes)
+  if (robot.pose().x < 13) await robot.forward(8);    // na zona de partida o robô está colado à parede: sai um pouco antes de rodar
+  for (let i = 0; i < 3; i++) {
+    const p = robot.pose(), dx = x - p.x, dy = y - p.y, d = Math.hypot(dx, dy); if (d < 1) return;
+    await face(Math.atan2(dy, dx) * 180 / Math.PI); await robot.forward(d);
+  }
+}
+// Pontapeia a laranja da linha y, a partir de x = fromX. Junto à parede de baixo o robô não consegue rodar, por isso fica um pouco acima da linha
+// (a bola continua na linha y: o pontapé empurra-a na direção do robô). Devolve true se havia uma laranja livre à frente.
+async function kickRow(y, fromX) {
+  const yRobot = Math.min(y, 96);
+  await moveTo(fromX, yRobot); await face(0); await robot.wait(.2);
+  const p = robot.pose(), rad = Math.PI / 180;
+  const seen = robot.camera().filter(b => Math.abs(b.distance * Math.sin(b.bearing * rad) - (y - p.y)) < 3);   // bolas na linha pedida
+  if (!seen.length || seen[0].color !== 'laranja') return false;        // nada à vista, ou a roxa está à frente (não lhe tocar)
+  const gap = seen[0].distance * Math.cos(seen[0].bearing * rad) - 11.5;   // o pontapé alcança até ~14 cm do centro do robô
+  if (gap > 0) await robot.forward(gap);
+  await robot.kick(1); await robot.wait(.3);
+  return true;
+}
+
+// ---- caçador: procura laranjas com a câmara, vai para trás delas e pontapeia-as para cima da rampa ----
+function scan(yMin, yMax) {                          // laranjas à vista, em coordenadas do campo, da mais perto para a mais longe
+  const p = robot.pose(), out = [];
+  for (const b of robot.camera()) {
+    const a = (p.heading + b.bearing) * Math.PI / 180, x = p.x + b.distance * Math.cos(a), y = p.y + b.distance * Math.sin(a);
+    if (b.color === 'laranja' && x >= 40 && x < 84 && y >= yMin && y <= yMax) out.push({ x, y });
+  }
+  return out;
+}
+async function goTo(x, y) {
+  const p = robot.pose();
+  if (p.y < 62 && y > 56) await moveTo(16, 66);   // desce pelo corredor da esquerda: a barreira começa em x = 40
+  if (p.x < 30 && Math.abs(robot.pose().y - y) > 14) await moveTo(16, y);   // e só depois vai para a direita (não corta o caminho ao parceiro)
+  await moveTo(x, y);
+}
+async function attack(t) {
+  const q = team.partnerPose();
+  if (q && Math.hypot(q.x - (t.x - 18), q.y - Math.min(t.y, 96)) < 19) { await robot.wait(1); return false; }   // o parceiro está no caminho
+  await goTo(Math.max(t.x - 18, 24), Math.min(t.y, 96));      // um pouco atrás da bola, na mesma linha
+  await face(0); await robot.wait(.2);
+  const p = robot.pose(), rad = Math.PI / 180;
+  const line = robot.camera().filter(b => Math.abs(b.distance * Math.sin(b.bearing * rad) - (t.y - p.y)) < 3);
+  if (!line.length || line[0].color !== 'laranja') return false;   // a bola já não está lá, ou há uma roxa à frente (não lhe tocar)
+  const gap = line[0].distance * Math.cos(line[0].bearing * rad) - 11.5;
+  if (gap > 0) await robot.forward(gap);
+  await robot.kick(1); await robot.wait(.3);
+  return true;
+}
+async function hunt(yMin, yMax) {                    // caçador da metade de baixo: vai alternando entre dois postos de observação
+  const posts = [78, 96];
+  for (let turn = 0; true; turn++) {
+    const postY = posts[turn % 2];
+    robot.say('vou ao posto y=' + postY + ' e olho para a frente');
+    await goTo(34, postY); await face(0); await robot.wait(.3);
+    const list = scan(yMin, yMax);
+    if (list.length) { robot.say('vejo ' + list.length + ' laranja(s); ataco a de x=' + Math.round(list[0].x) + ', y=' + Math.round(list[0].y)); await attack(list[0]); }
+    else { robot.say('nada à vista deste posto'); await robot.forward(5); await robot.forward(-5); await robot.wait(1); }
+  }
+}
+
+// ---- transportador: as bolas da metade de cima não passam a rampa; têm de descer pelo corredor da esquerda (a barreira começa em x = 40) ----
+var farBalls = 0;                                    // laranjas vistas demasiado perto da rampa do adversário
+function seeUpper() {                                // laranjas à vista na metade de cima que o robô consegue empurrar (x <= 95: tem de ficar atrás delas)
+  const p = robot.pose(), out = [];
+  for (const b of robot.camera()) {
+    const a = (p.heading + b.bearing) * Math.PI / 180, x = p.x + b.distance * Math.cos(a), y = p.y + b.distance * Math.sin(a);
+    if (b.color === 'laranja' && x > 95 && x < 118 && y < 56) farBalls++;
+    if (b.color === 'laranja' && x > 36 && x <= 95 && y > 6 && y < 52) out.push({ x, y });
+  }
+  return out;
+}
+async function lookUpper() {                         // dá uma volta de observação a meio do campo de cima e junta o que vê
+  const found = []; farBalls = 0;
+  if (robot.pose().y > 50) await moveTo(15, 40);          // vem do corredor: volta a subir antes de ir para o meio do campo
+  for (const spot of [[86, 34]]) {
+    await moveTo(spot[0], spot[1]);
+    for (const h of [180, 0]) { await face(h); await robot.wait(.2); for (const b of seeUpper()) if (!found.some(f => Math.hypot(f.x - b.x, f.y - b.y) < 4)) found.push(b); }
+  }
+  return found;
+}
+async function carry(t) {                            // 1) empurra a bola para oeste; 2) empurra-a para sul pelo corredor; 3) pontapeia-a para leste
+  robot.say('levo a bola de x=' + Math.round(t.x) + ', y=' + Math.round(t.y) + ' para o corredor');
+  let yb = t.y;                                       // y em que a bola vai ficar no corredor
+  await moveTo(robot.pose().x, 34);                   // anda pelo meio (y = 34), onde não há bolas
+  if (t.y < 30) {                                     // bola de cima: empurra-a na diagonal (sudoeste), porque junto à borda de cima o robô não consegue rodar
+    const ang = 160, u = [Math.cos(ang * Math.PI / 180), Math.sin(ang * Math.PI / 180)];
+    await moveTo(t.x + 14 * 0.94, 34); await moveTo(t.x + 14 * 0.94, t.y - 14 * u[1]); await face(ang);
+    await robot.forward((t.x - 30) / 0.94 - 15);      // a bola continua a rolar: acaba cerca de 29 cm à frente do robô, em x ≈ 30
+    yb = t.y + 0.364 * (t.x - 30);
+  } else {                                            // bola de baixo (y = 46): em linha reta para oeste
+    const x0 = Math.max(t.x + 14, 73), row = Math.min(t.y, 43);   // (a 43 cm da borda: mais perto da barreira o robô não consegue rodar)
+    await moveTo(x0, 34); await moveTo(x0, row); await face(180);
+    await robot.forward(x0 - 59);                     // o robô pára em x = 59; a bola fica cerca de 29 cm à frente (x ≈ 30)
+    yb = row;
+  }
+  await robot.wait(1.5);
+  robot.say('a bola está no corredor; vou para cima dela e empurro-a para sul');
+  const yTop = Math.max(13, yb - 30);
+  const yEnd = Math.max(33, yb - 7);                  // onde o robô pára: a bola rola e fica 29 cm à frente (y ≈ 62 a 68), já por baixo da barreira
+  await moveTo(30, yTop); await face(90); await robot.forward(yEnd - yTop);
+  await robot.wait(1.5);
+  for (let i = 0; i < 20; i++) { const q = team.partnerPose(); if (!q || Math.hypot(q.x - 15, q.y - (yEnd + 29)) > 30) break; await robot.wait(.5); }   // o parceiro não pode estar no meu caminho
+  robot.say('vou para o lado de fora da bola e pontapeio-a para a rampa');
+  await face(180); await robot.forward(15); await face(90); await robot.forward(29); await face(0); await robot.wait(.2);   // x = 15, ao lado da bola
+  if (!(await kickAhead(40, 6))) { robot.say('perdi a bola de vista'); return false; }
+  return true;
+}
+async function kickAhead(maxDist, maxSide) {         // aproxima-se da laranja que está mesmo à frente (a bola pode rolar um pouco) e pontapeia-a
+  const rad = Math.PI / 180;
+  for (let i = 0; i < 4; i++) {
+    const line = robot.camera().filter(b => b.color === 'laranja' && b.distance < maxDist && Math.abs(b.distance * Math.sin(b.bearing * rad)) < maxSide);
+    if (!line.length) return false;
+    const gap = line[0].distance * Math.cos(line[0].bearing * rad) - 11.5;
+    if (gap > 2) { await robot.forward(gap - 1); await robot.wait(.8); continue; }   // ainda longe: aproxima-se e olha outra vez
+    await robot.kick(1); await robot.wait(.3); return true;
+  }
+  return false;
+}
+async function carrier() {
+  await moveTo(15, 40);                              // sai da zona de partida logo e desce junto à parede
+  while (true) {
+    robot.say('procuro laranjas na metade de cima');
+    const list = await lookUpper();
+    if (!list.length) { robot.say(farBalls ? 'vejo laranjas coladas à rampa do adversário (x > 95): não consigo ficar atrás delas' : 'nada para levar; espero e volto a olhar'); await robot.forward(5); await robot.forward(-5); await robot.wait(2); continue; }
+    list.sort((a, b) => a.x - b.x);                  // a mais para oeste primeiro: não empurra as outras
+    await carry(list[0]);
+  }
+}
+`;
+
+const EXAMPLES = {
+  ola: {
+    title: 'Olá, rampa (um movimento)',
+    text: 'O robô 1 anda 20 cm. O robô 2 não é preciso: podes jogar só com um robô (GR 6.16). Experimenta mudar o número.',
+    robot1: 'await robot.forward(20);\n', robot2: '',
+  },
+  chuto: {
+    title: 'Chuto na rampa (robô 2)',
+    text: 'O robô 2 vai à linha de baixo, vê a bola com a câmara, aproxima-se e pontapeia-a por cima da rampa para o campo do adversário.',
+    robot1: '', robot2: `${LIB}
+await kickRow(78.3, 30);
+robot.log('Feito.');
+`,
+  },
+  cacador: {
+    title: 'Caçador com a câmara (um robô)',
+    text: 'Só o robô 1 joga: vai alternando entre dois postos na metade de baixo, procura laranjas com a câmara, põe-se atrás da que vê e pontapeia-a pela rampa. Ganha muitas vezes ao Aprendiz; contra o Regular costuma empatar.',
+    robot1: `// Robô 1 — caçador (metade de baixo).
+await goTo(34, 78);
+await hunt(58, 112);
+${LIB}`, robot2: '',
+  },
+  equipa: {
+    title: 'Equipa: transportador + caçador (câmara)',
+    text: 'O robô 1 trata da metade de cima: procura laranjas com a câmara, empurra-as para o corredor da esquerda, desce com elas e pontapeia-as por cima da rampa. O robô 2 vigia a faixa de baixo e pontapeia as laranjas que vê. O que fazem muda de sorteio para sorteio, conforme as bolas que a câmara encontra. Cada robô escreve no registo (robot.say) o que decidiu.',
+    robot1: `// Robô 1 — transportador (metade de cima).
+await carrier();
+${LIB}`,
+    robot2: `// Robô 2 — caçador (metade de baixo).
+await goTo(34, 78);
+await hunt(58, 112);
+${LIB}`,
+  },
+};
+
+const STARTER_CODE = ['// Robô 1. O robô é «robot»; cada movimento leva await.\nawait robot.forward(20);\n', '// Robô 2 (deixa vazio para jogares só com o robô 1).\n'];
+
+const API_HELP = [
+  ['await robot.forward(cm)', 'Anda em frente (negativo = marcha atrás).'],
+  ['await robot.turn(graus)', 'Roda no lugar; positivo = para a direita (sentido horário visto de cima).'],
+  ['await robot.strafe(cm) · robot.drive(frente, lado)', 'Só com tração omnidirecional: anda de lado.'],
+  ['await robot.kick(força 0–1)', 'Pontapé: lança a bola que está à frente (até ~14 cm do centro). Espera 1 s entre pontapés.'],
+  ['await robot.wait(segundos)', 'Espera.'],
+  ['robot.camera()', 'Lista de bolas à vista: { color: "laranja" | "roxa", distance, bearing }, da mais perto para a mais longe. Campo de visão limitado (a barreira tapa a vista).'],
+  ['robot.pose()', 'Posição estimada { x, y, heading } em cm e graus. Origem no canto superior esquerdo, y para baixo, 0° = para a direita, 90° = para baixo.'],
+  ['robot.range(ângulo)', 'Distância ao obstáculo (parede, barreira, face da rampa, robô) na direção pedida.'],
+  ['robot.floorColor()', 'Cor do chão: branco, preto, verde, azul ou vermelho.'],
+  ['robot.time()', 'Segundos desde o início da partida. A duração (1 a 2 minutos) não é revelada.'],
+  ['robot.map · robot.spec', 'Medidas do campo e do teu robô (só de leitura).'],
+  ['team.send(x) · team.receive() · team.peek()', 'Mensagens entre os dois robôs da tua equipa. receive() devolve undefined se não houver nada.'],
+  ['team.partnerPose()', 'Posição do outro robô da equipa.'],
+  ['robot.say(texto)', 'Escreve no registo e num balão por cima do robô o que ele decidiu (não muda o jogo).'],
+  ['robot.log(...)', 'Escreve no registo.'],
+];
+const HELPER_NAMES = 'robot,team,norm,face,moveTo,kickRow,scan,goTo,attack,hunt,seeUpper,lookUpper,carry,carrier,__loops,__guard';
+
+return {EXAMPLES,STARTER_CODE,API_HELP,HELPER_NAMES};
+})();
+__modules["python.js"] = (() => {
+// Modo Python (0.9.4): traduz um subconjunto de Python 3 para JavaScript assíncrono, que corre no mesmo motor dos programas
+// em JavaScript. Não é um interpretador completo (sem dependências, funciona offline). Suporta o essencial para programar robôs:
+// variáveis, números, texto (incluindo f-strings), listas, dicionários, tuplos, if/elif/else, while, for … in (range, listas,
+// enumerate, zip, dicionários), break, continue, pass, def com return, lambda, global, import math / import random,
+// operadores aritméticos (incluindo //, %, **), comparações encadeadas, and/or/not, in / not in, is / is not,
+// e as funções print, len, range, abs, min, max, round, int, float, str, bool, sum, sorted, list, dict, enumerate, zip, reversed.
+// Não suporta classes, try/except, with, yield, decoradores, nem argumentos com nome fora de sorted, min, max e print.
+// Os comandos do robô que levam tempo (robot.forward, …) e as funções definidas com def recebem «await» automaticamente.
+
+class PythonError extends Error { constructor(msg, line) { super(line ? `Python, linha ${line}: ${msg}` : `Python: ${msg}`); this.pyLine = line; } }
+
+const KEYWORDS = new Set(['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']);
+const UNSUPPORTED = { class: 'classes', try: 'try/except', except: 'try/except', finally: 'try/finally', with: 'with', yield: 'yield', async: 'async', await: 'await (não é preciso: é acrescentado automaticamente)', raise: 'raise', del: 'del', nonlocal: 'nonlocal', assert: 'assert' };
+const JS_RESERVED = new Set(['var', 'let', 'const', 'function', 'new', 'delete', 'typeof', 'void', 'this', 'switch', 'case', 'default', 'do', 'catch', 'throw', 'instanceof', 'enum', 'export', 'extends', 'super', 'static', 'implements', 'interface', 'package', 'private', 'protected', 'public', 'arguments', 'eval', 'undefined', 'NaN', 'Infinity', 'Object', 'Array', 'Math', 'String', 'Number', 'Promise', 'globalThis', 'window', 'document']);
+const safeName = n => JS_RESERVED.has(n) ? `py_${n}` : n;
+
+// ---------------- analisador léxico ----------------
+function tokenize(line, lineNo) {
+  const out = []; let i = 0;
+  const push = (type, value) => out.push({ type, value, line: lineNo });
+  while (i < line.length) {
+    const c = line[i];
+    if (c === ' ' || c === '\t') { i++; continue; }
+    if (c === '#') break;
+    const str = /^([fFrRbB]{0,2})("""|'''|"|')/.exec(line.slice(i));
+    if (str && (str[1] === '' || /^[fFrR]{1,2}$/.test(str[1]))) {
+      const prefix = str[1].toLowerCase(), q = str[2]; let j = i + str[0].length, s = '';
+      while (j < line.length && line.slice(j, j + q.length) !== q) { if (line[j] === '\\' && !prefix.includes('r')) { s += line[j] + (line[j + 1] ?? ''); j += 2; } else { s += line[j]; j++; } }
+      if (j >= line.length) throw new PythonError('texto (string) sem aspas de fecho.', lineNo);
+      push(prefix.includes('f') ? 'fstr' : 'str', s); i = j + q.length; continue;
+    }
+    const num = /^(\d[\d_]*\.?\d*([eE][+-]?\d+)?|\.\d+([eE][+-]?\d+)?)/.exec(line.slice(i));
+    if (num) { push('num', num[0].replace(/_/g, '')); i += num[0].length; continue; }
+    const id = /^[A-Za-z_À-ÿ][\wÀ-ÿ]*/.exec(line.slice(i));
+    if (id) { push(KEYWORDS.has(id[0]) ? 'kw' : 'name', id[0]); i += id[0].length; continue; }
+    const op = /^(\*\*=|\/\/=|\*\*|\/\/|==|!=|<=|>=|->|\+=|-=|\*=|\/=|%=|[-+*/%<>=()[\]{},:.;@~])/.exec(line.slice(i));
+    if (op) { push('op', op[0]); i += op[0].length; continue; }
+    throw new PythonError(`carácter inesperado «${c}».`, lineNo);
+  }
+  return out;
+}
+
+// Junta linhas lógicas (parênteses abertos, «\» no fim) e calcula a indentação.
+function logicalLines(src) {
+  const raw = src.replace(/\r\n?/g, '\n').split('\n'), out = [];
+  let buf = null, depth = 0, start = 0, indent = 0;
+  for (let n = 0; n < raw.length; n++) {
+    let text = raw[n];
+    if (buf === null) { if (!text.trim() || text.trim().startsWith('#')) continue; indent = text.match(/^[ \t]*/)[0].replace(/\t/g, '    ').length; start = n + 1; buf = []; }
+    const cont = /\\\s*$/.test(text) && !text.trim().startsWith('#'); if (cont) text = text.replace(/\\\s*$/, '');
+    const toks = tokenize(text, n + 1); buf.push(...toks);
+    for (const t of toks) if (t.type === 'op') { if ('([{'.includes(t.value)) depth++; else if (')]}'.includes(t.value)) depth--; }
+    if (depth < 0) throw new PythonError('parêntese de fecho a mais.', n + 1);
+    if (depth === 0 && !cont) { if (buf.length) out.push({ indent, tokens: buf, line: start }); buf = null; }
+  }
+  if (buf !== null) throw new PythonError('falta fechar um parêntese, parêntese reto ou chaveta.', start);
+  return out;
+}
+
+// ---------------- expressões ----------------
+class Expr {
+  constructor(tokens, line, ctx) { this.t = tokens; this.i = 0; this.line = line; this.ctx = ctx; }
+  peek(k = 0) { return this.t[this.i + k]; }
+  is(type, value) { const t = this.peek(); return t && t.type === type && (value === undefined || t.value === value); }
+  isOp(v) { return this.is('op', v); }
+  isKw(v) { return this.is('kw', v); }
+  next() { return this.t[this.i++]; }
+  expect(type, value) { const t = this.next(); if (!t || t.type !== type || (value !== undefined && t.value !== value)) throw new PythonError(`esperava «${value ?? type}»${t ? ` e encontrei «${t.value}»` : ' no fim da linha'}.`, t?.line ?? this.line); return t; }
+  done() { return this.i >= this.t.length; }
+  // tuplo sem parênteses: a, b
+  exprList() { const items = [this.expr()]; let tuple = false; while (this.isOp(',')) { this.next(); tuple = true; if (this.done() || this.isOp('=') || this.isOp(')') || this.isOp(':')) break; items.push(this.expr()); } return tuple ? `[${items.join(', ')}]` : items[0]; }
+  expr() {
+    if (this.isKw('lambda')) {
+      this.next(); const params = []; while (!this.isOp(':')) { params.push(safeName(this.expect('name').value)); if (this.isOp(',')) this.next(); }
+      this.next(); const inner = new Set(params); this.ctx.lambdaScopes.push(inner); const body = this.expr(); this.ctx.lambdaScopes.pop();
+      return `((${params.join(', ')}) => ${body})`;
+    }
+    const a = this.or();
+    if (this.isKw('if')) { this.next(); const c = this.or(); this.expect('kw', 'else'); const b = this.expr(); return `(__t(${c}) ? ${a} : ${b})`; }
+    return a;
+  }
+  // and / or em curto-circuito e com o valor do Python (devolvem um dos operandos), com variáveis temporárias __oN
+  or() { let a = this.and(); while (this.isKw('or')) { this.next(); const v = `__o${this.ctx.temps++}`; a = `(__t(${v} = ${a}) ? ${v} : ${this.and()})`; } return a; }
+  and() { let a = this.not(); while (this.isKw('and')) { this.next(); const v = `__o${this.ctx.temps++}`; a = `(__t(${v} = ${a}) ? ${this.not()} : ${v})`; } return a; }
+  not() { if (this.isKw('not')) { this.next(); return `!__t(${this.not()})`; } return this.cmp(); }
+  cmp() {
+    const first = this.arith(), parts = [];
+    let left = first;
+    for (;;) {
+      let op = null;
+      if (this.isOp('==') || this.isOp('!=') || this.isOp('<') || this.isOp('>') || this.isOp('<=') || this.isOp('>=')) op = this.next().value;
+      else if (this.isKw('in')) { this.next(); op = 'in'; }
+      else if (this.isKw('not') && this.peek(1)?.type === 'kw' && this.peek(1).value === 'in') { this.next(); this.next(); op = 'not in'; }
+      else if (this.isKw('is')) { this.next(); if (this.isKw('not')) { this.next(); op = 'is not'; } else op = 'is'; }
+      if (!op) break;
+      const right = this.arith();
+      parts.push(op === 'in' ? `__in(${left}, ${right})` : op === 'not in' ? `!__in(${left}, ${right})` : op === 'is' ? `(${left} === ${right})` : op === 'is not' ? `(${left} !== ${right})` : op === '==' ? `__eq(${left}, ${right})` : op === '!=' ? `!__eq(${left}, ${right})` : `(${left} ${op} ${right})`);
+      left = right;
+    }
+    return parts.length ? (parts.length === 1 ? parts[0] : `(${parts.join(' && ')})`) : first;
+  }
+  arith() { let a = this.term(); while (this.isOp('+') || this.isOp('-')) { const op = this.next().value; const b = this.term(); a = op === '+' ? `__add(${a}, ${b})` : `(${a} - ${b})`; } return a; }
+  term() {
+    let a = this.unary();
+    while (this.isOp('*') || this.isOp('/') || this.isOp('//') || this.isOp('%')) {
+      const op = this.next().value, b = this.unary();
+      a = op === '*' ? `__mul(${a}, ${b})` : op === '/' ? `__div(${a}, ${b})` : op === '//' ? `Math.floor(__div(${a}, ${b}))` : `__mod(${a}, ${b})`;
+    }
+    return a;
+  }
+  unary() { if (this.isOp('-')) { this.next(); return `(-${this.unary()})`; } if (this.isOp('+')) { this.next(); return this.unary(); } return this.power(); }
+  power() { const a = this.postfix(); if (this.isOp('**')) { this.next(); return `((${a}) ** (${this.unary()}))`; } return a; }
+  args() {   // devolve { pos: [...], kw: {nome: expr} }
+    const pos = [], kw = {};
+    while (!this.isOp(')')) {
+      if (this.is('name') && this.peek(1)?.type === 'op' && this.peek(1).value === '=') { const k = this.next().value; this.next(); kw[k] = this.expr(); }
+      else { if (this.isOp('*')) throw new PythonError('«*args» não é suportado.', this.line); pos.push(this.expr()); }
+      if (this.isOp(',')) this.next(); else break;
+    }
+    this.expect('op', ')'); return { pos, kw };
+  }
+  postfix() {
+    let a = this.atom(), owner = null, attr = null;
+    for (;;) {
+      if (this.isOp('.')) { this.next(); const name = this.expect('name').value; owner = a; attr = name; a = `${a}.${name}`; continue; }
+      if (this.isOp('(')) { this.next(); const { pos, kw } = this.args(); a = this.call(a, owner, attr, pos, kw); owner = attr = null; continue; }
+      if (this.isOp('[')) {
+        this.next(); let lo = null, hi = null, slice = false;
+        if (!this.isOp(':')) lo = this.expr();
+        if (this.isOp(':')) { slice = true; this.next(); if (!this.isOp(']')) hi = this.expr(); }
+        this.expect('op', ']'); a = slice ? `__slice(${a}, ${lo ?? 'null'}, ${hi ?? 'null'})` : `__idx(${a}, ${lo})`; owner = attr = null; continue;
+      }
+      return a;
+    }
+  }
+  call(fn, owner, attr, pos, kw) {
+    const kwKeys = Object.keys(kw), line = this.line, ctx = this.ctx;
+    if (owner !== null) {
+      if (kwKeys.length && !(attr === 'sort')) throw new PythonError(`argumentos com nome («${kwKeys[0]}=») não são suportados em ${attr}().`, line);
+      const root = owner.split('.')[0];
+      if ((root === 'robot' || root === 'team') && ctx.asyncMethods.has(attr)) return `(await ${owner}.${attr}(${pos.join(', ')}))`;
+      const method = { append: 'push', lower: 'toLowerCase', upper: 'toUpperCase', startswith: 'startsWith', endswith: 'endsWith', strip: 'trim', index: 'indexOf' }[attr];
+      if (method && !['math', 'random', 'robot', 'team'].includes(root)) return `${owner}.${method}(${pos.join(', ')})`;
+      if (['join', 'items', 'keys', 'values', 'get', 'extend', 'insert', 'remove', 'count', 'copy', 'split', 'replace', 'format', 'sort', 'pop'].includes(attr) && !['math', 'random', 'robot', 'team'].includes(root))
+        return `__method(${owner}, ${JSON.stringify(attr)}, [${pos.join(', ')}], ${kwKeys.length ? `{${kwKeys.map(k => `${k}: ${kw[k]}`).join(', ')}}` : '{}'})`;
+      return `${owner}.${attr}(${pos.join(', ')})`;
+    }
+    if (fn === 'print') return `__print([${pos.join(', ')}], ${kw.sep ?? '" "'})`;
+    const builtins = { len: '__len', range: '__range', abs: 'Math.abs', min: '__min', max: '__max', round: '__round', int: '__int', float: '__float', str: '__str', bool: '__t', sum: '__sum', sorted: '__sorted', list: '__list', dict: '__dict', enumerate: '__enumerate', zip: '__zip', reversed: '__reversed', any: '__any', all: '__all', type: '__type', isinstance: '__isinstance', input: '__input', hasattr: '__hasattr' };
+    if (builtins[fn] && !ctx.userFunctions.has(fn)) {
+      if (kwKeys.length && !['sorted', 'min', 'max', 'round'].includes(fn)) throw new PythonError(`argumentos com nome não são suportados em ${fn}().`, line);
+      return `${builtins[fn]}(${[...pos, ...(kwKeys.length ? [`{${kwKeys.map(k => `${k}: ${kw[k]}`).join(', ')}}`] : [])].join(', ')})`;
+    }
+    if (kwKeys.length) throw new PythonError(`argumentos com nome («${kwKeys[0]}=») só são suportados em sorted, min, max e print.`, line);
+    if (ctx.userFunctions.has(fn)) return `(await ${fn}(${pos.join(', ')}))`;
+    return `${fn}(${pos.join(', ')})`;
+  }
+  atom() {
+    const t = this.next();
+    if (!t) throw new PythonError('expressão incompleta.', this.line);
+    if (t.type === 'num') return t.value;
+    if (t.type === 'str') { let s = t.value; while (this.is('str')) s += this.next().value; return JSON.stringify(unescape(s)); }
+    if (t.type === 'fstr') return fstring(t.value, this.line, this.ctx);
+    if (t.type === 'kw') {
+      if (t.value === 'True') return 'true'; if (t.value === 'False') return 'false'; if (t.value === 'None') return 'null';
+      if (UNSUPPORTED[t.value]) throw new PythonError(`${UNSUPPORTED[t.value]} não é suportado neste modo Python.`, t.line);
+      throw new PythonError(`«${t.value}» inesperado.`, t.line);
+    }
+    if (t.type === 'name') { this.ctx.used.add(t.value); return safeName(t.value); }
+    if (t.type === 'op' && t.value === '(') {
+      if (this.isOp(')')) { this.next(); return '[]'; }
+      const first = this.expr();
+      if (this.isOp(',')) { const items = [first]; while (this.isOp(',')) { this.next(); if (this.isOp(')')) break; items.push(this.expr()); } this.expect('op', ')'); return `[${items.join(', ')}]`; }
+      this.expect('op', ')'); return `(${first})`;
+    }
+    if (t.type === 'op' && t.value === '[') {
+      const items = [];
+      while (!this.isOp(']')) {
+        const e = this.expr();
+        if (this.isKw('for')) { const comp = this.comprehension(e, ']'); return comp; }
+        items.push(e); if (this.isOp(',')) this.next(); else break;
+      }
+      this.expect('op', ']'); return `[${items.join(', ')}]`;
+    }
+    if (t.type === 'op' && t.value === '{') {
+      const items = [];
+      while (!this.isOp('}')) { const k = this.expr(); this.expect('op', ':'); const v = this.expr(); items.push(`[${k}, ${v}]`); if (this.isOp(',')) this.next(); else break; }
+      this.expect('op', '}'); return `__dictOf([${items.join(', ')}])`;
+    }
+    throw new PythonError(`«${t.value}» inesperado.`, t.line);
+  }
+  comprehension(elem, close) {   // [elem for x in it if cond]
+    this.expect('kw', 'for'); const vars = [safeName(this.expect('name').value)]; while (this.isOp(',')) { this.next(); vars.push(safeName(this.expect('name').value)); }
+    this.expect('kw', 'in'); const it = this.or(); let cond = null; if (this.isKw('if')) { this.next(); cond = this.or(); }
+    this.expect('op', close);
+    const v = vars.length > 1 ? `[${vars.join(', ')}]` : vars[0];
+    return `__iter(${it}).filter((${v}) => ${cond ? `__t(${cond})` : 'true'}).map((${v}) => ${elem})`;
+  }
+}
+function unescape(s) { return s.replace(/\\(n|t|\\|'|"|r)/g, (_, c) => ({ n: '\n', t: '\t', '\\': '\\', "'": "'", '"': '"', r: '\r' })[c]); }
+function fstring(s, line, ctx) {
+  const parts = []; let i = 0, lit = '';
+  while (i < s.length) {
+    if (s[i] === '{' && s[i + 1] === '{') { lit += '{'; i += 2; continue; }
+    if (s[i] === '}' && s[i + 1] === '}') { lit += '}'; i += 2; continue; }
+    if (s[i] === '{') {
+      let j = i + 1, depth = 1; while (j < s.length && depth) { if (s[j] === '{') depth++; else if (s[j] === '}') depth--; if (depth) j++; }
+      if (depth) throw new PythonError('f-string com «{» sem «}».', line);
+      let inner = s.slice(i + 1, j), spec = ''; const colon = inner.search(/:(?![^[]*\])/); if (colon >= 0 && !/[=!<>]=?$/.test(inner.slice(0, colon))) { spec = inner.slice(colon + 1); inner = inner.slice(0, colon); }
+      if (lit) parts.push(JSON.stringify(unescape(lit))); lit = '';
+      const e = new Expr(tokenize(inner, line), line, ctx); const code = e.expr(); parts.push(spec ? `__fmt(${code}, ${JSON.stringify(spec)})` : `__str(${code})`); i = j + 1; continue;
+    }
+    lit += s[i++];
+  }
+  if (lit) parts.push(JSON.stringify(unescape(lit)));
+  return parts.length ? `(${parts.join(' + ')})` : '""';
+}
+
+// ---------------- instruções ----------------
+function pythonToJs(src, { asyncMethods = [] } = {}) {
+  const lines = logicalLines(String(src ?? ''));
+  const ctx = { asyncMethods: new Set(asyncMethods), userFunctions: new Set(), used: new Set(), lambdaScopes: [], temps: 0 };
+  // 1.ª passagem: nomes das funções definidas (as chamadas a elas levam await).
+  for (const l of lines) if (l.tokens[0]?.type === 'kw' && l.tokens[0].value === 'def') ctx.userFunctions.add(l.tokens[1]?.value);
+  let i = 0;
+  const pad = d => '  '.repeat(d);
+  const colonAt = (t, line) => { let d = 0; for (let k = 0; k < t.length; k++) { const v = t[k].value; if (t[k].type === 'op') { if ('([{'.includes(v)) d++; else if (')]}'.includes(v)) d--; else if (v === ':' && d === 0 && !(t[0].value === 'lambda')) { if (!t.slice(0, k).some(x => x.type === 'kw' && x.value === 'lambda') || t[0].type === 'kw') return k; } } } throw new PythonError('falta «:» no fim da linha.', line); };
+  // corpo de if/while/for/def: na mesma linha («if x: y») ou num bloco indentado
+  const body = (l, k, scope, depth) => {
+    if (k < l.tokens.length - 1) return statement({ indent: l.indent + 1, tokens: l.tokens.slice(k + 1), line: l.line }, scope, depth + 1);
+    const out = []; let blockIndent = null;
+    while (i < lines.length && lines[i].indent > l.indent) {
+      const m = lines[i]; if (blockIndent === null) blockIndent = m.indent;
+      if (m.indent !== blockIndent) throw new PythonError('indentação inconsistente.', m.line);
+      i++; out.push(`${pad(depth + 1)}__ln = ${m.line};`, ...statement(m, scope, depth + 1));
+    }
+    if (blockIndent === null) throw new PythonError('falta o bloco indentado depois de «:» (usa «pass» se não houver nada).', l.line);
+    return out;
+  };
+  const assignTarget = (toks, scope, line) => {
+    const plain = toks.every(t => t.type === 'name' || (t.type === 'op' && [',', '(', ')'].includes(t.value)));
+    if (plain) {
+      const names = toks.filter(t => t.type === 'name').map(t => t.value);
+      for (const n of names) if (!scope.globals.has(n)) scope.locals.add(n);
+      return names.length > 1 || toks.some(t => t.value === ',') ? `[${names.map(safeName).join(', ')}]` : safeName(names[0]);
+    }
+    const e = new Expr(toks, line, ctx), code = e.postfix(); if (!e.done()) throw new PythonError('atribuição inválida.', line);
+    return code;
+  };
+  const binop = (op, a, b) => ({ '+=': `__add(${a}, ${b})`, '-=': `(${a} - ${b})`, '*=': `__mul(${a}, ${b})`, '/=': `__div(${a}, ${b})`, '//=': `Math.floor(__div(${a}, ${b}))`, '%=': `__mod(${a}, ${b})`, '**=': `((${a}) ** (${b}))` })[op];
+  function statement(l, scope, depth) {
+    const t = l.tokens, line = l.line, P = pad(depth), kw = t[0].type === 'kw' ? t[0].value : null;
+    const exprAt = (from, to = t.length) => { const e = new Expr(t.slice(from, to), line, ctx); const c = e.exprList(); if (!e.done()) throw new PythonError(`não percebi «${e.peek().value}».`, line); return c; };
+    if (kw && UNSUPPORTED[kw]) throw new PythonError(`${UNSUPPORTED[kw]} não é suportado neste modo Python.`, line);
+    if (kw === 'pass') return [`${P};`];
+    if (kw === 'break' || kw === 'continue') return [`${P}${kw};`];
+    if (kw === 'return') return [`${P}return${t.length > 1 ? ' ' + exprAt(1) : ''};`];
+    if (kw === 'global') { for (const n of t.slice(1)) if (n.type === 'name') { scope.globals.add(n.value); scope.locals.delete(n.value); } return []; }
+    if (kw === 'import' || kw === 'from') {
+      const mods = t.filter(x => x.type === 'name').map(x => x.value), mod = mods[0];
+      if (!['math', 'random', 'time'].includes(mod)) throw new PythonError(`só é possível importar math, random e time (pedido: ${mod}).`, line);
+      if (kw === 'from') { if (t.some(x => x.value === '*')) throw new PythonError('«from … import *» não é suportado: usa «import math» e math.sqrt(…).', line); const names = mods.slice(1); for (const n of names) if (!scope.globals.has(n)) scope.locals.add(n); return names.map(n => `${P}${safeName(n)} = ${mod}.${n};`); }
+      return [];
+    }
+    if (kw === 'def') {
+      if (t[1]?.type !== 'name' || t[2]?.value !== '(') throw new PythonError('escreve «def nome(parâmetros):».', line);
+      const name = t[1].value, k = colonAt(t, line), params = [];
+      let j = 3;
+      while (j < k && t[j].value !== ')') {
+        if (t[j].type === 'name') {
+          const p = safeName(t[j].value);
+          if (t[j + 1]?.value === '=') { let e = j + 2, d = 0; while (e < k && !(d === 0 && (t[e].value === ',' || t[e].value === ')'))) { if ('([{'.includes(t[e].value)) d++; if (')]}'.includes(t[e].value)) d--; e++; } params.push(`${p} = ${new Expr(t.slice(j + 2, e), line, ctx).expr()}`); j = e; continue; }
+          params.push(p);
+        } else if (t[j].value === '*') throw new PythonError('«*args» não é suportado.', line);
+        j++;
+      }
+      if (!scope.globals.has(name)) scope.locals.add(name);
+      const inner = { locals: new Set(), globals: new Set() }, pnames = new Set(params.map(p => p.split(' = ')[0]));
+      const b = body(l, k, inner, depth), decl = [...inner.locals].map(safeName).filter(n => !pnames.has(n));
+      return [`${P}${safeName(name)} = async function ${safeName(name)}(${params.join(', ')}) {`, ...(decl.length ? [`${P}  let ${decl.join(', ')};`] : []), ...b, `${P}};`];
+    }
+    if (kw === 'if' || kw === 'while') {
+      const k = colonAt(t, line), cond = new Expr(t.slice(1, k), line, ctx).expr(), out = [`${P}${kw} (__t(${cond})) {`, ...body(l, k, scope, depth)];
+      if (kw === 'if') while (i < lines.length && lines[i].indent === l.indent && lines[i].tokens[0]?.type === 'kw' && ['elif', 'else'].includes(lines[i].tokens[0].value)) {
+        const m = lines[i++], mk = colonAt(m.tokens, m.line);
+        out.push(m.tokens[0].value === 'elif' ? `${P}} else if (__t(${new Expr(m.tokens.slice(1, mk), m.line, ctx).expr()})) {` : `${P}} else {`, ...body(m, mk, scope, depth));
+        if (m.tokens[0].value === 'else') break;
+      }
+      else if (i < lines.length && lines[i].indent === l.indent && lines[i].tokens[0]?.value === 'else') throw new PythonError('«while … else» não é suportado.', lines[i].line);
+      return [...out, `${P}}`];
+    }
+    if (kw === 'for') {
+      const k = colonAt(t, line), inAt = t.findIndex(x => x.type === 'kw' && x.value === 'in'); if (inAt < 0 || inAt > k) throw new PythonError('escreve «for x in …:».', line);
+      const target = assignTarget(t.slice(1, inAt), scope, line), it = new Expr(t.slice(inAt + 1, k), line, ctx).expr();
+      if (i < lines.length && lines[i].indent === l.indent && lines[i].tokens[0]?.value === 'else') throw new PythonError('«for … else» não é suportado.', lines[i].line);
+      return [`${P}for (${target} of __iter(${it})) {`, ...body(l, k, scope, depth), `${P}}`];
+    }
+    if (kw === 'elif' || kw === 'else') throw new PythonError(`«${kw}» sem «if» antes (ou com outra indentação).`, line);
+    const eq = (() => { let d = 0; for (let k = 0; k < t.length; k++) { const v = t[k].value; if (t[k].type === 'op') { if ('([{'.includes(v)) d++; else if (')]}'.includes(v)) d--; else if (d === 0 && ['=', '+=', '-=', '*=', '/=', '//=', '%=', '**='].includes(v)) return k; } } return -1; })();
+    if (eq > 0) {
+      const op = t[eq].value, rhs = exprAt(eq + 1), target = assignTarget(t.slice(0, eq), scope, line);
+      const idx = /^__idx\((.*), ([^,]*)\)$/s.exec(target);
+      if (idx) return [`${P}__setitem(${idx[1]}, ${idx[2]}, ${op === '=' ? rhs : binop(op, target, rhs)});`];
+      return [`${P}${target} = ${op === '=' ? rhs : binop(op, target, rhs)};`];
+    }
+    if (t.length === 1 && (t[0].type === 'str' || t[0].type === 'fstr')) return [];   // texto solto (docstring)
+    return [`${P}${exprAt(0)};`];
+  }
+  const top = { locals: new Set(), globals: new Set() }, out = [];
+  while (i < lines.length) { const l = lines[i]; if (l.indent !== 0) throw new PythonError('indentação inesperada (as instruções principais começam na coluna 1).', l.line); i++; out.push(`__ln = ${l.line};`, ...statement(l, top, 0)); }
+  const decl = [...top.locals].map(safeName), temps = Array.from({ length: ctx.temps }, (_, k) => `__o${k}`);
+  // O programa corre dentro de try: um erro de execução é reescrito em português, com a linha do Python.
+  return `${PY_RUNTIME}let __ln = 0;\n${decl.length ? `let ${decl.join(', ')};\n` : ''}${temps.length ? `let ${temps.join(', ')};\n` : ''}try {\n${out.join('\n')}\n} catch (__e) { throw __pyErr(__e, __ln); }\n`;
+}
+
+// Funções de apoio (em JavaScript) que dão a semântica do Python usada acima.
+const PY_RUNTIME = String.raw`const __t = v => Array.isArray(v) ? v.length > 0 : (v && typeof v === 'object') ? Object.keys(v).length > 0 : !!v;
+const __or = (a, b) => __t(a) ? a : b, __and = (a, b) => __t(a) ? b : a;
+const __add = (a, b) => { if (Array.isArray(a) && Array.isArray(b)) return [...a, ...b]; if ((typeof a === 'string') !== (typeof b === 'string')) throw new TypeError('não se pode somar texto com números: usa str(...)'); return a + b; };
+const __mul = (a, b) => typeof a === 'string' ? a.repeat(b) : Array.isArray(a) ? Array.from({ length: b }, () => a).flat() : a * b;
+const __div = (a, b) => { if (b === 0) throw new RangeError('divisão por zero'); return a / b; };
+const __mod = (a, b) => ((a % b) + b) % b;
+const __eq = (a, b) => (a && b && typeof a === 'object') ? JSON.stringify(a) === JSON.stringify(b) : a === b;
+const __in = (x, c) => typeof c === 'string' ? c.includes(x) : Array.isArray(c) ? c.some(v => __eq(v, x)) : c && typeof c === 'object' ? Object.prototype.hasOwnProperty.call(c, x) : false;
+const __len = v => { if (v == null) throw new TypeError('len() de None'); return Array.isArray(v) || typeof v === 'string' ? v.length : Object.keys(v).length; };
+const __range = (a, b, s = 1) => { if (b === undefined) { b = a; a = 0; } const out = []; if (s > 0) for (let i = a; i < b; i += s) out.push(i); else for (let i = a; i > b; i += s) out.push(i); if (out.length > 100000) throw new RangeError('range demasiado grande'); return out; };
+const __iter = v => Array.isArray(v) ? v : typeof v === 'string' ? [...v] : v && typeof v === 'object' ? Object.keys(v) : (() => { throw new TypeError('não é possível percorrer este valor com for'); })();
+const __kwlast = a => (a.length && a[a.length - 1] && typeof a[a.length - 1] === 'object' && !Array.isArray(a[a.length - 1]) && ('key' in a[a.length - 1] || 'reverse' in a[a.length - 1] || 'default' in a[a.length - 1])) ? [a.slice(0, -1), a[a.length - 1]] : [a, {}];
+const __minmax = (sign, args) => { const [a, kw] = __kwlast(args), list = a.length === 1 && (Array.isArray(a[0]) || typeof a[0] === 'string') ? __iter(a[0]) : a, key = kw.key || (x => x); if (!list.length) { if ('default' in kw) return kw.default; throw new RangeError('min/max de uma lista vazia'); } return list.reduce((m, x) => sign * (key(x) - key(m)) > 0 ? x : m); };
+const __min = (...a) => __minmax(-1, a), __max = (...a) => __minmax(1, a);
+const __round = (x, n = 0) => { const f = 10 ** n, v = x * f, r = Math.round(v); return (Math.abs(v % 1) === .5 ? (r % 2 ? r - 1 : r) : r) / f; };
+const __int = v => { const n = typeof v === 'string' ? Number(v.trim()) : Number(v); if (!Number.isFinite(n)) throw new TypeError('int(): valor inválido'); return Math.trunc(n); };
+const __float = v => { const n = Number(v); if (Number.isNaN(n)) throw new TypeError('float(): valor inválido'); return n; };
+const __str = v => v === null || v === undefined ? 'None' : v === true ? 'True' : v === false ? 'False' : Array.isArray(v) ? '[' + v.map(__repr).join(', ') + ']' : typeof v === 'object' ? '{' + Object.entries(v).map(([k, x]) => __repr(k) + ': ' + __repr(x)).join(', ') + '}' : typeof v === 'number' && Number.isInteger(v) ? String(v) : String(v);
+const __repr = v => typeof v === 'string' ? "'" + v + "'" : __str(v);
+const __fmt = (v, spec) => { const m = /^([<>^]?)(\d*)(?:\.(\d+))?([fd%]?)$/.exec(spec); if (!m) return __str(v); let s = m[4] === '%' ? (v * 100).toFixed(m[3] ? +m[3] : 6) + '%' : m[3] !== undefined ? __round(Number(v), +m[3]).toFixed(+m[3]) : m[4] === 'd' ? String(Math.trunc(v)) : __str(v); const w = +m[2] || 0; return m[1] === '<' ? s.padEnd(w) : m[1] === '^' ? s.padStart((w + s.length) >> 1).padEnd(w) : s.padStart(w); };
+const __sum = l => __iter(l).reduce((a, b) => a + b, 0);
+const __sorted = (l, kw = {}) => { const key = kw.key || (x => x), out = [...__iter(l)].sort((a, b) => { const x = key(a), y = key(b); return x < y ? -1 : x > y ? 1 : 0; }); return kw.reverse ? out.reverse() : out; };
+const __list = (v = []) => [...__iter(v)], __dict = (v = {}) => Array.isArray(v) ? Object.fromEntries(v) : { ...v }, __reversed = v => [...__iter(v)].reverse();
+const __enumerate = (v, s = 0) => __iter(v).map((x, i) => [i + s, x]);
+const __zip = (...ls) => { const a = ls.map(__iter), n = Math.min(...a.map(x => x.length)); return Array.from({ length: n }, (_, i) => a.map(x => x[i])); };
+const __any = l => __iter(l).some(__t), __all = l => __iter(l).every(__t);
+const __type = v => v === null ? 'NoneType' : Array.isArray(v) ? 'list' : typeof v === 'string' ? 'str' : typeof v === 'boolean' ? 'bool' : typeof v === 'number' ? (Number.isInteger(v) ? 'int' : 'float') : 'dict';
+const __isinstance = (v, t) => __type(v) === t, __hasattr = (o, k) => o != null && k in Object(o), __input = () => { throw new Error('input() não existe no robô: o programa corre sozinho'); };
+const __dictOf = pairs => { const o = {}; for (const [k, v] of pairs) o[k] = v; return o; };
+const __idx = (o, k) => { if (o == null) throw new TypeError('não é possível indexar None'); if (typeof k === 'number' && (Array.isArray(o) || typeof o === 'string')) { const i = k < 0 ? o.length + k : k; if (i < 0 || i >= o.length) throw new RangeError('índice fora da lista: ' + k); return o[i]; } if (!(k in Object(o))) throw new RangeError('chave inexistente: ' + __repr(k)); return o[k]; };
+const __setitem = (o, k, v) => { if (Array.isArray(o) && typeof k === 'number') { const i = k < 0 ? o.length + k : k; if (i < 0 || i >= o.length) throw new RangeError('índice fora da lista: ' + k); o[i] = v; } else o[k] = v; };
+const __slice = (o, a, b) => o.slice(a ?? 0, b ?? undefined);
+const __method = (o, m, a, kw) => {
+  if (o == null) throw new TypeError('None não tem o método ' + m + '()');
+  switch (m) {
+    case 'join': return __iter(a[0]).map(__str).join(o);
+    case 'items': return Object.entries(o); case 'keys': return Object.keys(o); case 'values': return Object.values(o);
+    case 'get': return Object.prototype.hasOwnProperty.call(o, a[0]) ? o[a[0]] : (a[1] ?? null);
+    case 'extend': o.push(...__iter(a[0])); return null;
+    case 'insert': o.splice(a[0], 0, a[1]); return null;
+    case 'remove': { const i = o.findIndex(x => __eq(x, a[0])); if (i < 0) throw new RangeError('remove(): o valor não está na lista'); o.splice(i, 1); return null; }
+    case 'count': return typeof o === 'string' ? o.split(a[0]).length - 1 : o.filter(x => __eq(x, a[0])).length;
+    case 'copy': return Array.isArray(o) ? [...o] : { ...o };
+    case 'split': return a[0] === undefined ? o.trim().split(/\s+/) : o.split(a[0]);
+    case 'replace': return o.split(a[0]).join(a[1]);
+    case 'format': { let n = 0; return o.replace(/\{(\d*)\}/g, (_, i) => __str(a[i === '' ? n++ : +i])); }
+    case 'sort': { const s = __sorted(o, kw); o.splice(0, o.length, ...s); return null; }
+    case 'pop': if (Array.isArray(o)) { if (!o.length) throw new RangeError('pop() de uma lista vazia'); return a.length ? o.splice(a[0] < 0 ? o.length + a[0] : a[0], 1)[0] : o.pop(); } { const v = o[a[0]]; delete o[a[0]]; return v; }
+  }
+};
+const math = Object.freeze({ pi: Math.PI, e: Math.E, inf: Infinity, sqrt: Math.sqrt, sin: Math.sin, cos: Math.cos, tan: Math.tan, asin: Math.asin, acos: Math.acos, atan: Math.atan, atan2: Math.atan2, hypot: Math.hypot, floor: Math.floor, ceil: Math.ceil, fabs: Math.abs, exp: Math.exp, log: Math.log, radians: d => d * Math.PI / 180, degrees: r => r * 180 / Math.PI, copysign: (a, b) => Math.sign(b) * Math.abs(a), isclose: (a, b, t = 1e-9) => Math.abs(a - b) <= t });
+const random = Object.freeze({ random: () => { throw new Error('random: o simulador é determinístico; usa robot.time() ou a câmara em vez de números aleatórios'); } });
+const time = Object.freeze({ sleep: () => { throw new Error('time.sleep(): usa robot.wait(segundos)'); } });
+const __print = (a, sep) => robot.log(a.map(__str).join(sep));
+const __pyErr = (e, line) => {
+  if (!(e instanceof Error) || !['ReferenceError', 'TypeError', 'RangeError', 'SyntaxError', 'Error'].includes(e.constructor.name)) return e;   // p. ex. o fim da prova
+  let m = String(e.message), r;
+  if ((r = /^(\S+) is not defined$/.exec(m))) m = 'o nome «' + r[1] + '» não está definido (escreveste bem? uma variável tem de ter um valor antes de ser usada)';
+  else if ((r = /Cannot read properties of (null|undefined) \(reading '([^']+)'\)/.exec(m))) m = (r[1] === 'null' ? 'None' : 'um valor inexistente') + ' não tem «' + r[2] + '»';
+  else if ((r = /^(.+) is not a function$/.exec(m))) m = '«' + r[1].replace(/^\(intermediate value\)\.?/, '') + '» não é uma função ou um comando conhecido';
+  else if ((r = /^(.+) is not iterable$/.exec(m))) m = 'não é possível percorrer «' + r[1] + '» com for';
+  else if (/Assignment to constant variable/.test(m)) m = 'não é possível mudar este nome (é do simulador)';
+  const out = new Error('Python, linha ' + line + ': ' + m); out.pyLine = line; return out;
+};
+`;
+
+return {PythonError,pythonToJs,PY_RUNTIME};
+})();
+__modules["tennis-python.js"] = (() => {
+// Modo Python do Double Tennis (0.9.4): comandos que levam tempo (recebem await automaticamente) e exemplos em Python.
+const TENNIS_ASYNC = ['forward', 'strafe', 'drive', 'turn', 'wait', 'kick'];
+
+// «import math» é montado assim porque o exportador offline recusa linhas que comecem por «import».
+const IMPORT_MATH = 'im' + 'port math';
+
+const PY_STARTER = ['# Robô 1 em Python. O robô é «robot».\nrobot.forward(20)\n', '# Robô 2 em Python (deixa vazio para jogares só com o robô 1).\n'];
+
+const HUNTER = `${IMPORT_MATH}
+
+def angulo(a):                                # ângulo entre -180 e 180
+    return (a + 540) % 360 - 180
+
+def virar_para(rumo):
+    for i in range(4):
+        d = angulo(rumo - robot.pose().heading)
+        if abs(d) <= 0.6:
+            return
+        robot.turn(d)
+
+def ir_para(x, y):                            # vira para o ponto e anda até lá (corrige duas vezes)
+    if robot.pose().x < 13:
+        robot.forward(8)                      # na zona de partida está colado à parede: sai antes de rodar
+    for i in range(3):
+        p = robot.pose()
+        dx = x - p.x
+        dy = y - p.y
+        d = math.hypot(dx, dy)
+        if d < 1:
+            return
+        virar_para(math.degrees(math.atan2(dy, dx)))
+        robot.forward(d)
+
+def ir(x, y):                                 # desce pelo corredor da esquerda (a barreira começa em x = 40)
+    p = robot.pose()
+    if p.y < 62 and y > 56:
+        ir_para(16, 66)
+    if robot.pose().x < 30 and abs(robot.pose().y - y) > 14:
+        ir_para(16, y)
+    ir_para(x, y)
+
+def laranjas(y_min, y_max):                   # laranjas à vista, em coordenadas do campo, da mais perto para a mais longe
+    p = robot.pose()
+    out = []
+    for b in robot.camera():
+        a = math.radians(p.heading + b['bearing'])
+        x = p.x + b['distance'] * math.cos(a)
+        y = p.y + b['distance'] * math.sin(a)
+        if b['color'] == 'laranja' and 40 <= x < 84 and y_min <= y <= y_max:
+            out.append({'x': x, 'y': y})
+    return out
+
+def atacar(bola):                             # põe-se atrás da bola, na mesma linha, e pontapeia-a para a rampa
+    q = team.partnerPose()
+    if q and math.hypot(q.x - (bola['x'] - 18), q.y - min(bola['y'], 96)) < 19:
+        robot.wait(1)                         # o parceiro está no caminho
+        return False
+    ir(max(bola['x'] - 18, 24), min(bola['y'], 96))
+    virar_para(0)
+    robot.wait(0.2)
+    p = robot.pose()
+    linha = [b for b in robot.camera() if abs(b['distance'] * math.sin(math.radians(b['bearing'])) - (bola['y'] - p.y)) < 3]
+    if not linha or linha[0]['color'] != 'laranja':
+        return False                          # já não está lá, ou há uma roxa à frente (não lhe tocar)
+    falta = linha[0]['distance'] * math.cos(math.radians(linha[0]['bearing'])) - 11.5
+    if falta > 0:
+        robot.forward(falta)
+    robot.kick(1)
+    robot.wait(0.3)
+    return True
+
+def cacar(y_min, y_max):                      # vai alternando entre dois postos de observação
+    postos = [78, 96]
+    vez = 0
+    while True:
+        y = postos[vez % 2]
+        vez += 1
+        robot.say(f"vou ao posto y={y} e olho para a frente")
+        ir(34, y)
+        virar_para(0)
+        robot.wait(0.3)
+        vistas = laranjas(y_min, y_max)
+        if vistas:
+            alvo = vistas[0]
+            robot.say(f"vejo {len(vistas)} laranja(s); ataco a de x={round(alvo['x'])}, y={round(alvo['y'])}")
+            atacar(alvo)
+        else:
+            robot.say("nada à vista deste posto")
+            robot.forward(5)
+            robot.forward(-5)
+            robot.wait(1)
+`;
+
+const PY_EXAMPLES = {
+  ola: { title: 'Olá, rampa (Python)', text: 'O robô 1 anda 20 cm e diz o que vê.', robot1: `# Robô 1 em Python
+robot.forward(20)
+bolas = robot.camera()
+robot.say(f"vejo {len(bolas)} bola(s)")
+for b in bolas:
+    print(b['color'], round(b['distance']), "cm")
+`, robot2: '' },
+  cacador: { title: 'Caçador com a câmara (Python, um robô)', text: 'O mesmo caçador do exemplo em JavaScript, escrito em Python: procura laranjas na metade de baixo e pontapeia-as pela rampa.', robot1: `# Robô 1 em Python — caçador (metade de baixo).
+${HUNTER}
+ir(34, 78)
+cacar(58, 112)
+`, robot2: '' },
+};
+
+return {TENNIS_ASYNC,PY_STARTER,PY_EXAMPLES};
+})();
+__modules["tennis-app.js"] = (() => {
+const { installOfficialRules } = __modules["official-rules.js"];
+const { installQuickRun } = __modules["quick-run.js"];
+const { createTeacherMode, openTeacherDialog } = __modules["teacher-mode.js"];
+const { FIELD, CENTER_X, BARRIER, RAMPS, RED, START_ZONES, BLACK_LINES, BALL, gamePoints, robotPoly } = __modules["tennis.js"];
+const { createMatch, AI_LEVELS } = __modules["tennis-ai.js"];
+const { TennisRunner } = __modules["tennis-runner.js"];
+const { EXAMPLES, STARTER_CODE, API_HELP } = __modules["tennis-examples.js"];
+const { pythonToJs } = __modules["python.js"];
+const { TENNIS_ASYNC, PY_EXAMPLES, PY_STARTER } = __modules["tennis-python.js"];
+
+const $ = id => document.getElementById(id);
+const safe = fn => { try { return fn(); } catch { return null; } };
+// 0.9.4: JavaScript ou Python (um subconjunto, traduzido para JavaScript antes de jogar). Cada linguagem guarda os seus programas.
+const SAVES = { js: ['wro-tennis-source1-v1', 'wro-tennis-source2-v1'], py: ['wro-tennis-py1-v1', 'wro-tennis-py2-v1'] }, LANG_KEY = 'wro-tennis-lang-v1';
+let lang = safe(() => localStorage.getItem(LANG_KEY)) === 'py' ? 'py' : 'js';
+const SAVE = new Proxy([], { get: (_, k) => SAVES[lang][k] });
+const exampleSet = () => lang === 'py' ? PY_EXAMPLES : EXAMPLES;
+let world = null, runner = null, running = false, pumping = false, speed = 2, results = [], matchIndex = 0, shownEvents = 0, tab = 0, lastFrame = 0;
+const teacher = createTeacherMode();
+
+const readSpec = () => ({ length: +$('len').value, width: +$('wid').value, holonomic: $('drive').value === 'holo' });
+function setState(text, cls = '') { const s = $('state'); s.textContent = text; s.className = 'state ' + cls; }
+function addLog(e) { const li = document.createElement('li'); li.className = e.type; li.textContent = `${e.t.toFixed(1)} s · ${e.title}${e.detail ? ' — ' + e.detail : ''}`; const ul = $('log'); ul.prepend(li); while (ul.children.length > 80) ul.lastChild.remove(); }
+const fmtClock = t => `${Math.floor(t / 60)}:${(t % 60).toFixed(1).padStart(4, '0')}`;
+const codes = () => [$('source1').value, $('source2').value].map(c => lang === 'py' && c.trim() ? pythonToJs(c, { asyncMethods: TENNIS_ASYNC }) : c);
+
+let startTally = null;
+function newWorld() {
+  running = false; runner = null; shownEvents = 0; $('log').replaceChildren(); $('run').textContent = '▶ Executar'; $('next').disabled = true;
+  const seed = Math.max(1, Math.floor(+$('seed').value || 1)) + matchIndex;
+  try {
+    const spec = readSpec(), c = codes();
+    world = createMatch({ seed, level: $('level').value, realism: $('realism').value, robot: spec, robot2: spec, });
+    runner = new TennisRunner(world, c); startTally = world.result().tally;
+    setState('Pronto'); $('matchNo').textContent = `Partida ${matchIndex + 1} de 3`;
+  } catch (err) { world = null; setState(err.message, 'err'); }
+  hud(); draw();
+}
+
+function hud() {
+  if (!world) return;
+  const t = world.tally(), r = world.finished ? world.result() : null, a = r ? r.A : t.A.score, b = r ? r.B : t.B.score;
+  $('scoreA').textContent = a; $('scoreB').textContent = b;
+  $('detA').textContent = `${t.A.orange} laranja · ${t.A.purple} roxa`; $('detB').textContent = `${t.B.orange} laranja · ${t.B.purple} roxa`;
+  $('clock').textContent = fmtClock(world.elapsed);
+  for (; shownEvents < world.events.length; shownEvents++) addLog(world.events[shownEvents]);
+}
+
+function seriesHud() {
+  const box = $('series'); box.replaceChildren();
+  for (let i = 0; i < 3; i++) {
+    const s = document.createElement('span'), r = results[i];
+    s.textContent = r ? `${i + 1}: ${r.A}:${r.B}` : `${i + 1}: —`; if (r) s.className = r.winner === 'A' ? 'w' : r.winner === 'B' ? 'l' : ''; box.append(s);
+  }
+  const g = gamePoints(results);
+  $('seriesText').textContent = g.A === null ? `Vitórias: tu ${g.wins.A}, adversário ${g.wins.B}.` : g.winner === 'empate' ? 'Jogo empatado: 1 ponto para cada equipa.' : g.winner === 'A' ? 'Ganhaste o jogo: 3 pontos.' : 'O adversário ganhou o jogo: 3 pontos para ele.';
+}
+
+function finish() {
+  running = false; $('run').textContent = '▶ Executar';
+  const r = world.result(); results[matchIndex] = { A: r.A, B: r.B, winner: r.winner };
+  setState(r.winner === 'A' ? 'Ganhaste a partida' : r.winner === 'B' ? 'O adversário ganhou' : 'Empate', r.winner === 'A' ? 'ok' : r.winner === 'B' ? 'err' : '');
+  if (runner.errors.length) setState('Erro no programa do robô ' + runner.errors[0].robot, 'err');
+  $('next').disabled = matchIndex >= 2; seriesHud(); hud();
+  // Dica (0.9.4): se a equipa não passou nenhuma laranja, explica o que falta e sugere o nível Treino.
+  const passed = r.tally.B.orange - (startTally?.B.orange ?? r.tally.B.orange);
+  if (passed <= 0) addLog({ type: 'info', t: world.elapsed, title: 'Dica', detail: `Os teus robôs não passaram nenhuma laranja para o outro lado${$('level').value === 'treino' ? '' : ' e o adversário continuou a mandar bolas para o teu'}. Uma laranja só passa a rampa com velocidade: usa robot.camera() para a encontrar, põe-te atrás dela e usa robot.kick(1). Para afinar sem pressão, escolhe o nível «Treino (sem adversário)».` });
+}
+
+async function pump(ts) {
+  if (!running || !world) return; requestAnimationFrame(pump);
+  if (pumping) return; pumping = true;
+  try {
+    const dtWall = Math.min(.1, (ts - (lastFrame || ts)) / 1000); lastFrame = ts;
+    let sim = dtWall * speed;
+    while (sim > 1e-6 && !runner.over) { const dt = Math.min(1 / 30, sim); await runner.advance(dt); sim -= dt; }
+    hud(); draw(); if (runner.over) finish();
+  } catch (err) { running = false; setState('Erro: ' + err.message, 'err'); }
+  pumping = false;
+}
+function start() {
+  if (!world || runner.over) return;
+  if (running) { running = false; $('run').textContent = '▶ Continuar'; setState('Em pausa'); return; }
+  safe(() => { localStorage.setItem(SAVE[0], $('source1').value); localStorage.setItem(SAVE[1], $('source2').value); });
+  running = true; lastFrame = 0; $('run').textContent = '⏸ Pausar'; setState('A jogar…'); requestAnimationFrame(pump);
+}
+
+// ---------- desenho ----------
+// Robô visto de cima, em coordenadas locais (x para a frente): sombra, rodas com piso, chassis, placa da equipa com o número,
+// pontapé (barra à frente), câmara e seta de direção. Diferencial: 2 rodas + apoio; omnidirecional: 4 rodas mecanum.
+function rr(g, x, y, w, h, rad) { g.beginPath(); g.roundRect ? g.roundRect(x, y, w, h, rad) : g.rect(x, y, w, h); }
+function drawRobot(g, r) {
+  const L = r.length, Wd = r.width, on = r.status === 'ativo', col = COLORS[r.team], dim = on ? 1 : .4;
+  g.save(); g.translate(r.x, r.y); g.rotate(r.heading * Math.PI / 180); g.globalAlpha = dim;
+  g.fillStyle = '#0006'; rr(g, -L / 2 + 1, -Wd / 2 + 1.2, L, Wd, 2); g.fill();                         // sombra
+  const wheel = (x, y, w, h, mecanum) => {
+    g.fillStyle = '#15181c'; rr(g, x - w / 2, y - h / 2, w, h, 1.2); g.fill();
+    g.strokeStyle = '#4b535c'; g.lineWidth = .35;
+    for (let i = -2; i <= 2; i++) { g.beginPath(); if (mecanum) { g.moveTo(x - w / 2 + .4, y + i * h / 6 + h / 12); g.lineTo(x + w / 2 - .4, y + i * h / 6 - h / 12); } else { g.moveTo(x - w / 2 + .3, y + i * h / 6); g.lineTo(x + w / 2 - .3, y + i * h / 6); } g.stroke(); }
+  };
+  const ww = L * .34, wh = Wd * .16;
+  if (r.holonomic) { for (const sx of [-1, 1]) for (const sy of [-1, 1]) wheel(sx * (L / 2 - ww / 2 - .3), sy * (Wd / 2 - wh / 2 + .2), ww, wh, true); }
+  else { wheel(-L * .08, -Wd / 2 + wh / 2 - .3, ww * 1.15, wh, false); wheel(-L * .08, Wd / 2 - wh / 2 + .3, ww * 1.15, wh, false); g.fillStyle = '#9aa3ad'; g.beginPath(); g.arc(L / 2 - 2.2, 0, 1.1, 0, 7); g.fill(); }   // roda de apoio
+  g.fillStyle = '#3a4350'; rr(g, -L / 2 + .6, -Wd / 2 + wh - .4, L - 1.2, Wd - 2 * wh + .8, 1.8); g.fill();       // chassis
+  g.fillStyle = on ? col : '#777'; rr(g, -L / 2 + 2, -Wd / 2 + wh + .6, L - 5.2, Wd - 2 * wh - 1.2, 1.5); g.fill();  // placa da equipa
+  g.strokeStyle = '#ffffff55'; g.lineWidth = .4; g.stroke();
+  if (r.kicker) { g.fillStyle = '#d7dde3'; rr(g, L / 2 - 3.1, -Wd * .28, 2.6, Wd * .56, .8); g.fill(); g.fillStyle = '#7b8591'; g.fillRect(L / 2 - 3.5, -.6, .6, 1.2); }   // pontapé
+  if (r.camera) { g.fillStyle = '#10151b'; g.beginPath(); g.arc(L / 2 - 5.6, 0, 1.7, 0, 7); g.fill(); g.fillStyle = '#58c4ff'; g.beginPath(); g.arc(L / 2 - 5.1, 0, .8, 0, 7); g.fill(); }   // câmara
+  g.fillStyle = '#ffffffd0'; g.beginPath(); g.moveTo(L / 2 - 8.4, -1.5); g.lineTo(L / 2 - 6.6, 0); g.lineTo(L / 2 - 8.4, 1.5); g.closePath(); g.fill();   // seta de frente
+  g.restore();
+  g.save(); g.globalAlpha = dim; g.translate(r.x, r.y); g.fillStyle = '#10151b'; g.beginPath(); g.arc(-L * .12, 0, 3.1, 0, 7); g.fill(); g.fillStyle = '#fff'; g.font = 'bold 4.2px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(r.id, -L * .12, .2); g.restore();   // número, sempre na vertical
+}
+
+const COLORS = { A: '#3da5e8', B: '#f08a24' };
+function draw() {
+  const cv = $('canvas'), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; if (!W) return;
+  if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  const g = cv.getContext('2d'), k = W * dpr / FIELD.width; g.setTransform(k, 0, 0, k, 0, 0);
+  g.fillStyle = '#e9edf0'; g.fillRect(0, 0, FIELD.width, FIELD.height);
+  g.fillStyle = '#222'; for (const l of BLACK_LINES) g.fillRect(l.x0, l.y0, l.x1 - l.x0, l.y1 - l.y0);
+  g.globalAlpha = .18; for (const z of [...START_ZONES.A, ...START_ZONES.B]) { g.fillStyle = z.x0 < CENTER_X ? COLORS.A : COLORS.B; g.fillRect(z.x0, z.y0, z.x1 - z.x0, z.y1 - z.y0); } g.globalAlpha = 1;
+  for (const r of Object.values(RAMPS)) {
+    const band = (x0, x1, c) => { g.fillStyle = c; g.fillRect(x0, r.y0, x1 - x0, r.y1 - r.y0); };
+    band(r.red[0], r.red[1], '#c0392b'); band(r.blue[0], r.blue[1], '#4a78c8'); band(r.green[0], r.green[1], '#4caf6a');
+  }
+  g.fillStyle = '#111'; g.fillRect(BARRIER.x0, BARRIER.y0, BARRIER.x1 - BARRIER.x0, BARRIER.y1 - BARRIER.y0);
+  g.strokeStyle = '#000'; g.lineWidth = .5; g.beginPath(); g.moveTo(CENTER_X, 0); g.lineTo(CENTER_X, FIELD.height); g.stroke();
+  if (!world) return;
+  for (const r of world.robots) {
+    if (r.status === 'ausente') continue;
+    if (r.team === 'A' && $('showFov').checked && r.status === 'ativo') {
+      const h = r.heading * Math.PI / 180, f = r.cameraFov / 2 * Math.PI / 180; g.fillStyle = '#3da5e822'; g.beginPath(); g.moveTo(r.x, r.y); g.arc(r.x, r.y, r.cameraRange, h - f, h + f); g.closePath(); g.fill();
+    }
+    drawRobot(g, r);
+  }
+  for (const r of world.robots) {   // balões de fala (robot.say)
+    if (r.team !== 'A' || !r.bubble || r.bubble.until < world.elapsed || r.status !== 'ativo') continue;
+    g.font = '4px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; const w2 = Math.min(g.measureText(r.bubble.text).width + 4, 110), x = Math.max(w2 / 2 + 1, Math.min(FIELD.width - w2 / 2 - 1, r.x)), y = Math.max(5, r.y - 16);
+    g.fillStyle = '#101720e6'; rr(g, x - w2 / 2, y - 3.6, w2, 7.2, 2); g.fill(); g.fillStyle = '#fff'; g.fillText(r.bubble.text, x, y, w2 - 3);
+  }
+  for (const b of world.balls) { g.beginPath(); g.arc(b.x, b.y, BALL.r, 0, 7); g.fillStyle = b.color === BALL.orange ? '#ff9a2e' : '#8e44ad'; g.fill(); g.strokeStyle = '#000'; g.lineWidth = .3; g.stroke(); }
+}
+
+// ---------- interface ----------
+function showTab(i) {
+  tab = i; $('tab1').classList.toggle('on', i === 0); $('tab2').classList.toggle('on', i === 1); $('source1').hidden = i !== 0; $('source2').hidden = i !== 1;
+}
+function fillExamples() {
+  const sel = $('example'), keep = sel.value; sel.replaceChildren();
+  for (const [k, e] of Object.entries(exampleSet())) if (teacher.enabled || k === 'ola') sel.add(new Option(e.title, k));
+  if ([...sel.options].some(o => o.value === keep)) sel.value = keep;
+}
+function loadExample() {
+  const e = exampleSet()[$('example').value]; if (!e || (!teacher.enabled && $('example').value !== 'ola')) return;
+  $('source1').value = e.robot1; $('source2').value = e.robot2; setState(e.text); newWorld();
+}
+function resetGame() { results = []; matchIndex = 0; seriesHud(); newWorld(); }
+
+$('level').addEventListener('change', () => { $('levelNote').textContent = AI_LEVELS[$('level').value].text; resetGame(); });
+for (const id of ['seed', 'drive', 'len', 'wid', 'realism']) $(id).addEventListener('change', resetGame);
+$('reseed').addEventListener('click', () => { $('seed').value = 1 + Math.floor(Math.random() * 99999); resetGame(); });
+$('run').addEventListener('click', start);
+$('reset').addEventListener('click', newWorld);
+$('next').addEventListener('click', () => { if (matchIndex < 2) { matchIndex++; newWorld(); } });
+$('newGame').addEventListener('click', resetGame);
+$('speed').addEventListener('change', () => { speed = +$('speed').value; });
+$('showFov').addEventListener('change', draw);
+$('tab1').addEventListener('click', () => showTab(0)); $('tab2').addEventListener('click', () => showTab(1));
+$('loadExample').addEventListener('click', loadExample);
+$('howBtn').addEventListener('click', () => $('how').showModal()); $('howClose').addEventListener('click', () => $('how').close());
+window.addEventListener('resize', draw);
+document.addEventListener('keydown', e => { if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); start(); } });
+for (const [c, d] of API_HELP) { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = c; dd.textContent = d; $('api').append(dt, dd); }
+function applyTeacher() {
+  const on = teacher.enabled; fillExamples();
+  $('teacherBtn').textContent = on ? '🔓 Professor · sair' : '🔒 Modo professor'; $('teacherBtn').setAttribute('aria-pressed', String(on));
+}
+$('teacherBtn').addEventListener('click', () => openTeacherDialog(document, teacher, on => { applyTeacher(); setState(on ? 'Modo professor ativo: exemplos visíveis.' : 'Modo professor desligado.'); }));
+applyTeacher();
+function loadSources() { const st = lang === 'py' ? PY_STARTER : STARTER_CODE; $('source1').value = safe(() => localStorage.getItem(SAVE[0])) ?? st[0]; $('source2').value = safe(() => localStorage.getItem(SAVE[1])) ?? st[1]; }
+function setLang(l) {
+  safe(() => { localStorage.setItem(SAVE[0], $('source1').value); localStorage.setItem(SAVE[1], $('source2').value); });
+  lang = l; safe(() => localStorage.setItem(LANG_KEY, l)); $('langJs').classList.toggle('on', l === 'js'); $('langPy').classList.toggle('on', l === 'py');
+  $('pyNote').hidden = l !== 'py'; loadSources(); fillExamples(); newWorld();
+}
+$('langJs').addEventListener('click', () => setLang('js')); $('langPy').addEventListener('click', () => setLang('py'));
+$('langJs').classList.toggle('on', lang === 'js'); $('langPy').classList.toggle('on', lang === 'py'); $('pyNote').hidden = lang !== 'py';
+loadSources();
+$('levelNote').textContent = AI_LEVELS.regular.text;
+seriesHud(); newWorld();
+if (/[?&]teste\b/.test(location.search)) globalThis.__tennis = { get world() { return world; }, get results() { return results; }, start, newWorld, resetGame, loadExample, get runner() { return runner; }, setCodes: (a, b) => { $('source1').value = a; $('source2').value = b || ''; } };
+installQuickRun($('run'));
+installOfficialRules('tennis', $('howBtn'));
+// Tab insere espaços (indentação do Python e do JavaScript), em vez de saltar para o campo seguinte.
+for (const id of ['source1', 'source2']) $(id).addEventListener('keydown', e => { if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); const t = e.target, s0 = t.selectionStart; t.setRangeText(lang === 'py' ? '    ' : '  ', s0, t.selectionEnd, 'end'); } });
+
+return {};
+})();
+})();</script></body>
+</html>
